@@ -36,8 +36,8 @@ namespace sparse_matrix
         Line* rows;
     public:
         Matrix(const int n, const int m);
-        int hight();
-        int width();
+        int hight() const;
+        int width() const;
         void add(const int i, const int j, const float num);
         void output() const;
         Line& operator[](const int i) const;

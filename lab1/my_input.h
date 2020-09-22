@@ -5,7 +5,7 @@
 #ifndef LAB1_2_0_MY_INPUT_H
 #define LAB1_2_0_MY_INPUT_H
 #include <iostream>
-#include "sparse_matrix.h"
+
 namespace my_input {
     template<class T>
     int getNum(T &num) {

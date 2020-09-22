@@ -1,18 +1,16 @@
 //
 // Created by CopiedWonder on 16.09.2020.
 //
-#include "sparse_matrix.h"
 #include <iostream>
 #include <stdexcept>
+#include "sparse_matrix.h"
 
 sparse_matrix::elem::~elem() {
     delete next;
 }
 
 sparse_matrix::Line::Line(const int mlen) {
-    if (mlen < 1) {
-        throw std::invalid_argument("Bad line max length.");
-    }
+    mlen < 1 ? throw std::invalid_argument("Bad line max length."): true;
     len = 0;
     head = nullptr;
     max_len = mlen;
@@ -21,35 +19,32 @@ sparse_matrix::Line::Line(const int mlen) {
 void sparse_matrix::Line::add(const int j, const float num) {
     len++;
     if (head == nullptr) {
-        head = new elem{j, num, nullptr}; //TODO check if correct
+        head = new elem{j, num, nullptr};
     }
     else {
         elem* ptr = head;
         elem* prev = nullptr;
-        while (ptr != nullptr && num > ptr->num) {
+        while (ptr != nullptr && j > ptr->j) {
             prev = ptr;
             ptr = ptr->next;
         }
         elem* new_elem;
-        new_elem = new elem{j, num, ptr}; //TODO check if correct
+        new_elem = new elem{j, num, ptr};
         if (prev != nullptr) {
             prev->next = new_elem;
+        }
+        else {
+            head = new_elem;
         }
     }
 }
 
 float sparse_matrix::Line::operator[](const int j) const {
     elem* ptr = head;
-    while (ptr != nullptr && ptr->j != j) {
+    while (ptr != nullptr && ptr->j < j) {
         ptr = ptr->next;
     }
-    if (ptr == nullptr) {
-        return 0;
-    }
-    else {
-        return ptr->num;
-    }
-
+    return (ptr == nullptr || ptr->j != j) ? 0 : ptr->num;
 }
 
 int sparse_matrix::Line::length() const{
@@ -92,9 +87,7 @@ int sparse_matrix::Line::max_length() const {
 }
 
 sparse_matrix::Matrix::Matrix(const int n, const int m) {
-    if (n < 1 || m < 1) {
-        throw std::invalid_argument("Bad matrix params.");
-    }
+    (n < 1 || m < 1) ? throw std::invalid_argument("Bad matrix params.") :true;
     this->n = n;
     this->m = m;
     rows = new Line[n];
@@ -103,18 +96,16 @@ sparse_matrix::Matrix::Matrix(const int n, const int m) {
     }
 }
 
-int sparse_matrix::Matrix::hight() {
+int sparse_matrix::Matrix::hight() const {
     return n;
 }
 
-int sparse_matrix::Matrix::width() {
+int sparse_matrix::Matrix::width() const {
     return m;
 }
 
 void sparse_matrix::Matrix::add(const int i, const int j, const float num) {
-    if (i < 0 || i >= n || j < 0 || j >= m) {
-        throw std::out_of_range("Matrix index out of range.");
-    }
+    (i < 0 || i >= n || j < 0 || j >= m) ? throw std::out_of_range("Matrix index out of range.") : true;
     rows[i].add(j, num);
 }
 
@@ -129,25 +120,24 @@ void sparse_matrix::Matrix::output() const {
 }
 
 sparse_matrix::Line& sparse_matrix::Matrix::operator[](const int i) const {
-    if (i < 0 || i >= n) {
-        throw std::invalid_argument("Bad matrix index.");
-    }
+    (i < 0 || i >= n) ? throw std::invalid_argument("Bad matrix index.") : true;
     return rows[i];
 }
 
 void sparse_matrix::Matrix::swap(const int i, const int j) {
-    Line tmp = rows[i];
+    Line tmp;
+    tmp = rows[i];
     rows[i] = rows[j];
     rows[j] = tmp;
 }
 
 int sparse_matrix::Matrix::max_signed(bool (*cmp)(const float)) {
     int max = 0;
-    int max_index = 0;
+    int max_index = -1;
     int cur;
     for (int i = 0; i < n; i++) {
         cur = 0;
-        for (int j = 0; j < rows[i].length(); j++) {
+        for (int j = 0; j < m; j++) {
             if (cmp(rows[i][j])) {
                 cur++;
             }
@@ -161,7 +151,7 @@ int sparse_matrix::Matrix::max_signed(bool (*cmp)(const float)) {
 }
 
 sparse_matrix::Matrix::~Matrix() {
-    delete[] rows;
+    delete[] rows; // TODO check if memory is really cleaned
 }
 
 bool sparse_matrix::is_positive(const float x) {
