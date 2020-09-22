@@ -5,12 +5,11 @@
 #include <stdexcept>
 #include "sparse_matrix.h"
 
-sparse_matrix::elem::~elem() {
-    delete next;
-}
-
+/*
+ * Class line definitions
+ */
 sparse_matrix::Line::Line(const int mlen) {
-    mlen < 1 ? throw std::invalid_argument("Bad line max length."): true;
+    mlen < 1 ? throw std::invalid_argument("Bad line max length.") : true;
     len = 0;
     head = nullptr;
     max_len = mlen;
@@ -47,20 +46,6 @@ float sparse_matrix::Line::operator[](const int j) const {
     return (ptr == nullptr || ptr->j != j) ? 0 : ptr->num;
 }
 
-int sparse_matrix::Line::length() const{
-    return len;
-}
-
-sparse_matrix::Line::~Line() {
-    elem* ptr;
-    elem* next = head;
-    while (next != nullptr) {
-        ptr = next;
-        next = ptr->next;
-        delete ptr;
-    }
-}
-
 sparse_matrix::Line& sparse_matrix::Line::operator=(const sparse_matrix::Line& x) {
     delete head;
     len = x.length();
@@ -82,21 +67,41 @@ sparse_matrix::Line& sparse_matrix::Line::operator=(const sparse_matrix::Line& x
     return *this;
 }
 
+int sparse_matrix::Line::length() const{
+    return len;
+}
+
 int sparse_matrix::Line::max_length() const {
     return max_len;
 }
 
+sparse_matrix::Line::~Line() {
+    elem* ptr;
+    elem* next = head;
+    while (next != nullptr) {
+        ptr = next;
+        next = ptr->next;
+        delete ptr;
+    }
+}
+
+/*
+ * Class Matrix definitions
+ */
 sparse_matrix::Matrix::Matrix(const int n, const int m) {
     (n < 1 || m < 1) ? throw std::invalid_argument("Bad matrix params.") :true;
     this->n = n;
     this->m = m;
     rows = new Line[n];
+    Line* tmp;
     for (int i = 0; i < n; i++) {
-        rows[i] = *(new Line(m));
+        tmp = new Line(m);
+        rows[i] = *tmp;
+        delete tmp;
     }
 }
 
-int sparse_matrix::Matrix::hight() const {
+int sparse_matrix::Matrix::height() const {
     return n;
 }
 
@@ -154,6 +159,9 @@ sparse_matrix::Matrix::~Matrix() {
     delete[] rows; // TODO check if memory is really cleaned
 }
 
+/*
+ * Useful functions definitions
+ */
 bool sparse_matrix::is_positive(const float x) {
     return (x > 0);
 }

@@ -4,7 +4,7 @@
 #include "my_input.h"
 
 int main() {
-    std::cout << "Enter Matrix hight:" << std::endl;
+    std::cout << "Enter Matrix height:" << std::endl;
     int n;
     (my_input::getNum(n) != 0 || n < 0) ? throw std::out_of_range("Bad matrix hight. Retry."): true;
 
@@ -31,7 +31,7 @@ int main() {
     int max_positive = M.max_signed(sparse_matrix::is_positive);
     if (max_positive >= 0) {M.swap(0, max_positive);}
     int max_negative= M.max_signed(sparse_matrix::is_negative);
-    if (max_negative >= 0) {M.swap(M.hight() - 1, max_negative);}
+    if (max_negative >= 0) {M.swap(M.height() - 1, max_negative);}
     std::cout << "After operations: " << std::endl;
     M.output();
     return 0;

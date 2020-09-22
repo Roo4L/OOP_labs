@@ -10,7 +10,7 @@ namespace sparse_matrix
         int j;
         float num;
         elem* next;
-        ~elem();
+        ~elem(){};
     };
     class Line
     {
@@ -36,7 +36,7 @@ namespace sparse_matrix
         Line* rows;
     public:
         Matrix(const int n, const int m);
-        int hight() const;
+        int height() const;
         int width() const;
         void add(const int i, const int j, const float num);
         void output() const;
