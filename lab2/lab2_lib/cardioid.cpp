@@ -31,13 +31,13 @@ double cardioid::Cardioid::getPolarDistance(double ang) const {
 math_plane::Point* cardioid::Cardioid::getFarPoints() const {
     math_plane::Point* out_pair;
     out_pair = new math_plane::Point[2];
-    out_pair[0] = {this->getPolarDistance(90 + angle), 90 + angle};
-    out_pair[1] = {this->getPolarDistance(- 90 + angle), -90 + angle};
+    out_pair[0] = {this->getPolarDistance(90 + angle), 90. + angle};
+    out_pair[1] = {this->getPolarDistance(- 90 + angle), -90. + angle};
     return out_pair;
 }
 
 double cardioid::Cardioid::getRadiusOfCurvature(double ang) const {
-    return (4 * rad * sqrt(2) / 3 * sqrt(1 - cos(Rad(ang - angle))));
+    return (4 * rad * sqrt(2) * sqrt(1 - cos(Rad(ang - angle)))/ 3);
 }
 
 double cardioid::Cardioid::getArea() const {
