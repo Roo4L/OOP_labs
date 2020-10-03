@@ -72,11 +72,9 @@ int main() {
                 case 5:
                 {
                     if (curve != nullptr) {
-                        math_plane::Point* pair;
-                        pair = curve->getFarPoints();
-                        std::cout << "r = " << pair[0].r << ", alpha = " << pair[0].angle << std::endl;
-                        std::cout << "r = " << pair[1].r << ", aplha = " << pair[1].angle << std::endl;
-                        delete[] pair;
+                        auto [p1, p2] = curve->getFarPoints();
+                        std::cout << "r = " << p1.r << ", alpha = " << p1.angle << std::endl;
+                        std::cout << "r = " << p2.r << ", aplha = " << p2.angle << std::endl;
                     }
                     else {
                         std::cout << "Curve not found." << std::endl;

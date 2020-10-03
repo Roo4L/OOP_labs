@@ -11,9 +11,10 @@ namespace math_plane
     {
         double r;
         double angle;
-        Point(double r = 0, double angle = 0);
-        Point& operator=(const Point& p);
-        ~Point() =default;
+        Point(): r{0}, angle{0} {};
+        Point(double r, double angle);
+        Point& operator=(const Point& p) = default;
+        ~Point() = default;
     };
 
     const double Pi = 3.14159;
