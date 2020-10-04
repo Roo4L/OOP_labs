@@ -28,5 +28,9 @@ namespace cardioid
         Cardioid& rotate(double rot_angle);
         ~Cardioid() = default;
     };
+
+    inline double Rad(double angle) {
+        return angle * math_plane::Pi / 180;
+    }
 }
 #endif //LAB2_CARDIOID_H

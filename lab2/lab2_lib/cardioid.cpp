@@ -6,9 +6,7 @@
 #include "cardioid.h"
 #include "math_plane.h"
 
-inline double Rad(double angle) {
-    return angle * math_plane::Pi / 180;
-}
+using cardioid::Rad;
 
 cardioid::Cardioid::Cardioid(double rad, double angle) {
     if (rad < 0) { throw std::out_of_range("Cardioid radius is negative.");}
