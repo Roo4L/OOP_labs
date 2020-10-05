@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/CopiedWonder/Desktop/OOP/lab2/lab2_lib/cardioid.cpp
+stdexcept
+-
+cmath
+-
+cardioid.h
+C:/Users/CopiedWonder/Desktop/OOP/lab2/lab2_lib/cardioid.h
+math_plane.h
+C:/Users/CopiedWonder/Desktop/OOP/lab2/lab2_lib/math_plane.h
+
+C:/Users/CopiedWonder/Desktop/OOP/lab2/lab2_lib/cardioid.h
+math_plane.h
+C:/Users/CopiedWonder/Desktop/OOP/lab2/lab2_lib/math_plane.h
+
+C:/Users/CopiedWonder/Desktop/OOP/lab2/lab2_lib/math_plane.h
+

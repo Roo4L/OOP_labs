@@ -4,30 +4,33 @@
 
 #ifndef LAB1_2_0_SPARSE_MATRIX_H
 #define LAB1_2_0_SPARSE_MATRIX_H
+
+
 namespace sparse_matrix
 {
+    class Matrix;
+
     struct elem {
         int j;
         float num;
         elem* next;
-        ~elem(){};
+        ~elem(){ delete next;};
     };
     class Line
     {
     private:
         int len;
-        int max_len;
         elem* head;
     public:
-        Line(): len(0), max_len(0), head(nullptr) {};
-        explicit Line(const int mlen);
-        void add(const int j, const float num);
-        float operator[](const int j) const;
-        Line& operator=(const Line& x);
-        int length() const;
-        int max_length() const;
+        Line(): len(0), head(nullptr) {};
+        explicit Line(int mlen);
+        void add(int j, float num);
+        float operator[](int j) const;
+        Line& copy(Line& x, int i);
+        int length() const { return len; };
         ~Line();
     };
+
     class Matrix
     {
     private:
@@ -35,10 +38,10 @@ namespace sparse_matrix
         int m;
         Line* rows;
     public:
-        Matrix(const int n, const int m);
-        int height() const;
-        int width() const;
-        void add(const int i, const int j, const float num);
+        Matrix(int n, int m);
+        int height() const { return n; };
+        int width() const { return m; };
+        void add(int i, int j, float num);
         void output() const;
         Line& operator[](const int i) const;
         void swap(const int i, const int j);

@@ -1,0 +1,2 @@
+C:\MinGW\bin\ar.exe qc liblab2_lib.a  CMakeFiles/lab2_lib.dir/math_plane.cpp.obj CMakeFiles/lab2_lib.dir/cardioid.cpp.obj
+C:\MinGW\bin\ranlib.exe liblab2_lib.a

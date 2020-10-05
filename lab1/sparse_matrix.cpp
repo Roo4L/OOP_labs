@@ -9,10 +9,9 @@
  * Class line definitions
  */
 sparse_matrix::Line::Line(const int mlen) {
-    mlen < 1 ? throw std::invalid_argument("Bad line max length.") : true;
+    if (mlen < 1) { throw std::invalid_argument("Bad line max length."); };
     len = 0;
     head = nullptr;
-    max_len = mlen;
 }
 
 void sparse_matrix::Line::add(const int j, const float num) {
@@ -46,33 +45,24 @@ float sparse_matrix::Line::operator[](const int j) const {
     return (ptr == nullptr || ptr->j != j) ? 0 : ptr->num;
 }
 
-sparse_matrix::Line& sparse_matrix::Line::operator=(const sparse_matrix::Line& x) {
+sparse_matrix::Line& sparse_matrix::Line::copy(sparse_matrix::Line& x, int max_len) {
     delete head;
     len = x.length();
-    max_len = x.max_length();
     head = nullptr;
     elem* ptr;
-    for (int i = 0; i < max_len; i++) {
-        if (x[i] != 0) {
+    for (int j = 0; j < max_len; j++) {
+        if (x[j] != 0) {
             if (head == nullptr) {
-                head = new elem{i, x[i], nullptr};
+                head = new elem{j, x[j], nullptr};
                 ptr = head;
             }
             else {
-                ptr->next = new elem{i, x[i], nullptr};
+                ptr->next = new elem{j, x[j], nullptr};
                 ptr = ptr->next;
             }
         }
     }
     return *this;
-}
-
-int sparse_matrix::Line::length() const{
-    return len;
-}
-
-int sparse_matrix::Line::max_length() const {
-    return max_len;
 }
 
 sparse_matrix::Line::~Line() {
@@ -89,7 +79,7 @@ sparse_matrix::Line::~Line() {
  * Class Matrix definitions
  */
 sparse_matrix::Matrix::Matrix(const int n, const int m) {
-    (n < 1 || m < 1) ? throw std::invalid_argument("Bad matrix params.") :true;
+    if (n < 1 || m < 1) { throw std::invalid_argument("Bad matrix params.");};
     this->n = n;
     this->m = m;
     rows = new Line[n];
@@ -101,16 +91,8 @@ sparse_matrix::Matrix::Matrix(const int n, const int m) {
     }
 }
 
-int sparse_matrix::Matrix::height() const {
-    return n;
-}
-
-int sparse_matrix::Matrix::width() const {
-    return m;
-}
-
 void sparse_matrix::Matrix::add(const int i, const int j, const float num) {
-    (i < 0 || i >= n || j < 0 || j >= m) ? throw std::out_of_range("Matrix index out of range.") : true;
+    if (i < 0 || i >= n || j < 0 || j >= m) { throw std::out_of_range("Matrix index out of range.");};
     rows[i].add(j, num);
 }
 
@@ -125,15 +107,15 @@ void sparse_matrix::Matrix::output() const {
 }
 
 sparse_matrix::Line& sparse_matrix::Matrix::operator[](const int i) const {
-    (i < 0 || i >= n) ? throw std::invalid_argument("Bad matrix index.") : true;
+    if (i < 0 || i >= n) { throw std::invalid_argument("Bad matrix index.");};
     return rows[i];
 }
 
 void sparse_matrix::Matrix::swap(const int i, const int j) {
-    Line tmp;
-    tmp = rows[i];
-    rows[i] = rows[j];
-    rows[j] = tmp;
+    Line tmp(this->m);
+    tmp.copy((*this)[i], this->m);
+    (*this)[i].copy((*this)[j], this->m);
+    (*this)[j].copy(tmp, this->m);
 }
 
 int sparse_matrix::Matrix::max_signed(bool (*cmp)(const float)) {
