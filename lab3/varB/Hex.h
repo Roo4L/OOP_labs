@@ -12,16 +12,28 @@ namespace hexmath {
     class Hex {
     private:
         char num[MAX_NUM_LEN + 1];
+        void Complimentary();
     public:
         Hex() { this->setNull();}
-        Hex(int dnum);
-        Hex(char *num);
+        explicit Hex(int decimal_num);
+        Hex(const char *num);
         Hex& setNull();
 
         bool isEven();
 
+        const Hex& operator<<=(const int bias);
+        const Hex& operator>>=(const int bias);
+
+        friend const Hex operator+(const Hex& x, const Hex& y);
+        friend const Hex operator-(const Hex& x, const Hex& y);
+        friend const bool operator>(const Hex& x, const Hex& y);
+        friend const bool operator<(const Hex& x, const Hex& y);
+        friend const bool operator>=(const Hex& x, const Hex& y);
+        friend const bool operator<=(const Hex& x, const Hex& y);
+        friend const bool operator==(const Hex& x, const Hex& y);
+        friend const bool operator!=(const Hex& x, const Hex& y);
         friend std::istream& operator>>(std::istream& is, Hex& num);
-        friend std::ostream& operator<<(std::ostream& os, Hex& num);
+        friend std::ostream& operator<<(std::ostream& os, const Hex& num);
     };
 
     bool isHexLetter(char x);

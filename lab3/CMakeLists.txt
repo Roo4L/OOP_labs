@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 project(lab3)
 
-set(CMAKE_CXX_STANDARD 17)
+add_subdirectory(varA)
 
-add_executable(lab3 main.cpp varA/Hex.cpp varA/Hex.h)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
