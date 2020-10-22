@@ -31,10 +31,19 @@ namespace hexmath {
         Hex Complementary() const noexcept;
     public:
         Hex() noexcept { this->setNull();};
-        explicit Hex(int value);
+        explicit Hex(long long value);
         Hex(const Hex& cp);
         Hex(const char *num);
         Hex& setNull() noexcept;
+        void getDigits(char * buf) const noexcept {
+            int i = 0, j = 0;
+            while (num_[i] == '\0' && i < MAX_NUM_LEN) i++;
+            for (; i < MAX_NUM_LEN; i++) {
+                buf[j++] = num_[i];
+            }
+            buf[j] = '\0';
+        }
+        char getSign() const noexcept { return sign_;}
 
         bool isEven() const noexcept {
             return !(int(num_[MAX_NUM_LEN - 1]) % 2);

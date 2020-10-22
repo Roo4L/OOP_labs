@@ -37,7 +37,7 @@ namespace hexmath {
             num_[i] = cp.num_[i];
         }
     }
-    Hex::Hex(int value) {
+    Hex::Hex(long long value) {
         sign_ = (value < 0 ? Minus : Plus);
         if (value < 0) { value *= -1;}
 
@@ -155,6 +155,9 @@ namespace hexmath {
     }
 
     bool isGreater(const Hex& x, const Hex& y) noexcept {
+        if (x.sign_ != y.sign_) {
+            return x.sign_ < y.sign_;
+        }
         for (int i = 0; i < MAX_NUM_LEN; i++) {
             if (int(x.num_[i]) > y.num_[i]) {
                 return true;
