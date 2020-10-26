@@ -1,1 +1,1 @@
-add_library(Hex Hex.cpp)
+add_library(Hex_varA Hex.cpp)

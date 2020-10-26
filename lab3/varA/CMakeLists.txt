@@ -4,5 +4,5 @@ add_subdirectory(source)
 add_subdirectory(testing)
 
 add_executable(lab3A main.cpp)
-target_link_libraries(lab3A PUBLIC Hex)
+target_link_libraries(lab3A PUBLIC Hex_varA)
 target_include_directories(lab3A PUBLIC source)
