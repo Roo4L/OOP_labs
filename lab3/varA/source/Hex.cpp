@@ -42,7 +42,7 @@ namespace hexmath {
         if (value < 0) { value *= -1;}
 
         int it = MAX_NUM_LEN;
-        while (value > 0 && it > 1) {
+        while (value > 0 && it > 0) {
             it--;
             num_[it] = char(value % 16);
             value /= 16;
@@ -66,19 +66,23 @@ namespace hexmath {
                 throw std::out_of_range("Number is longer then possible.");
             }
             sign_ = Minus;
-            for (int j = 0; j < MAX_NUM_LEN - len + 1; j++) {
-                num_[j] = '\0';
-            }
             i++;
         }
         else {
-            if (len > MAX_NUM_LEN) {
+            if (snum[0] == '+') {
+                i++;
+                if (len > MAX_NUM_LEN + 1) {
+                    throw std::out_of_range("Number is longer then possible.");
+                }
+            }
+            else if  (len > MAX_NUM_LEN) {
                 throw std::out_of_range("Number is longer then possible.");
             }
             sign_ = Plus;
-            for (int j = 0; j < MAX_NUM_LEN - len; j++) {
-                num_[j] = '\0';
-            }
+
+        }
+        for (int j = 0; j < MAX_NUM_LEN - len + i; j++) {
+            num_[j] = '\0';
         }
         for (; i < len; i++) {
             if (isHexLetter(snum[i])) {
@@ -107,22 +111,7 @@ namespace hexmath {
             z.num_[i] = int(num_buf) % 16;
             overdrive = int(num_buf) / 16;
         }
-        if (x.sign_ == y.sign_) {
-            if (overdrive) { // overflow
-                z.sign_ = (x.sign_ + 1) % 2;
-            }
-            else {
-                z.sign_ = x.sign_;
-            }
-        }
-        else {
-            if (overdrive) { // overflow
-                z.sign_ = Plus;
-            }
-            else {
-                z.sign_ = Minus;
-            }
-        }
+        z.sign_ = (x_.sign_ + y_.sign_ + overdrive) % 2;
         return z.Complementary();
     }
 
@@ -161,6 +150,9 @@ namespace hexmath {
         for (int i = 0; i < MAX_NUM_LEN; i++) {
             if (int(x.num_[i]) > y.num_[i]) {
                 return true;
+            }
+            else if (int(x.num_[i] < y.num_[i])) {
+                return false;
             }
         }
         return false;

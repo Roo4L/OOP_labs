@@ -12,13 +12,20 @@ inline int hash(int i) {
             int(fmin(std::numeric_limits<int>::max(), pow(2, hexmath::MAX_NUM_LEN)));
 }
 
-char* genStr(char t = '\1', int len = hexmath::MAX_NUM_LEN + 1) {
-    char *res = new char[len];
-    for (int i = 0; i < len; i++) {
+char* genStr(char t, int len, bool negative = false) {
+    char *res;
+    int start = 0;
+    if (negative) start++;
+    res = new char[len + 1 + start];
+    if (negative) res[0] = '-';
+    for (int i = start; i < len + start; i++) {
         res[i] = t;
     }
+    res[len + start] = '\0';
     return res;
 }
+
+
 bool cmp(const char *x, const char *y) {
     int i = 0;
     while (x[i] != 0 || y[i] != 0) {
@@ -46,7 +53,7 @@ class HexTest: public ::testing::Test
         }
     };
 
-    TEST(HexTest, ConstructorFromChar) {
+    TEST(HexTesting, ConstructorFromChar) {
         // Check for normal numbers
         Hex a("A34");
         EXPECT_EQ(a.getSign(), hexmath::Plus);
@@ -76,26 +83,26 @@ class HexTest: public ::testing::Test
         EXPECT_TRUE(cmp(tmp, "\x0A\x0B\x07"));
 
         EXPECT_THROW(Hex("UDKF"), std::invalid_argument);
-        EXPECT_THROW(Hex(genStr()), std::out_of_range);
+        EXPECT_THROW(Hex(genStr('A', 17)), std::out_of_range);
     }
 
-    TEST(HexTest, ConstructorFromInt) {
+    TEST(HexTesting, ConstructorFromInt) {
         Hex a(1345);
         EXPECT_EQ(a.getSign(), hexmath::Plus);
         char tmp[MAX_NUM_LEN];
         a.getDigits(tmp);
-        EXPECT_TRUE(cmp(tmp, "541"));
+        EXPECT_TRUE(cmp(tmp, "\x5\x4\x1"));
         Hex b(-2000);
         EXPECT_EQ(b.getSign(), hexmath::Minus);
         b.getDigits(tmp);
-        EXPECT_TRUE(cmp(tmp, "7DO"));
+        EXPECT_TRUE(cmp(tmp, "\x7\xD\x0O"));
         Hex c(+0);
         EXPECT_EQ(c.getSign(), hexmath::Plus);
         c.getDigits(tmp);
         EXPECT_TRUE(cmp(tmp, ""));
     }
 
-    TEST(HexTest, DefaultConstructor) {
+    TEST(HexTesting, DefaultConstructor) {
         Hex a;
         EXPECT_EQ(a.getSign(), hexmath::Plus);
         char tmp[MAX_NUM_LEN];
@@ -118,7 +125,7 @@ class HexTest: public ::testing::Test
         }
     }
 
-    TEST(HexTest, HexAdd) {
+    TEST(HexTesting, HexAdd) {
         Hex a("A10");
         Hex b("904");
         Hex c = hexmath::Add(a, b);
@@ -133,17 +140,18 @@ class HexTest: public ::testing::Test
         EXPECT_TRUE(hexmath::Equals(u, Hex("-F330")));
         Hex t("-132");
         Hex v("-F20");
-        Hex k = hexmath::Add(x, y);
-        Hex l = hexmath::Add(y, x);
-        EXPECT_TRUE(hexmath::Equals(k, Hex("-141")));
-        EXPECT_TRUE(hexmath::Equals(l, Hex("-141")));
+        Hex k = hexmath::Add(t, v);
+        Hex l = hexmath::Add(v, t);
+        EXPECT_TRUE(hexmath::Equals(k, Hex("-1052")));
+        EXPECT_TRUE(hexmath::Equals(l, Hex("-1052")));
         // overflow check
         Hex i(genStr('F', MAX_NUM_LEN));
         Hex j("2");
         Hex m = hexmath::Add(i, j);
+        EXPECT_TRUE(hexmath::Equals(m, Hex(genStr('F', 16, true))));
     }
 
-    TEST(HexTest, HexSub) {
+    TEST(HexTesting, HexSub) {
         Hex a("A10");
         Hex b("904");
         Hex c = hexmath::Sub(a, b);
@@ -158,13 +166,13 @@ class HexTest: public ::testing::Test
         EXPECT_TRUE(hexmath::Equals(u, Hex("-10B10")));
         Hex t("-132");
         Hex v("-F20");
-        Hex k = hexmath::Add(x, y);
-        Hex l = hexmath::Add(y, x);
+        Hex k = hexmath::Sub(t, v);
+        Hex l = hexmath::Sub(v, t);
         EXPECT_TRUE(hexmath::Equals(k, Hex("DEE")));
         EXPECT_TRUE(hexmath::Equals(l, Hex("-DEE")));
     }
 
-    TEST(HexTest, HexBitShift) {
+    TEST(HexTesting, HexBitShift) {
         Hex a("A0");
         EXPECT_TRUE(hexmath::Equals(a.BitShiftRight(2), Hex("A000")));
         Hex b("1245");
