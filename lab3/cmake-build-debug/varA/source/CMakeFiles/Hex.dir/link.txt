@@ -1,0 +1,2 @@
+/usr/bin/ar qc libHex.a  CMakeFiles/Hex.dir/Hex.cpp.o
+/usr/bin/ranlib libHex.a

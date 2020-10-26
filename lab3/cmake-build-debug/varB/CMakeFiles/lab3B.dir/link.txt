@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/lab3B.dir/main.cpp.o  -o lab3B  source/libHex.a 

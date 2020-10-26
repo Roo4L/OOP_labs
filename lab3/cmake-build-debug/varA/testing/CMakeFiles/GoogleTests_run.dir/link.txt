@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/GoogleTests_run.dir/hex-test.cpp.o  -o GoogleTests_run  ../source/libHex.a ../../lib/libgtestd.a ../../lib/libgtest_maind.a ../../lib/libgtestd.a -lpthread 

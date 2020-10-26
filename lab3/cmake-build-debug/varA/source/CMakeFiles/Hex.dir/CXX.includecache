@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/copiedwonder/OOP_Labs/lab3/varA/source/Hex.cpp
+stdexcept
+-
+cstring
+-
+iostream
+-
+iomanip
+-
+Hex.h
+/home/copiedwonder/OOP_Labs/lab3/varA/source/Hex.h
+
+/home/copiedwonder/OOP_Labs/lab3/varA/source/Hex.h
+iostream
+-
+
