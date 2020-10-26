@@ -99,7 +99,7 @@ lab3A_EXTERNAL_OBJECTS =
 
 varA/lab3A: varA/CMakeFiles/lab3A.dir/main.cpp.o
 varA/lab3A: varA/CMakeFiles/lab3A.dir/build.make
-varA/lab3A: varA/source/libHex.a
+varA/lab3A: varA/source/libHex_varA.a
 varA/lab3A: varA/CMakeFiles/lab3A.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable lab3A"
 	cd /home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varA && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/lab3A.dir/link.txt --verbose=$(VERBOSE)

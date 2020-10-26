@@ -177,43 +177,43 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named lab3B
+# Target rules for targets named lab3A
 
 # Build rule for target.
-lab3B: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 lab3B
-.PHONY : lab3B
+lab3A: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 lab3A
+.PHONY : lab3A
 
 # fast build rule for target.
-lab3B/fast:
-	$(MAKE) $(MAKESILENT) -f varB/CMakeFiles/lab3B.dir/build.make varB/CMakeFiles/lab3B.dir/build
-.PHONY : lab3B/fast
+lab3A/fast:
+	$(MAKE) $(MAKESILENT) -f varA/CMakeFiles/lab3A.dir/build.make varA/CMakeFiles/lab3A.dir/build
+.PHONY : lab3A/fast
 
 #=============================================================================
-# Target rules for targets named Hex
+# Target rules for targets named Hex_varA
 
 # Build rule for target.
-Hex: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Hex
-.PHONY : Hex
+Hex_varA: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Hex_varA
+.PHONY : Hex_varA
 
 # fast build rule for target.
-Hex/fast:
-	$(MAKE) $(MAKESILENT) -f varB/source/CMakeFiles/Hex.dir/build.make varB/source/CMakeFiles/Hex.dir/build
-.PHONY : Hex/fast
+Hex_varA/fast:
+	$(MAKE) $(MAKESILENT) -f varA/source/CMakeFiles/Hex_varA.dir/build.make varA/source/CMakeFiles/Hex_varA.dir/build
+.PHONY : Hex_varA/fast
 
 #=============================================================================
-# Target rules for targets named GoogleTests_run
+# Target rules for targets named GoogleTests_varA_run
 
 # Build rule for target.
-GoogleTests_run: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 GoogleTests_run
-.PHONY : GoogleTests_run
+GoogleTests_varA_run: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 GoogleTests_varA_run
+.PHONY : GoogleTests_varA_run
 
 # fast build rule for target.
-GoogleTests_run/fast:
-	$(MAKE) $(MAKESILENT) -f varB/testing/CMakeFiles/GoogleTests_run.dir/build.make varB/testing/CMakeFiles/GoogleTests_run.dir/build
-.PHONY : GoogleTests_run/fast
+GoogleTests_varA_run/fast:
+	$(MAKE) $(MAKESILENT) -f varA/testing/CMakeFiles/GoogleTests_varA_run.dir/build.make varA/testing/CMakeFiles/GoogleTests_varA_run.dir/build
+.PHONY : GoogleTests_varA_run/fast
 
 #=============================================================================
 # Target rules for targets named gmock_main
@@ -225,7 +225,7 @@ gmock_main: cmake_check_build_system
 
 # fast build rule for target.
 gmock_main/fast:
-	$(MAKE) $(MAKESILENT) -f varB/testing/googletest-master/googlemock/CMakeFiles/gmock_main.dir/build.make varB/testing/googletest-master/googlemock/CMakeFiles/gmock_main.dir/build
+	$(MAKE) $(MAKESILENT) -f varA/testing/googletest-master/googlemock/CMakeFiles/gmock_main.dir/build.make varA/testing/googletest-master/googlemock/CMakeFiles/gmock_main.dir/build
 .PHONY : gmock_main/fast
 
 #=============================================================================
@@ -238,7 +238,7 @@ gmock: cmake_check_build_system
 
 # fast build rule for target.
 gmock/fast:
-	$(MAKE) $(MAKESILENT) -f varB/testing/googletest-master/googlemock/CMakeFiles/gmock.dir/build.make varB/testing/googletest-master/googlemock/CMakeFiles/gmock.dir/build
+	$(MAKE) $(MAKESILENT) -f varA/testing/googletest-master/googlemock/CMakeFiles/gmock.dir/build.make varA/testing/googletest-master/googlemock/CMakeFiles/gmock.dir/build
 .PHONY : gmock/fast
 
 #=============================================================================
@@ -251,7 +251,7 @@ gtest_main: cmake_check_build_system
 
 # fast build rule for target.
 gtest_main/fast:
-	$(MAKE) $(MAKESILENT) -f varB/testing/googletest-master/googletest/CMakeFiles/gtest_main.dir/build.make varB/testing/googletest-master/googletest/CMakeFiles/gtest_main.dir/build
+	$(MAKE) $(MAKESILENT) -f varA/testing/googletest-master/googletest/CMakeFiles/gtest_main.dir/build.make varA/testing/googletest-master/googletest/CMakeFiles/gtest_main.dir/build
 .PHONY : gtest_main/fast
 
 #=============================================================================
@@ -264,7 +264,7 @@ gtest: cmake_check_build_system
 
 # fast build rule for target.
 gtest/fast:
-	$(MAKE) $(MAKESILENT) -f varB/testing/googletest-master/googletest/CMakeFiles/gtest.dir/build.make varB/testing/googletest-master/googletest/CMakeFiles/gtest.dir/build
+	$(MAKE) $(MAKESILENT) -f varA/testing/googletest-master/googletest/CMakeFiles/gtest.dir/build.make varA/testing/googletest-master/googletest/CMakeFiles/gtest.dir/build
 .PHONY : gtest/fast
 
 # Help Target
@@ -279,13 +279,13 @@ help:
 	@echo "... install/strip"
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
-	@echo "... GoogleTests_run"
-	@echo "... Hex"
+	@echo "... GoogleTests_varA_run"
+	@echo "... Hex_varA"
 	@echo "... gmock"
 	@echo "... gmock_main"
 	@echo "... gtest"
 	@echo "... gtest_main"
-	@echo "... lab3B"
+	@echo "... lab3A"
 .PHONY : help
 
 

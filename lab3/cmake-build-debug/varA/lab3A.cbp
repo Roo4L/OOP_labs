@@ -65,8 +65,8 @@
 					<DistClean command="/usr/bin/make -j8 -f &quot;/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varA/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="Hex">
-				<Option output="/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varA/source/libHex.a" prefix_auto="0" extension_auto="0"/>
+			<Target title="Hex_varA">
+				<Option output="/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varA/source/libHex_varA.a" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varA/source"/>
 				<Option object_output="./"/>
 				<Option type="2"/>
@@ -82,14 +82,14 @@
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varA/source/Makefile&quot;  VERBOSE=1 Hex"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varA/source/Makefile&quot;  VERBOSE=1 Hex_varA"/>
 					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varA/source/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="/usr/bin/make -j8 -f &quot;/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varA/source/Makefile&quot;  VERBOSE=1 clean"/>
 					<DistClean command="/usr/bin/make -j8 -f &quot;/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varA/source/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="Hex/fast">
-				<Option output="/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varA/source/libHex.a" prefix_auto="0" extension_auto="0"/>
+			<Target title="Hex_varA/fast">
+				<Option output="/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varA/source/libHex_varA.a" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varA/source"/>
 				<Option object_output="./"/>
 				<Option type="2"/>
@@ -105,14 +105,14 @@
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varA/source/Makefile&quot;  VERBOSE=1 Hex/fast"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varA/source/Makefile&quot;  VERBOSE=1 Hex_varA/fast"/>
 					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varA/source/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="/usr/bin/make -j8 -f &quot;/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varA/source/Makefile&quot;  VERBOSE=1 clean"/>
 					<DistClean command="/usr/bin/make -j8 -f &quot;/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varA/source/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="GoogleTests_run">
-				<Option output="/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varA/testing/GoogleTests_run" prefix_auto="0" extension_auto="0"/>
+			<Target title="GoogleTests_varA_run">
+				<Option output="/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varA/testing/GoogleTests_varA_run" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varA/testing"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
@@ -131,14 +131,14 @@
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varA/testing/Makefile&quot;  VERBOSE=1 GoogleTests_run"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varA/testing/Makefile&quot;  VERBOSE=1 GoogleTests_varA_run"/>
 					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varA/testing/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="/usr/bin/make -j8 -f &quot;/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varA/testing/Makefile&quot;  VERBOSE=1 clean"/>
 					<DistClean command="/usr/bin/make -j8 -f &quot;/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varA/testing/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="GoogleTests_run/fast">
-				<Option output="/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varA/testing/GoogleTests_run" prefix_auto="0" extension_auto="0"/>
+			<Target title="GoogleTests_varA_run/fast">
+				<Option output="/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varA/testing/GoogleTests_varA_run" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varA/testing"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
@@ -157,7 +157,7 @@
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varA/testing/Makefile&quot;  VERBOSE=1 GoogleTests_run/fast"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varA/testing/Makefile&quot;  VERBOSE=1 GoogleTests_varA_run/fast"/>
 					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varA/testing/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="/usr/bin/make -j8 -f &quot;/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varA/testing/Makefile&quot;  VERBOSE=1 clean"/>
 					<DistClean command="/usr/bin/make -j8 -f &quot;/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varA/testing/Makefile&quot;  VERBOSE=1 clean"/>
@@ -376,10 +376,10 @@
 			<Option target="lab3A"/>
 		</Unit>
 		<Unit filename="/home/copiedwonder/OOP_Labs/lab3/varA/source/Hex.cpp">
-			<Option target="Hex"/>
+			<Option target="Hex_varA"/>
 		</Unit>
 		<Unit filename="/home/copiedwonder/OOP_Labs/lab3/varA/source/Hex.h">
-			<Option target="Hex"/>
+			<Option target="Hex_varA"/>
 		</Unit>
 		<Unit filename="/home/copiedwonder/OOP_Labs/lab3/varA/testing/googletest-master/googlemock/src/gmock-all.cc">
 			<Option target="gmock"/>
@@ -394,7 +394,7 @@
 			<Option target="gtest_main"/>
 		</Unit>
 		<Unit filename="/home/copiedwonder/OOP_Labs/lab3/varA/testing/hex-test.cpp">
-			<Option target="GoogleTests_run"/>
+			<Option target="GoogleTests_varA_run"/>
 		</Unit>
 		<Unit filename="/home/copiedwonder/OOP_Labs/lab3/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>

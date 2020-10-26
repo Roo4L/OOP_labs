@@ -292,6 +292,12 @@ GoogleTests_BINARY_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug
 //Value Computed by CMake
 GoogleTests_SOURCE_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/varB/testing
 
+//Value Computed by CMake
+GoogleTests_varA_BINARY_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varA/testing
+
+//Value Computed by CMake
+GoogleTests_varA_SOURCE_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/varA/testing
+
 //Enable installation of googletest. (Projects embedding googletest
 // may want to turn this OFF.)
 INSTALL_GTEST:BOOL=ON
@@ -306,13 +312,13 @@ ProcessorCount_cmd_nproc:FILEPATH=/usr/bin/nproc
 ProcessorCount_cmd_sysctl:FILEPATH=/usr/sbin/sysctl
 
 //Value Computed by CMake
-gmock_BINARY_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varB/testing/googletest-master/googlemock
+gmock_BINARY_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varA/testing/googletest-master/googlemock
 
 //Dependencies for the target
 gmock_LIB_DEPENDS:STATIC=general;gtest;
 
 //Value Computed by CMake
-gmock_SOURCE_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/varB/testing/googletest-master/googlemock
+gmock_SOURCE_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/varA/testing/googletest-master/googlemock
 
 //Build all of Google Mock's own tests.
 gmock_build_tests:BOOL=OFF
@@ -321,16 +327,16 @@ gmock_build_tests:BOOL=OFF
 gmock_main_LIB_DEPENDS:STATIC=general;gmock;
 
 //Value Computed by CMake
-googletest-distribution_BINARY_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varB/testing/googletest-master
+googletest-distribution_BINARY_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varA/testing/googletest-master
 
 //Value Computed by CMake
-googletest-distribution_SOURCE_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/varB/testing/googletest-master
+googletest-distribution_SOURCE_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/varA/testing/googletest-master
 
 //Value Computed by CMake
-gtest_BINARY_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varB/testing/googletest-master/googletest
+gtest_BINARY_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varA/testing/googletest-master/googletest
 
 //Value Computed by CMake
-gtest_SOURCE_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/varB/testing/googletest-master/googletest
+gtest_SOURCE_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/varA/testing/googletest-master/googletest
 
 //Build gtest's sample programs.
 gtest_build_samples:BOOL=OFF
@@ -577,7 +583,7 @@ ProcessorCount_cmd_nproc-ADVANCED:INTERNAL=1
 ProcessorCount_cmd_sysctl-ADVANCED:INTERNAL=1
 //CMAKE_INSTALL_PREFIX during last run
 _GNUInstallDirs_LAST_CMAKE_INSTALL_PREFIX:INTERNAL=/usr/local
-generated_dir:INTERNAL=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varB/testing/googletest-master/googletest/generated
+generated_dir:INTERNAL=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varA/testing/googletest-master/googletest/generated
 //ADVANCED property for variable: gmock_build_tests
 gmock_build_tests-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: gtest_build_samples

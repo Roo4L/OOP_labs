@@ -73,332 +73,332 @@ CMAKE_BINARY_DIR = /home/copiedwonder/OOP_Labs/lab3/cmake-build-debug
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: varB/all
+all: varA/all
 
 .PHONY : all
 
 # The main recursive "preinstall" target.
-preinstall: varB/preinstall
+preinstall: varA/preinstall
 
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: varB/clean
+clean: varA/clean
 
 .PHONY : clean
 
 #=============================================================================
-# Directory level rules for directory varB
+# Directory level rules for directory varA
 
 # Recursive "all" directory target.
-varB/all: varB/CMakeFiles/lab3B.dir/all
-varB/all: varB/source/all
-varB/all: varB/testing/all
+varA/all: varA/CMakeFiles/lab3A.dir/all
+varA/all: varA/source/all
+varA/all: varA/testing/all
 
-.PHONY : varB/all
+.PHONY : varA/all
 
 # Recursive "preinstall" directory target.
-varB/preinstall: varB/source/preinstall
-varB/preinstall: varB/testing/preinstall
+varA/preinstall: varA/source/preinstall
+varA/preinstall: varA/testing/preinstall
 
-.PHONY : varB/preinstall
+.PHONY : varA/preinstall
 
 # Recursive "clean" directory target.
-varB/clean: varB/CMakeFiles/lab3B.dir/clean
-varB/clean: varB/source/clean
-varB/clean: varB/testing/clean
+varA/clean: varA/CMakeFiles/lab3A.dir/clean
+varA/clean: varA/source/clean
+varA/clean: varA/testing/clean
 
-.PHONY : varB/clean
+.PHONY : varA/clean
 
 #=============================================================================
-# Directory level rules for directory varB/source
+# Directory level rules for directory varA/source
 
 # Recursive "all" directory target.
-varB/source/all: varB/source/CMakeFiles/Hex.dir/all
+varA/source/all: varA/source/CMakeFiles/Hex_varA.dir/all
 
-.PHONY : varB/source/all
+.PHONY : varA/source/all
 
 # Recursive "preinstall" directory target.
-varB/source/preinstall:
+varA/source/preinstall:
 
-.PHONY : varB/source/preinstall
+.PHONY : varA/source/preinstall
 
 # Recursive "clean" directory target.
-varB/source/clean: varB/source/CMakeFiles/Hex.dir/clean
+varA/source/clean: varA/source/CMakeFiles/Hex_varA.dir/clean
 
-.PHONY : varB/source/clean
+.PHONY : varA/source/clean
 
 #=============================================================================
-# Directory level rules for directory varB/testing
+# Directory level rules for directory varA/testing
 
 # Recursive "all" directory target.
-varB/testing/all: varB/testing/CMakeFiles/GoogleTests_run.dir/all
-varB/testing/all: varB/testing/googletest-master/all
+varA/testing/all: varA/testing/CMakeFiles/GoogleTests_varA_run.dir/all
+varA/testing/all: varA/testing/googletest-master/all
 
-.PHONY : varB/testing/all
+.PHONY : varA/testing/all
 
 # Recursive "preinstall" directory target.
-varB/testing/preinstall: varB/testing/googletest-master/preinstall
+varA/testing/preinstall: varA/testing/googletest-master/preinstall
 
-.PHONY : varB/testing/preinstall
+.PHONY : varA/testing/preinstall
 
 # Recursive "clean" directory target.
-varB/testing/clean: varB/testing/CMakeFiles/GoogleTests_run.dir/clean
-varB/testing/clean: varB/testing/googletest-master/clean
+varA/testing/clean: varA/testing/CMakeFiles/GoogleTests_varA_run.dir/clean
+varA/testing/clean: varA/testing/googletest-master/clean
 
-.PHONY : varB/testing/clean
+.PHONY : varA/testing/clean
 
 #=============================================================================
-# Directory level rules for directory varB/testing/googletest-master
+# Directory level rules for directory varA/testing/googletest-master
 
 # Recursive "all" directory target.
-varB/testing/googletest-master/all: varB/testing/googletest-master/googlemock/all
+varA/testing/googletest-master/all: varA/testing/googletest-master/googlemock/all
 
-.PHONY : varB/testing/googletest-master/all
+.PHONY : varA/testing/googletest-master/all
 
 # Recursive "preinstall" directory target.
-varB/testing/googletest-master/preinstall: varB/testing/googletest-master/googlemock/preinstall
+varA/testing/googletest-master/preinstall: varA/testing/googletest-master/googlemock/preinstall
 
-.PHONY : varB/testing/googletest-master/preinstall
+.PHONY : varA/testing/googletest-master/preinstall
 
 # Recursive "clean" directory target.
-varB/testing/googletest-master/clean: varB/testing/googletest-master/googlemock/clean
+varA/testing/googletest-master/clean: varA/testing/googletest-master/googlemock/clean
 
-.PHONY : varB/testing/googletest-master/clean
+.PHONY : varA/testing/googletest-master/clean
 
 #=============================================================================
-# Directory level rules for directory varB/testing/googletest-master/googlemock
+# Directory level rules for directory varA/testing/googletest-master/googlemock
 
 # Recursive "all" directory target.
-varB/testing/googletest-master/googlemock/all: varB/testing/googletest-master/googlemock/CMakeFiles/gmock_main.dir/all
-varB/testing/googletest-master/googlemock/all: varB/testing/googletest-master/googlemock/CMakeFiles/gmock.dir/all
-varB/testing/googletest-master/googlemock/all: varB/testing/googletest-master/googletest/all
+varA/testing/googletest-master/googlemock/all: varA/testing/googletest-master/googlemock/CMakeFiles/gmock_main.dir/all
+varA/testing/googletest-master/googlemock/all: varA/testing/googletest-master/googlemock/CMakeFiles/gmock.dir/all
+varA/testing/googletest-master/googlemock/all: varA/testing/googletest-master/googletest/all
 
-.PHONY : varB/testing/googletest-master/googlemock/all
+.PHONY : varA/testing/googletest-master/googlemock/all
 
 # Recursive "preinstall" directory target.
-varB/testing/googletest-master/googlemock/preinstall: varB/testing/googletest-master/googletest/preinstall
+varA/testing/googletest-master/googlemock/preinstall: varA/testing/googletest-master/googletest/preinstall
 
-.PHONY : varB/testing/googletest-master/googlemock/preinstall
+.PHONY : varA/testing/googletest-master/googlemock/preinstall
 
 # Recursive "clean" directory target.
-varB/testing/googletest-master/googlemock/clean: varB/testing/googletest-master/googlemock/CMakeFiles/gmock_main.dir/clean
-varB/testing/googletest-master/googlemock/clean: varB/testing/googletest-master/googlemock/CMakeFiles/gmock.dir/clean
-varB/testing/googletest-master/googlemock/clean: varB/testing/googletest-master/googletest/clean
+varA/testing/googletest-master/googlemock/clean: varA/testing/googletest-master/googlemock/CMakeFiles/gmock_main.dir/clean
+varA/testing/googletest-master/googlemock/clean: varA/testing/googletest-master/googlemock/CMakeFiles/gmock.dir/clean
+varA/testing/googletest-master/googlemock/clean: varA/testing/googletest-master/googletest/clean
 
-.PHONY : varB/testing/googletest-master/googlemock/clean
+.PHONY : varA/testing/googletest-master/googlemock/clean
 
 #=============================================================================
-# Directory level rules for directory varB/testing/googletest-master/googletest
+# Directory level rules for directory varA/testing/googletest-master/googletest
 
 # Recursive "all" directory target.
-varB/testing/googletest-master/googletest/all: varB/testing/googletest-master/googletest/CMakeFiles/gtest_main.dir/all
-varB/testing/googletest-master/googletest/all: varB/testing/googletest-master/googletest/CMakeFiles/gtest.dir/all
+varA/testing/googletest-master/googletest/all: varA/testing/googletest-master/googletest/CMakeFiles/gtest_main.dir/all
+varA/testing/googletest-master/googletest/all: varA/testing/googletest-master/googletest/CMakeFiles/gtest.dir/all
 
-.PHONY : varB/testing/googletest-master/googletest/all
+.PHONY : varA/testing/googletest-master/googletest/all
 
 # Recursive "preinstall" directory target.
-varB/testing/googletest-master/googletest/preinstall:
+varA/testing/googletest-master/googletest/preinstall:
 
-.PHONY : varB/testing/googletest-master/googletest/preinstall
+.PHONY : varA/testing/googletest-master/googletest/preinstall
 
 # Recursive "clean" directory target.
-varB/testing/googletest-master/googletest/clean: varB/testing/googletest-master/googletest/CMakeFiles/gtest_main.dir/clean
-varB/testing/googletest-master/googletest/clean: varB/testing/googletest-master/googletest/CMakeFiles/gtest.dir/clean
+varA/testing/googletest-master/googletest/clean: varA/testing/googletest-master/googletest/CMakeFiles/gtest_main.dir/clean
+varA/testing/googletest-master/googletest/clean: varA/testing/googletest-master/googletest/CMakeFiles/gtest.dir/clean
 
-.PHONY : varB/testing/googletest-master/googletest/clean
+.PHONY : varA/testing/googletest-master/googletest/clean
 
 #=============================================================================
-# Target rules for target varB/CMakeFiles/lab3B.dir
+# Target rules for target varA/CMakeFiles/lab3A.dir
 
 # All Build rule for target.
-varB/CMakeFiles/lab3B.dir/all: varB/source/CMakeFiles/Hex.dir/all
-	$(MAKE) $(MAKESILENT) -f varB/CMakeFiles/lab3B.dir/build.make varB/CMakeFiles/lab3B.dir/depend
-	$(MAKE) $(MAKESILENT) -f varB/CMakeFiles/lab3B.dir/build.make varB/CMakeFiles/lab3B.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/CMakeFiles --progress-num=13,14 "Built target lab3B"
-.PHONY : varB/CMakeFiles/lab3B.dir/all
+varA/CMakeFiles/lab3A.dir/all: varA/source/CMakeFiles/Hex_varA.dir/all
+	$(MAKE) $(MAKESILENT) -f varA/CMakeFiles/lab3A.dir/build.make varA/CMakeFiles/lab3A.dir/depend
+	$(MAKE) $(MAKESILENT) -f varA/CMakeFiles/lab3A.dir/build.make varA/CMakeFiles/lab3A.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/CMakeFiles --progress-num=13,14 "Built target lab3A"
+.PHONY : varA/CMakeFiles/lab3A.dir/all
 
 # Build rule for subdir invocation for target.
-varB/CMakeFiles/lab3B.dir/rule: cmake_check_build_system
+varA/CMakeFiles/lab3A.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/CMakeFiles 4
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 varB/CMakeFiles/lab3B.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 varA/CMakeFiles/lab3A.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/CMakeFiles 0
-.PHONY : varB/CMakeFiles/lab3B.dir/rule
+.PHONY : varA/CMakeFiles/lab3A.dir/rule
 
 # Convenience name for target.
-lab3B: varB/CMakeFiles/lab3B.dir/rule
+lab3A: varA/CMakeFiles/lab3A.dir/rule
 
-.PHONY : lab3B
+.PHONY : lab3A
 
 # clean rule for target.
-varB/CMakeFiles/lab3B.dir/clean:
-	$(MAKE) $(MAKESILENT) -f varB/CMakeFiles/lab3B.dir/build.make varB/CMakeFiles/lab3B.dir/clean
-.PHONY : varB/CMakeFiles/lab3B.dir/clean
+varA/CMakeFiles/lab3A.dir/clean:
+	$(MAKE) $(MAKESILENT) -f varA/CMakeFiles/lab3A.dir/build.make varA/CMakeFiles/lab3A.dir/clean
+.PHONY : varA/CMakeFiles/lab3A.dir/clean
 
 #=============================================================================
-# Target rules for target varB/source/CMakeFiles/Hex.dir
+# Target rules for target varA/source/CMakeFiles/Hex_varA.dir
 
 # All Build rule for target.
-varB/source/CMakeFiles/Hex.dir/all:
-	$(MAKE) $(MAKESILENT) -f varB/source/CMakeFiles/Hex.dir/build.make varB/source/CMakeFiles/Hex.dir/depend
-	$(MAKE) $(MAKESILENT) -f varB/source/CMakeFiles/Hex.dir/build.make varB/source/CMakeFiles/Hex.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/CMakeFiles --progress-num=3,4 "Built target Hex"
-.PHONY : varB/source/CMakeFiles/Hex.dir/all
+varA/source/CMakeFiles/Hex_varA.dir/all:
+	$(MAKE) $(MAKESILENT) -f varA/source/CMakeFiles/Hex_varA.dir/build.make varA/source/CMakeFiles/Hex_varA.dir/depend
+	$(MAKE) $(MAKESILENT) -f varA/source/CMakeFiles/Hex_varA.dir/build.make varA/source/CMakeFiles/Hex_varA.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/CMakeFiles --progress-num=3,4 "Built target Hex_varA"
+.PHONY : varA/source/CMakeFiles/Hex_varA.dir/all
 
 # Build rule for subdir invocation for target.
-varB/source/CMakeFiles/Hex.dir/rule: cmake_check_build_system
+varA/source/CMakeFiles/Hex_varA.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/CMakeFiles 2
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 varB/source/CMakeFiles/Hex.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 varA/source/CMakeFiles/Hex_varA.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/CMakeFiles 0
-.PHONY : varB/source/CMakeFiles/Hex.dir/rule
+.PHONY : varA/source/CMakeFiles/Hex_varA.dir/rule
 
 # Convenience name for target.
-Hex: varB/source/CMakeFiles/Hex.dir/rule
+Hex_varA: varA/source/CMakeFiles/Hex_varA.dir/rule
 
-.PHONY : Hex
+.PHONY : Hex_varA
 
 # clean rule for target.
-varB/source/CMakeFiles/Hex.dir/clean:
-	$(MAKE) $(MAKESILENT) -f varB/source/CMakeFiles/Hex.dir/build.make varB/source/CMakeFiles/Hex.dir/clean
-.PHONY : varB/source/CMakeFiles/Hex.dir/clean
+varA/source/CMakeFiles/Hex_varA.dir/clean:
+	$(MAKE) $(MAKESILENT) -f varA/source/CMakeFiles/Hex_varA.dir/build.make varA/source/CMakeFiles/Hex_varA.dir/clean
+.PHONY : varA/source/CMakeFiles/Hex_varA.dir/clean
 
 #=============================================================================
-# Target rules for target varB/testing/CMakeFiles/GoogleTests_run.dir
+# Target rules for target varA/testing/CMakeFiles/GoogleTests_varA_run.dir
 
 # All Build rule for target.
-varB/testing/CMakeFiles/GoogleTests_run.dir/all: varB/source/CMakeFiles/Hex.dir/all
-varB/testing/CMakeFiles/GoogleTests_run.dir/all: varB/testing/googletest-master/googletest/CMakeFiles/gtest_main.dir/all
-varB/testing/CMakeFiles/GoogleTests_run.dir/all: varB/testing/googletest-master/googletest/CMakeFiles/gtest.dir/all
-	$(MAKE) $(MAKESILENT) -f varB/testing/CMakeFiles/GoogleTests_run.dir/build.make varB/testing/CMakeFiles/GoogleTests_run.dir/depend
-	$(MAKE) $(MAKESILENT) -f varB/testing/CMakeFiles/GoogleTests_run.dir/build.make varB/testing/CMakeFiles/GoogleTests_run.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/CMakeFiles --progress-num=1,2 "Built target GoogleTests_run"
-.PHONY : varB/testing/CMakeFiles/GoogleTests_run.dir/all
+varA/testing/CMakeFiles/GoogleTests_varA_run.dir/all: varA/source/CMakeFiles/Hex_varA.dir/all
+varA/testing/CMakeFiles/GoogleTests_varA_run.dir/all: varA/testing/googletest-master/googletest/CMakeFiles/gtest_main.dir/all
+varA/testing/CMakeFiles/GoogleTests_varA_run.dir/all: varA/testing/googletest-master/googletest/CMakeFiles/gtest.dir/all
+	$(MAKE) $(MAKESILENT) -f varA/testing/CMakeFiles/GoogleTests_varA_run.dir/build.make varA/testing/CMakeFiles/GoogleTests_varA_run.dir/depend
+	$(MAKE) $(MAKESILENT) -f varA/testing/CMakeFiles/GoogleTests_varA_run.dir/build.make varA/testing/CMakeFiles/GoogleTests_varA_run.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/CMakeFiles --progress-num=1,2 "Built target GoogleTests_varA_run"
+.PHONY : varA/testing/CMakeFiles/GoogleTests_varA_run.dir/all
 
 # Build rule for subdir invocation for target.
-varB/testing/CMakeFiles/GoogleTests_run.dir/rule: cmake_check_build_system
+varA/testing/CMakeFiles/GoogleTests_varA_run.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/CMakeFiles 8
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 varB/testing/CMakeFiles/GoogleTests_run.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 varA/testing/CMakeFiles/GoogleTests_varA_run.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/CMakeFiles 0
-.PHONY : varB/testing/CMakeFiles/GoogleTests_run.dir/rule
+.PHONY : varA/testing/CMakeFiles/GoogleTests_varA_run.dir/rule
 
 # Convenience name for target.
-GoogleTests_run: varB/testing/CMakeFiles/GoogleTests_run.dir/rule
+GoogleTests_varA_run: varA/testing/CMakeFiles/GoogleTests_varA_run.dir/rule
 
-.PHONY : GoogleTests_run
+.PHONY : GoogleTests_varA_run
 
 # clean rule for target.
-varB/testing/CMakeFiles/GoogleTests_run.dir/clean:
-	$(MAKE) $(MAKESILENT) -f varB/testing/CMakeFiles/GoogleTests_run.dir/build.make varB/testing/CMakeFiles/GoogleTests_run.dir/clean
-.PHONY : varB/testing/CMakeFiles/GoogleTests_run.dir/clean
+varA/testing/CMakeFiles/GoogleTests_varA_run.dir/clean:
+	$(MAKE) $(MAKESILENT) -f varA/testing/CMakeFiles/GoogleTests_varA_run.dir/build.make varA/testing/CMakeFiles/GoogleTests_varA_run.dir/clean
+.PHONY : varA/testing/CMakeFiles/GoogleTests_varA_run.dir/clean
 
 #=============================================================================
-# Target rules for target varB/testing/googletest-master/googlemock/CMakeFiles/gmock_main.dir
+# Target rules for target varA/testing/googletest-master/googlemock/CMakeFiles/gmock_main.dir
 
 # All Build rule for target.
-varB/testing/googletest-master/googlemock/CMakeFiles/gmock_main.dir/all: varB/testing/googletest-master/googlemock/CMakeFiles/gmock.dir/all
-varB/testing/googletest-master/googlemock/CMakeFiles/gmock_main.dir/all: varB/testing/googletest-master/googletest/CMakeFiles/gtest.dir/all
-	$(MAKE) $(MAKESILENT) -f varB/testing/googletest-master/googlemock/CMakeFiles/gmock_main.dir/build.make varB/testing/googletest-master/googlemock/CMakeFiles/gmock_main.dir/depend
-	$(MAKE) $(MAKESILENT) -f varB/testing/googletest-master/googlemock/CMakeFiles/gmock_main.dir/build.make varB/testing/googletest-master/googlemock/CMakeFiles/gmock_main.dir/build
+varA/testing/googletest-master/googlemock/CMakeFiles/gmock_main.dir/all: varA/testing/googletest-master/googlemock/CMakeFiles/gmock.dir/all
+varA/testing/googletest-master/googlemock/CMakeFiles/gmock_main.dir/all: varA/testing/googletest-master/googletest/CMakeFiles/gtest.dir/all
+	$(MAKE) $(MAKESILENT) -f varA/testing/googletest-master/googlemock/CMakeFiles/gmock_main.dir/build.make varA/testing/googletest-master/googlemock/CMakeFiles/gmock_main.dir/depend
+	$(MAKE) $(MAKESILENT) -f varA/testing/googletest-master/googlemock/CMakeFiles/gmock_main.dir/build.make varA/testing/googletest-master/googlemock/CMakeFiles/gmock_main.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/CMakeFiles --progress-num=7,8 "Built target gmock_main"
-.PHONY : varB/testing/googletest-master/googlemock/CMakeFiles/gmock_main.dir/all
+.PHONY : varA/testing/googletest-master/googlemock/CMakeFiles/gmock_main.dir/all
 
 # Build rule for subdir invocation for target.
-varB/testing/googletest-master/googlemock/CMakeFiles/gmock_main.dir/rule: cmake_check_build_system
+varA/testing/googletest-master/googlemock/CMakeFiles/gmock_main.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/CMakeFiles 6
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 varB/testing/googletest-master/googlemock/CMakeFiles/gmock_main.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 varA/testing/googletest-master/googlemock/CMakeFiles/gmock_main.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/CMakeFiles 0
-.PHONY : varB/testing/googletest-master/googlemock/CMakeFiles/gmock_main.dir/rule
+.PHONY : varA/testing/googletest-master/googlemock/CMakeFiles/gmock_main.dir/rule
 
 # Convenience name for target.
-gmock_main: varB/testing/googletest-master/googlemock/CMakeFiles/gmock_main.dir/rule
+gmock_main: varA/testing/googletest-master/googlemock/CMakeFiles/gmock_main.dir/rule
 
 .PHONY : gmock_main
 
 # clean rule for target.
-varB/testing/googletest-master/googlemock/CMakeFiles/gmock_main.dir/clean:
-	$(MAKE) $(MAKESILENT) -f varB/testing/googletest-master/googlemock/CMakeFiles/gmock_main.dir/build.make varB/testing/googletest-master/googlemock/CMakeFiles/gmock_main.dir/clean
-.PHONY : varB/testing/googletest-master/googlemock/CMakeFiles/gmock_main.dir/clean
+varA/testing/googletest-master/googlemock/CMakeFiles/gmock_main.dir/clean:
+	$(MAKE) $(MAKESILENT) -f varA/testing/googletest-master/googlemock/CMakeFiles/gmock_main.dir/build.make varA/testing/googletest-master/googlemock/CMakeFiles/gmock_main.dir/clean
+.PHONY : varA/testing/googletest-master/googlemock/CMakeFiles/gmock_main.dir/clean
 
 #=============================================================================
-# Target rules for target varB/testing/googletest-master/googlemock/CMakeFiles/gmock.dir
+# Target rules for target varA/testing/googletest-master/googlemock/CMakeFiles/gmock.dir
 
 # All Build rule for target.
-varB/testing/googletest-master/googlemock/CMakeFiles/gmock.dir/all: varB/testing/googletest-master/googletest/CMakeFiles/gtest.dir/all
-	$(MAKE) $(MAKESILENT) -f varB/testing/googletest-master/googlemock/CMakeFiles/gmock.dir/build.make varB/testing/googletest-master/googlemock/CMakeFiles/gmock.dir/depend
-	$(MAKE) $(MAKESILENT) -f varB/testing/googletest-master/googlemock/CMakeFiles/gmock.dir/build.make varB/testing/googletest-master/googlemock/CMakeFiles/gmock.dir/build
+varA/testing/googletest-master/googlemock/CMakeFiles/gmock.dir/all: varA/testing/googletest-master/googletest/CMakeFiles/gtest.dir/all
+	$(MAKE) $(MAKESILENT) -f varA/testing/googletest-master/googlemock/CMakeFiles/gmock.dir/build.make varA/testing/googletest-master/googlemock/CMakeFiles/gmock.dir/depend
+	$(MAKE) $(MAKESILENT) -f varA/testing/googletest-master/googlemock/CMakeFiles/gmock.dir/build.make varA/testing/googletest-master/googlemock/CMakeFiles/gmock.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/CMakeFiles --progress-num=5,6 "Built target gmock"
-.PHONY : varB/testing/googletest-master/googlemock/CMakeFiles/gmock.dir/all
+.PHONY : varA/testing/googletest-master/googlemock/CMakeFiles/gmock.dir/all
 
 # Build rule for subdir invocation for target.
-varB/testing/googletest-master/googlemock/CMakeFiles/gmock.dir/rule: cmake_check_build_system
+varA/testing/googletest-master/googlemock/CMakeFiles/gmock.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/CMakeFiles 4
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 varB/testing/googletest-master/googlemock/CMakeFiles/gmock.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 varA/testing/googletest-master/googlemock/CMakeFiles/gmock.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/CMakeFiles 0
-.PHONY : varB/testing/googletest-master/googlemock/CMakeFiles/gmock.dir/rule
+.PHONY : varA/testing/googletest-master/googlemock/CMakeFiles/gmock.dir/rule
 
 # Convenience name for target.
-gmock: varB/testing/googletest-master/googlemock/CMakeFiles/gmock.dir/rule
+gmock: varA/testing/googletest-master/googlemock/CMakeFiles/gmock.dir/rule
 
 .PHONY : gmock
 
 # clean rule for target.
-varB/testing/googletest-master/googlemock/CMakeFiles/gmock.dir/clean:
-	$(MAKE) $(MAKESILENT) -f varB/testing/googletest-master/googlemock/CMakeFiles/gmock.dir/build.make varB/testing/googletest-master/googlemock/CMakeFiles/gmock.dir/clean
-.PHONY : varB/testing/googletest-master/googlemock/CMakeFiles/gmock.dir/clean
+varA/testing/googletest-master/googlemock/CMakeFiles/gmock.dir/clean:
+	$(MAKE) $(MAKESILENT) -f varA/testing/googletest-master/googlemock/CMakeFiles/gmock.dir/build.make varA/testing/googletest-master/googlemock/CMakeFiles/gmock.dir/clean
+.PHONY : varA/testing/googletest-master/googlemock/CMakeFiles/gmock.dir/clean
 
 #=============================================================================
-# Target rules for target varB/testing/googletest-master/googletest/CMakeFiles/gtest_main.dir
+# Target rules for target varA/testing/googletest-master/googletest/CMakeFiles/gtest_main.dir
 
 # All Build rule for target.
-varB/testing/googletest-master/googletest/CMakeFiles/gtest_main.dir/all: varB/testing/googletest-master/googletest/CMakeFiles/gtest.dir/all
-	$(MAKE) $(MAKESILENT) -f varB/testing/googletest-master/googletest/CMakeFiles/gtest_main.dir/build.make varB/testing/googletest-master/googletest/CMakeFiles/gtest_main.dir/depend
-	$(MAKE) $(MAKESILENT) -f varB/testing/googletest-master/googletest/CMakeFiles/gtest_main.dir/build.make varB/testing/googletest-master/googletest/CMakeFiles/gtest_main.dir/build
+varA/testing/googletest-master/googletest/CMakeFiles/gtest_main.dir/all: varA/testing/googletest-master/googletest/CMakeFiles/gtest.dir/all
+	$(MAKE) $(MAKESILENT) -f varA/testing/googletest-master/googletest/CMakeFiles/gtest_main.dir/build.make varA/testing/googletest-master/googletest/CMakeFiles/gtest_main.dir/depend
+	$(MAKE) $(MAKESILENT) -f varA/testing/googletest-master/googletest/CMakeFiles/gtest_main.dir/build.make varA/testing/googletest-master/googletest/CMakeFiles/gtest_main.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/CMakeFiles --progress-num=11,12 "Built target gtest_main"
-.PHONY : varB/testing/googletest-master/googletest/CMakeFiles/gtest_main.dir/all
+.PHONY : varA/testing/googletest-master/googletest/CMakeFiles/gtest_main.dir/all
 
 # Build rule for subdir invocation for target.
-varB/testing/googletest-master/googletest/CMakeFiles/gtest_main.dir/rule: cmake_check_build_system
+varA/testing/googletest-master/googletest/CMakeFiles/gtest_main.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/CMakeFiles 4
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 varB/testing/googletest-master/googletest/CMakeFiles/gtest_main.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 varA/testing/googletest-master/googletest/CMakeFiles/gtest_main.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/CMakeFiles 0
-.PHONY : varB/testing/googletest-master/googletest/CMakeFiles/gtest_main.dir/rule
+.PHONY : varA/testing/googletest-master/googletest/CMakeFiles/gtest_main.dir/rule
 
 # Convenience name for target.
-gtest_main: varB/testing/googletest-master/googletest/CMakeFiles/gtest_main.dir/rule
+gtest_main: varA/testing/googletest-master/googletest/CMakeFiles/gtest_main.dir/rule
 
 .PHONY : gtest_main
 
 # clean rule for target.
-varB/testing/googletest-master/googletest/CMakeFiles/gtest_main.dir/clean:
-	$(MAKE) $(MAKESILENT) -f varB/testing/googletest-master/googletest/CMakeFiles/gtest_main.dir/build.make varB/testing/googletest-master/googletest/CMakeFiles/gtest_main.dir/clean
-.PHONY : varB/testing/googletest-master/googletest/CMakeFiles/gtest_main.dir/clean
+varA/testing/googletest-master/googletest/CMakeFiles/gtest_main.dir/clean:
+	$(MAKE) $(MAKESILENT) -f varA/testing/googletest-master/googletest/CMakeFiles/gtest_main.dir/build.make varA/testing/googletest-master/googletest/CMakeFiles/gtest_main.dir/clean
+.PHONY : varA/testing/googletest-master/googletest/CMakeFiles/gtest_main.dir/clean
 
 #=============================================================================
-# Target rules for target varB/testing/googletest-master/googletest/CMakeFiles/gtest.dir
+# Target rules for target varA/testing/googletest-master/googletest/CMakeFiles/gtest.dir
 
 # All Build rule for target.
-varB/testing/googletest-master/googletest/CMakeFiles/gtest.dir/all:
-	$(MAKE) $(MAKESILENT) -f varB/testing/googletest-master/googletest/CMakeFiles/gtest.dir/build.make varB/testing/googletest-master/googletest/CMakeFiles/gtest.dir/depend
-	$(MAKE) $(MAKESILENT) -f varB/testing/googletest-master/googletest/CMakeFiles/gtest.dir/build.make varB/testing/googletest-master/googletest/CMakeFiles/gtest.dir/build
+varA/testing/googletest-master/googletest/CMakeFiles/gtest.dir/all:
+	$(MAKE) $(MAKESILENT) -f varA/testing/googletest-master/googletest/CMakeFiles/gtest.dir/build.make varA/testing/googletest-master/googletest/CMakeFiles/gtest.dir/depend
+	$(MAKE) $(MAKESILENT) -f varA/testing/googletest-master/googletest/CMakeFiles/gtest.dir/build.make varA/testing/googletest-master/googletest/CMakeFiles/gtest.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/CMakeFiles --progress-num=9,10 "Built target gtest"
-.PHONY : varB/testing/googletest-master/googletest/CMakeFiles/gtest.dir/all
+.PHONY : varA/testing/googletest-master/googletest/CMakeFiles/gtest.dir/all
 
 # Build rule for subdir invocation for target.
-varB/testing/googletest-master/googletest/CMakeFiles/gtest.dir/rule: cmake_check_build_system
+varA/testing/googletest-master/googletest/CMakeFiles/gtest.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/CMakeFiles 2
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 varB/testing/googletest-master/googletest/CMakeFiles/gtest.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 varA/testing/googletest-master/googletest/CMakeFiles/gtest.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/CMakeFiles 0
-.PHONY : varB/testing/googletest-master/googletest/CMakeFiles/gtest.dir/rule
+.PHONY : varA/testing/googletest-master/googletest/CMakeFiles/gtest.dir/rule
 
 # Convenience name for target.
-gtest: varB/testing/googletest-master/googletest/CMakeFiles/gtest.dir/rule
+gtest: varA/testing/googletest-master/googletest/CMakeFiles/gtest.dir/rule
 
 .PHONY : gtest
 
 # clean rule for target.
-varB/testing/googletest-master/googletest/CMakeFiles/gtest.dir/clean:
-	$(MAKE) $(MAKESILENT) -f varB/testing/googletest-master/googletest/CMakeFiles/gtest.dir/build.make varB/testing/googletest-master/googletest/CMakeFiles/gtest.dir/clean
-.PHONY : varB/testing/googletest-master/googletest/CMakeFiles/gtest.dir/clean
+varA/testing/googletest-master/googletest/CMakeFiles/gtest.dir/clean:
+	$(MAKE) $(MAKESILENT) -f varA/testing/googletest-master/googletest/CMakeFiles/gtest.dir/build.make varA/testing/googletest-master/googletest/CMakeFiles/gtest.dir/clean
+.PHONY : varA/testing/googletest-master/googletest/CMakeFiles/gtest.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

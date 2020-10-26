@@ -177,19 +177,19 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
-varA/testing/CMakeFiles/GoogleTests_run.dir/rule:
-	cd /home/copiedwonder/OOP_Labs/lab3/cmake-build-debug && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 varA/testing/CMakeFiles/GoogleTests_run.dir/rule
-.PHONY : varA/testing/CMakeFiles/GoogleTests_run.dir/rule
+varA/testing/CMakeFiles/GoogleTests_varA_run.dir/rule:
+	cd /home/copiedwonder/OOP_Labs/lab3/cmake-build-debug && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 varA/testing/CMakeFiles/GoogleTests_varA_run.dir/rule
+.PHONY : varA/testing/CMakeFiles/GoogleTests_varA_run.dir/rule
 
 # Convenience name for target.
-GoogleTests_run: varA/testing/CMakeFiles/GoogleTests_run.dir/rule
+GoogleTests_varA_run: varA/testing/CMakeFiles/GoogleTests_varA_run.dir/rule
 
-.PHONY : GoogleTests_run
+.PHONY : GoogleTests_varA_run
 
 # fast build rule for target.
-GoogleTests_run/fast:
-	cd /home/copiedwonder/OOP_Labs/lab3/cmake-build-debug && $(MAKE) $(MAKESILENT) -f varA/testing/CMakeFiles/GoogleTests_run.dir/build.make varA/testing/CMakeFiles/GoogleTests_run.dir/build
-.PHONY : GoogleTests_run/fast
+GoogleTests_varA_run/fast:
+	cd /home/copiedwonder/OOP_Labs/lab3/cmake-build-debug && $(MAKE) $(MAKESILENT) -f varA/testing/CMakeFiles/GoogleTests_varA_run.dir/build.make varA/testing/CMakeFiles/GoogleTests_varA_run.dir/build
+.PHONY : GoogleTests_varA_run/fast
 
 hex-test.o: hex-test.cpp.o
 
@@ -197,7 +197,7 @@ hex-test.o: hex-test.cpp.o
 
 # target to build an object file
 hex-test.cpp.o:
-	cd /home/copiedwonder/OOP_Labs/lab3/cmake-build-debug && $(MAKE) $(MAKESILENT) -f varA/testing/CMakeFiles/GoogleTests_run.dir/build.make varA/testing/CMakeFiles/GoogleTests_run.dir/hex-test.cpp.o
+	cd /home/copiedwonder/OOP_Labs/lab3/cmake-build-debug && $(MAKE) $(MAKESILENT) -f varA/testing/CMakeFiles/GoogleTests_varA_run.dir/build.make varA/testing/CMakeFiles/GoogleTests_varA_run.dir/hex-test.cpp.o
 .PHONY : hex-test.cpp.o
 
 hex-test.i: hex-test.cpp.i
@@ -206,7 +206,7 @@ hex-test.i: hex-test.cpp.i
 
 # target to preprocess a source file
 hex-test.cpp.i:
-	cd /home/copiedwonder/OOP_Labs/lab3/cmake-build-debug && $(MAKE) $(MAKESILENT) -f varA/testing/CMakeFiles/GoogleTests_run.dir/build.make varA/testing/CMakeFiles/GoogleTests_run.dir/hex-test.cpp.i
+	cd /home/copiedwonder/OOP_Labs/lab3/cmake-build-debug && $(MAKE) $(MAKESILENT) -f varA/testing/CMakeFiles/GoogleTests_varA_run.dir/build.make varA/testing/CMakeFiles/GoogleTests_varA_run.dir/hex-test.cpp.i
 .PHONY : hex-test.cpp.i
 
 hex-test.s: hex-test.cpp.s
@@ -215,7 +215,7 @@ hex-test.s: hex-test.cpp.s
 
 # target to generate assembly for a file
 hex-test.cpp.s:
-	cd /home/copiedwonder/OOP_Labs/lab3/cmake-build-debug && $(MAKE) $(MAKESILENT) -f varA/testing/CMakeFiles/GoogleTests_run.dir/build.make varA/testing/CMakeFiles/GoogleTests_run.dir/hex-test.cpp.s
+	cd /home/copiedwonder/OOP_Labs/lab3/cmake-build-debug && $(MAKE) $(MAKESILENT) -f varA/testing/CMakeFiles/GoogleTests_varA_run.dir/build.make varA/testing/CMakeFiles/GoogleTests_varA_run.dir/hex-test.cpp.s
 .PHONY : hex-test.cpp.s
 
 # Help Target
@@ -230,7 +230,7 @@ help:
 	@echo "... install/strip"
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
-	@echo "... GoogleTests_run"
+	@echo "... GoogleTests_varA_run"
 	@echo "... hex-test.o"
 	@echo "... hex-test.i"
 	@echo "... hex-test.s"

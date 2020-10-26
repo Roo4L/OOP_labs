@@ -100,17 +100,6 @@ install/local/fast: preinstall/fast
 	/snap/clion/129/bin/cmake/linux/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
 .PHONY : install/local/fast
 
-# Special rule for the target edit_cache
-edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/snap/clion/129/bin/cmake/linux/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
-.PHONY : edit_cache
-
-# Special rule for the target edit_cache
-edit_cache/fast: edit_cache
-
-.PHONY : edit_cache/fast
-
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
@@ -121,6 +110,17 @@ rebuild_cache:
 rebuild_cache/fast: rebuild_cache
 
 .PHONY : rebuild_cache/fast
+
+# Special rule for the target edit_cache
+edit_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
+	/snap/clion/129/bin/cmake/linux/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+.PHONY : edit_cache
+
+# Special rule for the target edit_cache
+edit_cache/fast: edit_cache
+
+.PHONY : edit_cache/fast
 
 # Special rule for the target install
 install: preinstall
@@ -177,19 +177,19 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
-varA/source/CMakeFiles/Hex.dir/rule:
-	cd /home/copiedwonder/OOP_Labs/lab3/cmake-build-debug && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 varA/source/CMakeFiles/Hex.dir/rule
-.PHONY : varA/source/CMakeFiles/Hex.dir/rule
+varA/source/CMakeFiles/Hex_varA.dir/rule:
+	cd /home/copiedwonder/OOP_Labs/lab3/cmake-build-debug && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 varA/source/CMakeFiles/Hex_varA.dir/rule
+.PHONY : varA/source/CMakeFiles/Hex_varA.dir/rule
 
 # Convenience name for target.
-Hex: varA/source/CMakeFiles/Hex.dir/rule
+Hex_varA: varA/source/CMakeFiles/Hex_varA.dir/rule
 
-.PHONY : Hex
+.PHONY : Hex_varA
 
 # fast build rule for target.
-Hex/fast:
-	cd /home/copiedwonder/OOP_Labs/lab3/cmake-build-debug && $(MAKE) $(MAKESILENT) -f varA/source/CMakeFiles/Hex.dir/build.make varA/source/CMakeFiles/Hex.dir/build
-.PHONY : Hex/fast
+Hex_varA/fast:
+	cd /home/copiedwonder/OOP_Labs/lab3/cmake-build-debug && $(MAKE) $(MAKESILENT) -f varA/source/CMakeFiles/Hex_varA.dir/build.make varA/source/CMakeFiles/Hex_varA.dir/build
+.PHONY : Hex_varA/fast
 
 Hex.o: Hex.cpp.o
 
@@ -197,7 +197,7 @@ Hex.o: Hex.cpp.o
 
 # target to build an object file
 Hex.cpp.o:
-	cd /home/copiedwonder/OOP_Labs/lab3/cmake-build-debug && $(MAKE) $(MAKESILENT) -f varA/source/CMakeFiles/Hex.dir/build.make varA/source/CMakeFiles/Hex.dir/Hex.cpp.o
+	cd /home/copiedwonder/OOP_Labs/lab3/cmake-build-debug && $(MAKE) $(MAKESILENT) -f varA/source/CMakeFiles/Hex_varA.dir/build.make varA/source/CMakeFiles/Hex_varA.dir/Hex.cpp.o
 .PHONY : Hex.cpp.o
 
 Hex.i: Hex.cpp.i
@@ -206,7 +206,7 @@ Hex.i: Hex.cpp.i
 
 # target to preprocess a source file
 Hex.cpp.i:
-	cd /home/copiedwonder/OOP_Labs/lab3/cmake-build-debug && $(MAKE) $(MAKESILENT) -f varA/source/CMakeFiles/Hex.dir/build.make varA/source/CMakeFiles/Hex.dir/Hex.cpp.i
+	cd /home/copiedwonder/OOP_Labs/lab3/cmake-build-debug && $(MAKE) $(MAKESILENT) -f varA/source/CMakeFiles/Hex_varA.dir/build.make varA/source/CMakeFiles/Hex_varA.dir/Hex.cpp.i
 .PHONY : Hex.cpp.i
 
 Hex.s: Hex.cpp.s
@@ -215,7 +215,7 @@ Hex.s: Hex.cpp.s
 
 # target to generate assembly for a file
 Hex.cpp.s:
-	cd /home/copiedwonder/OOP_Labs/lab3/cmake-build-debug && $(MAKE) $(MAKESILENT) -f varA/source/CMakeFiles/Hex.dir/build.make varA/source/CMakeFiles/Hex.dir/Hex.cpp.s
+	cd /home/copiedwonder/OOP_Labs/lab3/cmake-build-debug && $(MAKE) $(MAKESILENT) -f varA/source/CMakeFiles/Hex_varA.dir/build.make varA/source/CMakeFiles/Hex_varA.dir/Hex.cpp.s
 .PHONY : Hex.cpp.s
 
 # Help Target
@@ -230,7 +230,7 @@ help:
 	@echo "... install/strip"
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
-	@echo "... Hex"
+	@echo "... Hex_varA"
 	@echo "... Hex.o"
 	@echo "... Hex.i"
 	@echo "... Hex.s"
