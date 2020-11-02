@@ -1,0 +1,1 @@
+add_library(Hex Hex.cpp my_input.cpp)
