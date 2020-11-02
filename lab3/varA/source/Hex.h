@@ -13,8 +13,8 @@ namespace hexmath {
 
     class Hex;
 
-    Hex Add(const Hex& x_, const Hex& y_) noexcept;
-    Hex Sub(const Hex& x_, const Hex& y_) noexcept;
+    Hex Add(const Hex& x_, const Hex& y_);
+    Hex Sub(const Hex& x_, const Hex& y_);
     bool isGreater(const Hex& x, const Hex& y) noexcept;
     bool isLess(const Hex& x, const Hex& y) noexcept;
     bool isGreaterOrEquals(const Hex& x, const Hex& y) noexcept;
@@ -35,10 +35,13 @@ namespace hexmath {
         Hex(const Hex& cp);
         Hex(const char *num);
         Hex& setNull() noexcept;
-        void getDigits(char * buf) const noexcept {
+        void getDigits(char * buf, int buf_len) const {
+            if (buf == nullptr) {
+                throw std::invalid_argument("Buf is a nullptr.");
+            }
             int i = 0, j = 0;
             while (num_[i] == '\0' && i < MAX_NUM_LEN) i++;
-            for (; i < MAX_NUM_LEN; i++) {
+            for (; i < MAX_NUM_LEN && j < (buf_len - 1); i++) {
                 buf[j++] = num_[i];
             }
             buf[j] = '\0';
@@ -49,11 +52,11 @@ namespace hexmath {
             return !(int(num_[MAX_NUM_LEN - 1]) % 2);
         }
 
-        const Hex& BitShiftLeft(const int bias);
-        const Hex& BitShiftRight(const int bias);
+        Hex& BitShiftLeft(unsigned int bias);
+        Hex& BitShiftRight(unsigned int bias);
 
-        friend Hex hexmath::Add(const Hex& x_, const Hex& y_) noexcept;
-        friend Hex hexmath::Sub(const Hex& x_, const Hex& y_) noexcept;
+        friend Hex hexmath::Add(const Hex& x_, const Hex& y_);
+        friend Hex hexmath::Sub(const Hex& x_, const Hex& y_);
         friend bool hexmath::isGreater(const Hex& x, const Hex& y) noexcept;
         friend bool hexmath::isLess(const Hex& x, const Hex& y) noexcept;
         friend bool hexmath::isGreaterOrEquals(const Hex& x, const Hex& y) noexcept;

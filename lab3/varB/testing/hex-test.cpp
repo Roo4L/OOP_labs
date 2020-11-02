@@ -57,30 +57,39 @@ class HexTest: public ::testing::Test
         // Check for normal numbers
         Hex a("A34");
         EXPECT_EQ(a.getSign(), hexmath::Plus);
-        char tmp[MAX_NUM_LEN];
-        a.getDigits(tmp);
+        char tmp[MAX_NUM_LEN + 1];
+        a.getDigits(tmp, MAX_NUM_LEN + 1);
         EXPECT_TRUE(cmp(tmp, "\x0A\x03\x04"));
         Hex b("-534");
         EXPECT_EQ(b.getSign(), hexmath::Minus);
-        b.getDigits(tmp);
+        b.getDigits(tmp, MAX_NUM_LEN + 1);
         EXPECT_TRUE(cmp(tmp, "\x05\x03\x04"));
         Hex c("+432F");
         EXPECT_EQ(c.getSign(), hexmath::Plus);
-        c.getDigits(tmp);
+        c.getDigits(tmp, MAX_NUM_LEN + 1);
         EXPECT_TRUE(cmp(tmp, "\x04\x03\x02\x0F"));
         // Check numbers with leading zeroes
         Hex d("00234");
         EXPECT_EQ(d.getSign(), hexmath::Plus);
-        d.getDigits(tmp);
+        d.getDigits(tmp, MAX_NUM_LEN + 1);
         EXPECT_TRUE(cmp(tmp, "\x02\x03\x04"));
         Hex f("-00043");
         EXPECT_EQ(f.getSign(), hexmath::Minus);
-        f.getDigits(tmp);
+        f.getDigits(tmp, MAX_NUM_LEN + 1);
         EXPECT_TRUE(cmp(tmp, "\x04\x03"));
         Hex e("+00AB7");
         EXPECT_EQ(e.getSign(), hexmath::Plus);
-        e.getDigits(tmp);
+        e.getDigits(tmp, MAX_NUM_LEN + 1);
         EXPECT_TRUE(cmp(tmp, "\x0A\x0B\x07"));
+        Hex z("-");
+        EXPECT_EQ(z.getSign(), hexmath::Plus);
+        z.getDigits(tmp, MAX_NUM_LEN + 1);
+        EXPECT_TRUE(cmp(tmp, ""));
+        EXPECT_THROW(Hex zz(""), std::out_of_range);
+        Hex zzz("+");
+        EXPECT_EQ(zzz.getSign(), hexmath::Plus);
+        zzz.getDigits(tmp, MAX_NUM_LEN + 1);
+        EXPECT_TRUE(cmp(tmp, ""));
 
         EXPECT_THROW(Hex("UDKF"), std::invalid_argument);
         EXPECT_THROW(Hex(genStr('A', 17)), std::out_of_range);
@@ -89,24 +98,24 @@ class HexTest: public ::testing::Test
     TEST(HexTesting, ConstructorFromInt) {
         Hex a(1345);
         EXPECT_EQ(a.getSign(), hexmath::Plus);
-        char tmp[MAX_NUM_LEN];
-        a.getDigits(tmp);
+        char tmp[MAX_NUM_LEN + 1];
+        a.getDigits(tmp, MAX_NUM_LEN + 1);
         EXPECT_TRUE(cmp(tmp, "\x5\x4\x1"));
         Hex b(-2000);
         EXPECT_EQ(b.getSign(), hexmath::Minus);
-        b.getDigits(tmp);
+        b.getDigits(tmp, MAX_NUM_LEN + 1);
         EXPECT_TRUE(cmp(tmp, "\x7\xD\x0O"));
         Hex c(+0);
         EXPECT_EQ(c.getSign(), hexmath::Plus);
-        c.getDigits(tmp);
+        c.getDigits(tmp, MAX_NUM_LEN + 1);
         EXPECT_TRUE(cmp(tmp, ""));
     }
 
     TEST(HexTesting, DefaultConstructor) {
         Hex a;
         EXPECT_EQ(a.getSign(), hexmath::Plus);
-        char tmp[MAX_NUM_LEN];
-        a.getDigits(tmp);
+        char tmp[MAX_NUM_LEN + 1];
+        a.getDigits(tmp, MAX_NUM_LEN + 1);
         EXPECT_TRUE(cmp(tmp, ""));
     }
     TEST_F(HexTest, HexCompare) {
@@ -147,8 +156,7 @@ class HexTest: public ::testing::Test
         // overflow check
         Hex i(genStr('F', MAX_NUM_LEN));
         Hex j("2");
-        Hex m = i + j;
-        EXPECT_TRUE(m == Hex(genStr('F', 16, true)));
+        EXPECT_THROW(Hex m = i + j, std::overflow_error);
     }
 
     TEST(HexTesting, HexSub) {
@@ -174,15 +182,15 @@ class HexTest: public ::testing::Test
 
     TEST(HexTesting, HexBitShift) {
         Hex a("A0");
-        EXPECT_TRUE((a >>= 2) == Hex("A000"));
+        EXPECT_TRUE((a <<= 2) == Hex("A000"));
         Hex b("1245");
-        EXPECT_TRUE((b <<= 2) == Hex("12"));
+        EXPECT_TRUE((b >>= 2) == Hex("12"));
         Hex c("-2451");
-        EXPECT_TRUE((c >>= 1) == Hex("-24510"));
+        EXPECT_TRUE((c <<= 1) == Hex("-24510"));
         Hex d("-8902");
-        EXPECT_TRUE((d <<= 1) == Hex("-890"));
-        EXPECT_THROW(d <<= -23, std::invalid_argument);
-        EXPECT_THROW(d >>= -100, std::invalid_argument);
+        EXPECT_TRUE((d >>= 1) == Hex("-890"));
+        EXPECT_NO_THROW(d <<= -23);
+        EXPECT_NO_THROW(d >>= -100);
     }
  }
 

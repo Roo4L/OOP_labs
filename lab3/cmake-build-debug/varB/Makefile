@@ -191,6 +191,33 @@ lab3B/fast:
 	cd /home/copiedwonder/OOP_Labs/lab3/cmake-build-debug && $(MAKE) $(MAKESILENT) -f varB/CMakeFiles/lab3B.dir/build.make varB/CMakeFiles/lab3B.dir/build
 .PHONY : lab3B/fast
 
+__/varC/source/Hex.o: __/varC/source/Hex.cpp.o
+
+.PHONY : __/varC/source/Hex.o
+
+# target to build an object file
+__/varC/source/Hex.cpp.o:
+	cd /home/copiedwonder/OOP_Labs/lab3/cmake-build-debug && $(MAKE) $(MAKESILENT) -f varB/CMakeFiles/lab3B.dir/build.make varB/CMakeFiles/lab3B.dir/__/varC/source/Hex.cpp.o
+.PHONY : __/varC/source/Hex.cpp.o
+
+__/varC/source/Hex.i: __/varC/source/Hex.cpp.i
+
+.PHONY : __/varC/source/Hex.i
+
+# target to preprocess a source file
+__/varC/source/Hex.cpp.i:
+	cd /home/copiedwonder/OOP_Labs/lab3/cmake-build-debug && $(MAKE) $(MAKESILENT) -f varB/CMakeFiles/lab3B.dir/build.make varB/CMakeFiles/lab3B.dir/__/varC/source/Hex.cpp.i
+.PHONY : __/varC/source/Hex.cpp.i
+
+__/varC/source/Hex.s: __/varC/source/Hex.cpp.s
+
+.PHONY : __/varC/source/Hex.s
+
+# target to generate assembly for a file
+__/varC/source/Hex.cpp.s:
+	cd /home/copiedwonder/OOP_Labs/lab3/cmake-build-debug && $(MAKE) $(MAKESILENT) -f varB/CMakeFiles/lab3B.dir/build.make varB/CMakeFiles/lab3B.dir/__/varC/source/Hex.cpp.s
+.PHONY : __/varC/source/Hex.cpp.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -231,6 +258,9 @@ help:
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... lab3B"
+	@echo "... __/varC/source/Hex.o"
+	@echo "... __/varC/source/Hex.i"
+	@echo "... __/varC/source/Hex.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

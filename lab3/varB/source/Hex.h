@@ -11,19 +11,6 @@ namespace hexmath {
     static constexpr char Plus = 0;
     static constexpr char Minus = 1;
 
-    class Hex;
-
-    Hex Add(const Hex& x_, const Hex& y_) noexcept;
-    Hex Sub(const Hex& x_, const Hex& y_) noexcept;
-    bool isGreater(const Hex& x, const Hex& y) noexcept;
-    bool isLess(const Hex& x, const Hex& y) noexcept;
-    bool isGreaterOrEquals(const Hex& x, const Hex& y) noexcept;
-    bool isLessOrEquals(const Hex& x, const Hex& y) noexcept;
-    bool Equals(const Hex& x, const Hex& y) noexcept;
-    bool notEquals(const Hex& x, const Hex& y) noexcept;
-    std::istream& input(std::istream& is, Hex& x);
-    std::ostream& print(std::ostream& os, const Hex& x) noexcept;
-
     class Hex {
     private:
         char sign_;
@@ -35,10 +22,13 @@ namespace hexmath {
         Hex(const Hex& cp);
         Hex(const char *num);
         Hex& setNull() noexcept;
-        void getDigits(char * buf) const noexcept {
+        void getDigits(char * buf, int buf_len) const{
+            if (buf == nullptr) {
+                throw std::invalid_argument("Buf is nullptr.");
+            }
             int i = 0, j = 0;
             while (num_[i] == '\0' && i < MAX_NUM_LEN) i++;
-            for (; i < MAX_NUM_LEN; i++) {
+            for (; i < MAX_NUM_LEN && j < (buf_len - 1); i++) {
                 buf[j++] = num_[i];
             }
             buf[j] = '\0';
@@ -49,23 +39,23 @@ namespace hexmath {
             return !(int(num_[MAX_NUM_LEN - 1]) % 2);
         }
 
-        const Hex& operator<<=(const int bias);
-        const Hex& operator>>=(const int bias);
+        Hex& operator<<=(unsigned int bias);
+        Hex& operator>>=(unsigned int bias);
 
-        friend Hex operator+(const Hex& x_, const Hex& y_) noexcept;
-        friend Hex operator-(const Hex& x_, const Hex& y_) noexcept;
+        friend Hex operator+(const Hex& x_, const Hex& y_);
+        friend Hex operator-(const Hex& x_, const Hex& y_);
         friend bool operator>(const Hex& x, const Hex& y) noexcept;
         friend bool operator<(const Hex& x, const Hex& y) noexcept;
         friend bool operator>=(const Hex& x, const Hex& y) noexcept;
         friend bool operator<=(const Hex& x, const Hex& y) noexcept;
         friend bool operator==(const Hex& x, const Hex& y) noexcept;
         friend bool operator!=(const Hex& x, const Hex& y) noexcept;
-        friend std::istream& operator>>(std::istream& is, Hex& x);
+        friend std::istream& operator>>(std::istream& is, Hex& x) noexcept;
         friend std::ostream& operator<<(std::ostream& os, const Hex& x) noexcept;
     };
 
     inline bool isHexLetter(const char x) noexcept {
-        return (abs(x - '0') < 10 || abs(x - 'A') < 6);
+        return (x > 47 && x < 58 || x > 64 && x < 71);
     }
 }
 

@@ -55,7 +55,10 @@ namespace hexmath {
             throw std::out_of_range("Constant too big for HEX class representation.");
         }
     }
-    Hex::Hex(const char * const snum) {
+    Hex::Hex(const char * snum) {
+        if (snum == nullptr) {
+            throw std::invalid_argument("Hex string doesn't exist. snum == nullptr.");
+        }
         size_t len = strlen(snum);
         int i = 0;
         if (len < 1) {
@@ -65,7 +68,7 @@ namespace hexmath {
             if (len > MAX_NUM_LEN + 1) {
                 throw std::out_of_range("Number is longer then possible.");
             }
-            sign_ = Minus;
+            sign_ = len == 1 ? Plus : Minus;
             i++;
         }
         else {
@@ -101,7 +104,7 @@ namespace hexmath {
         return *this;
     }
 
-    Hex Add(const Hex& x_, const Hex& y_) noexcept {
+    Hex Add(const Hex& x_, const Hex& y_) {
         Hex x = x_.Complementary();
         Hex y = y_.Complementary();
         Hex z;
@@ -111,35 +114,41 @@ namespace hexmath {
             z.num_[i] = int(num_buf) % 16;
             overdrive = int(num_buf) / 16;
         }
+
         z.sign_ = (x_.sign_ + y_.sign_ + overdrive) % 2;
+        if (x.sign_ == y.sign_ && z.sign_ != y.sign_) {
+            throw std::overflow_error("The overflow has occured.");
+        }
         return z.Complementary();
     }
 
-    Hex Sub(const Hex &x_, const Hex &y_) noexcept {
+    Hex Sub(const Hex &x_, const Hex &y_) {
         Hex y = y_;
         y.sign_ = (y.sign_ == Plus ? Minus : Plus);
         return Add(x_, y);
     }
 
-    const Hex& Hex::BitShiftLeft(const int bias) {
-        if (bias > 0) {
-            for (int i = MAX_NUM_LEN - 1; i > bias - 1; i--)
+    Hex& Hex::BitShiftRight(unsigned int bias) {
+        if (bias == 0) return *this;
+        int i = MAX_NUM_LEN - 1;
+        if (bias < MAX_NUM_LEN) {
+            for (; i > bias - 1; i--)
                 Hex::num_[i] = Hex::num_[i - bias];
-            for (int i = 0; i < bias && i < MAX_NUM_LEN; i++)
-                Hex::num_[i] = 0;
         }
-        else if (bias < 0) throw std::invalid_argument("Bit shift operation can't take a negative shift.");
+        for (; i >= 0; i--)
+            Hex::num_[i] = 0;
         return *this;
     }
 
-    const Hex& Hex::BitShiftRight(const int bias) {
-        if (bias > 0) {
-            for (int i = 0; i < MAX_NUM_LEN - bias; i++)
+    Hex& Hex::BitShiftLeft(unsigned int bias) {
+        if (bias == 0) return *this;
+        int i = 0;
+        if (bias < MAX_NUM_LEN) {
+            for (; i < MAX_NUM_LEN - bias; i++)
                 Hex::num_[i] = Hex::num_[i + bias];
-            for (int i = (MAX_NUM_LEN - bias > 0 ? MAX_NUM_LEN - bias : 0); i < MAX_NUM_LEN; i++)
-                Hex::num_[i] = 0;
         }
-        else if (bias < 0) throw std::invalid_argument("Bit shift operation can't take a negative shift.");
+        for (; i < MAX_NUM_LEN; i++)
+            Hex::num_[i] = 0;
         return *this;
     }
 

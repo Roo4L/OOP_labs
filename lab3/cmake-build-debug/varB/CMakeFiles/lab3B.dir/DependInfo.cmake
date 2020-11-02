@@ -4,6 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
+  "/home/copiedwonder/OOP_Labs/lab3/varC/source/Hex.cpp" "/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varB/CMakeFiles/lab3B.dir/__/varC/source/Hex.cpp.o"
   "/home/copiedwonder/OOP_Labs/lab3/varB/main.cpp" "/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varB/CMakeFiles/lab3B.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
