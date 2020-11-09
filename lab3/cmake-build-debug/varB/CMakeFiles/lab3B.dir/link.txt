@@ -1,1 +1,1 @@
-/usr/bin/c++  -g   CMakeFiles/lab3B.dir/main.cpp.o CMakeFiles/lab3B.dir/__/varC/source/Hex.cpp.o  -o lab3B  source/libHex.a 
+/usr/bin/c++  -g   CMakeFiles/lab3B.dir/main.cpp.o  -o lab3B  source/libHex.a 

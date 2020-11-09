@@ -17,7 +17,7 @@ const char* kMsgs[] = {
 };
 constexpr int kN = sizeof(kMsgs) / sizeof(kMsgs[0]);
 
-void ChangeSample(hexmath::Hex* p);
+void ChangeSample(hexmath::Hex*& p);
 void AddNum(hexmath::Hex* p);
 void SubNum(hexmath::Hex* p);
 void PrintNum(hexmath::Hex* p);
@@ -29,7 +29,7 @@ void ClearDigits(hexmath::Hex* p);
 
 void (*fcase[])(hexmath::Hex* p) = {
     nullptr,
-    ChangeSample,
+    nullptr,
     AddNum,
     SubNum,
     PrintNum,
@@ -52,6 +52,9 @@ int main() {
         if (menu_case > 0 && menu_case < kN) {
             fcase[menu_case](sample);
         }
+        else if (menu_case == 1) {
+            ChangeSample(sample);
+        }
         else if (menu_case == 0){
             end = true;
         }
@@ -62,7 +65,7 @@ int main() {
     return 0;
 }
 
-void ChangeSample(hexmath::Hex* p) {
+void ChangeSample(hexmath::Hex*& p) {
     delete p;
     p = new hexmath::Hex();
     try {

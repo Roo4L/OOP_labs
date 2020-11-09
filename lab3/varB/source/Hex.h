@@ -22,7 +22,7 @@ namespace hexmath {
         Hex(const Hex& cp);
         Hex(const char *num);
         Hex& setNull() noexcept;
-        void getDigits(char * buf, int buf_len) const{
+        int getDigits(char * buf, int buf_len) const{
             if (buf == nullptr) {
                 throw std::invalid_argument("Buf is nullptr.");
             }
@@ -32,6 +32,7 @@ namespace hexmath {
                 buf[j++] = num_[i];
             }
             buf[j] = '\0';
+            return MAX_NUM_LEN - i;
         }
         char getSign() const noexcept { return sign_;}
 

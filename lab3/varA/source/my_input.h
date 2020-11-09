@@ -5,6 +5,7 @@
 #ifndef LAB2_MY_INPUT_H
 #define LAB2_MY_INPUT_H
 #include <iostream>
+#include <limits>
 
 namespace my_input {
     template<class T>

@@ -5,7 +5,7 @@
 #include "gtest/gtest.h"
 #include "Hex.h"
 
-constexpr int TEST_F_CLASSES = 10;
+constexpr int TEST_F_CLASSES = 10000;
 
 inline int hash(int i) {
     return  (TEST_F_CLASSES * 193 + i * 37) %
@@ -131,6 +131,14 @@ class HexTest: public ::testing::Test
     TEST_F(HexTest, HexIsEven) {
         for (int i = 0; i < TEST_F_CLASSES; i++) {
             EXPECT_EQ(bool((hash(i) + 1) % 2), hf[i]->isEven());
+        }
+    }
+
+    TEST_F(HexTest, HexAdd) {
+        for (int i = 0; i < TEST_F_CLASSES; i += 2) {
+            EXPECT_TRUE(Hex(hash(i) + hash(i + 1)) == (*hf[i] + *hf[i + 1]));
+            EXPECT_TRUE(Hex(hash(i) - hash(i + 1)) == (*hf[i] - *hf[i + 1]));
+            EXPECT_TRUE(Hex(hash(i + 1) - hash(i)) == (*hf[i + 1] - *hf[i]));
         }
     }
 

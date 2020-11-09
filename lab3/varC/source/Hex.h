@@ -15,44 +15,34 @@ namespace hexmath {
         char sign_ = Plus;
         char* num_ = nullptr;
         int len_ = 0;
-        Hex Complementary() const noexcept;
+        Hex Complementary() const;
         Hex& toComplementary() noexcept;
         Hex& Truncate() noexcept;
     public:
         Hex() = default;
-        explicit Hex(long long value) noexcept;
+        explicit Hex(long long value);
         Hex(const Hex& cp);
         Hex(Hex&& cp) noexcept;
         explicit Hex(const char *num);
         Hex& setNull() noexcept;
-        void getDigits(char * buf, int buf_len) const{
-            if (buf == nullptr) {
-                throw std::invalid_argument("Buf is nullptr.");
-            }
-            int i = len_ - 1, j = 0;
-            while (num_[i] == '\0' && i >= 0) i--;
-            for (; i >= 0 && j < (buf_len - 1); i++) {
-                buf[j++] = num_[i];
-            }
-            buf[j] = '\0';
-        }
+        int getDigits(char * buf, int buf_len) const;
         char getSign() const noexcept { return sign_;}
 
         bool isEven() const noexcept {
             return !(int(num_[0]) % 2);
         }
 
-        Hex& operator<<=(unsigned int bias) noexcept;
+        Hex& operator<<=(unsigned int bias);
         Hex& operator>>=(unsigned int bias) noexcept;
 
-        Hex& operator=(const Hex& y) noexcept;
+        Hex& operator=(const Hex& y);
         Hex& operator=(Hex&& y) noexcept;
         friend Hex operator""_H(const char* num);
 
-        friend Hex operator+(const Hex& x_, const Hex& y_) noexcept;
-        friend Hex operator-(const Hex& x_, const Hex& y_) noexcept;
-        friend Hex& operator+=(Hex& x_, const Hex& y_) noexcept;
-        friend Hex& operator-=(Hex& x_, const Hex& y_) noexcept;
+        friend Hex operator+(const Hex& x_, const Hex& y_);
+        friend Hex operator-(const Hex& x_, const Hex& y_);
+        Hex& operator+=(const Hex& y_); //TODO rebuild to class method
+        Hex& operator-=(const Hex& y_);
 
         friend bool operator>(const Hex& x, const Hex& y) noexcept;
         friend bool operator<(const Hex& x, const Hex& y) noexcept;
@@ -63,6 +53,7 @@ namespace hexmath {
 
         friend std::istream& operator>>(std::istream& is, Hex& x) noexcept;
         friend std::ostream& operator<<(std::ostream& os, const Hex& x) noexcept;
+        ~Hex();
     };
 
     inline bool isHexLetter(const char x) noexcept {

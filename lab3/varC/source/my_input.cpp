@@ -6,13 +6,17 @@
 
 namespace my_input {
     char* getStr(std::istream& istream) {
-        char* str = nullptr;
+        char* str = nullptr, *tmp;
         char c;
         int i = 0;
         do
         {
             i++;
-            str = (char *)realloc(str, i);
+            tmp = (char *)realloc(str, i);
+            if (tmp == nullptr) {
+                throw std::bad_alloc();
+            }
+            str = tmp;
             istream.get(c);
             str[i - 1] = c;
         } while (c !=  '\n');

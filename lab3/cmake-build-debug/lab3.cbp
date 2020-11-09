@@ -456,12 +456,6 @@
 		<Unit filename="/home/copiedwonder/OOP_Labs/lab3/varB/testing/hex-test.cpp">
 			<Option target="GoogleTests_run"/>
 		</Unit>
-		<Unit filename="/home/copiedwonder/OOP_Labs/lab3/varC/source/Hex.cpp">
-			<Option target="lab3B"/>
-		</Unit>
-		<Unit filename="/home/copiedwonder/OOP_Labs/lab3/varC/source/Hex.h">
-			<Option target="lab3B"/>
-		</Unit>
 		<Unit filename="/home/copiedwonder/OOP_Labs/lab3/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
