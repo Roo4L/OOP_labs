@@ -1,4 +1,47 @@
 /snap/clion/129/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/copiedwonder/OOP_Labs/lab3
+-- PROJECT_NAME:SchemeConstuctor
+-- PROJECT_SOURCE_DIR:/home/copiedwonder/OOP_Labs/lab3/application/SchemeConstuctor
+-- COCOS2DX_ROOT_PATH:/home/copiedwonder/OOP_Labs/lab3/application/SchemeConstuctor/cocos2d
+-- CMAKE_MODULE_PATH:/home/copiedwonder/OOP_Labs/lab3/application/SchemeConstuctor/cocos2d/cmake/Modules/
+-- PROJECT_BINARY_DIR:/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/application/SchemeConstuctor
+-- ENGINE_BINARY_PATH:/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/application/SchemeConstuctor/engine
+-- PYTHON_PATH:/usr/bin/python2
+-- COCOS_COMMAND_PATH:COCOS_COMMAND-NOTFOUND
+-- HOST_SYSTEM:Linux
+-- CMAKE_GENERATOR: Unix Makefiles
+-- LUAJIT32_COMMAND:
+-- LUAJIT64_COMMAND:
+-- Fontconfig include dirs: /usr/include/uuid;/usr/include/freetype2;/usr/include/libpng16
+-- GTK3 include dirs: /usr/include/gtk-3.0;/usr/include/at-spi2-atk/2.0;/usr/include/at-spi-2.0;/usr/include/dbus-1.0;/usr/lib/x86_64-linux-gnu/dbus-1.0/include;/usr/include/gtk-3.0;/usr/include/gio-unix-2.0;/usr/include/cairo;/usr/include/libdrm;/usr/include/pango-1.0;/usr/include/harfbuzz;/usr/include/pango-1.0;/usr/include/fribidi;/usr/include/atk-1.0;/usr/include/cairo;/usr/include/pixman-1;/usr/include/freetype2;/usr/include/libpng16;/usr/include/gdk-pixbuf-2.0;/usr/include/libmount;/usr/include/blkid;/usr/include/uuid;/usr/include/glib-2.0;/usr/lib/x86_64-linux-gnu/glib-2.0/include
+-- ZLIB include dirs: /usr/include
+-- PNG include dirs: /usr/include;/usr/include
+-- GLEW include dirs: /usr/include
+CMake Warning (dev) at /snap/clion/129/bin/cmake/linux/share/cmake-3.17/Modules/FindOpenGL.cmake:305 (message):
+  Policy CMP0072 is not set: FindOpenGL prefers GLVND by default when
+  available.  Run "cmake --help-policy CMP0072" for policy details.  Use the
+  cmake_policy command to set the policy and suppress this warning.
+
+  FindOpenGL found both a legacy GL library:
+
+    OPENGL_gl_LIBRARY: /usr/lib/x86_64-linux-gnu/libGL.so
+
+  and GLVND libraries for OpenGL and GLX:
+
+    OPENGL_opengl_LIBRARY: /usr/lib/x86_64-linux-gnu/libOpenGL.so
+    OPENGL_glx_LIBRARY: /usr/lib/x86_64-linux-gnu/libGLX.so
+
+  OpenGL_GL_PREFERENCE has not been set to "GLVND" or "LEGACY", so for
+  compatibility with CMake 3.10 and below the legacy GL library will be used.
+Call Stack (most recent call first):
+  application/SchemeConstuctor/cocos2d/cmake/Modules/CocosBuildHelpers.cmake:294 (find_package)
+  application/SchemeConstuctor/cocos2d/cmake/Modules/CocosConfigDepend.cmake:16 (cocos_find_package)
+  application/SchemeConstuctor/cocos2d/cmake/Modules/CocosConfigDepend.cmake:92 (cocos2dx_depend)
+  application/SchemeConstuctor/cocos2d/cocos/CMakeLists.txt:117 (use_cocos2dx_libs_depend)
+This warning is for project developers.  Use -Wno-dev to suppress it.
+
+-- OpenGL include dirs: /usr/include
+-- CURL include dirs: /usr/include/x86_64-linux-gnu
+-- SQLite3 include dirs: /usr/include
 -- Configuring done
 -- Generating done
 -- Build files have been written to: /home/copiedwonder/OOP_Labs/lab3/cmake-build-debug

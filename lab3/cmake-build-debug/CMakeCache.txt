@@ -14,8 +14,83 @@
 # EXTERNAL cache entries
 ########################
 
+//Build editor support for cocostudio
+BUILD_EDITOR_COCOSTUDIO:BOOL=ON
+
+//Build editor support for spine
+BUILD_EDITOR_SPINE:BOOL=OFF
+
+//Build extension library
+BUILD_EXTENSIONS:BOOL=ON
+
+//Build with internal Box2D support
+BUILD_EXT_BOX2D:BOOL=ON
+
+//Build with internal bullet support
+BUILD_EXT_BULLET:BOOL=ON
+
+//Build with internal chipmunk support
+BUILD_EXT_CHIPMUNK:BOOL=ON
+
+//Build with internal clipper support
+BUILD_EXT_CLIPPER:BOOL=ON
+
+//Build with internal ConvertUTF support
+BUILD_EXT_CONVERTUTF:BOOL=ON
+
+//Build with internal curl support
+BUILD_EXT_CURL:BOOL=ON
+
+//Build with internal edtaa3func support
+BUILD_EXT_EDTAA3FUNC:BOOL=ON
+
+//Build with internal freetype2 support
+BUILD_EXT_FREETYPE2:BOOL=ON
+
+//Build with internal jpeg support
+BUILD_EXT_JPEG:BOOL=ON
+
+//Build with internal md5 support
+BUILD_EXT_MD5:BOOL=ON
+
+//Build with internal openssl support
+BUILD_EXT_OPENSSL:BOOL=ON
+
+//Build with internal poly2tri support
+BUILD_EXT_POLY2TRI:BOOL=ON
+
+//Build with internal recast support
+BUILD_EXT_RECAST:BOOL=ON
+
+//Build with internal tinyxml2 support
+BUILD_EXT_TINYXML2:BOOL=ON
+
+//Build with internal unzip support
+BUILD_EXT_UNZIP:BOOL=ON
+
+//Build with internal uv support
+BUILD_EXT_UV:BOOL=ON
+
+//Build with internal webp support
+BUILD_EXT_WEBP:BOOL=ON
+
+//Build with internal websockets support
+BUILD_EXT_WEBSOCKETS:BOOL=ON
+
+//Build with internal xxhash support
+BUILD_EXT_XXHASH:BOOL=ON
+
+//Build with internal xxtea support
+BUILD_EXT_XXTEA:BOOL=ON
+
+//Build with internal zlib support
+BUILD_EXT_ZLIB:BOOL=ON
+
 //Builds the googlemock subproject
 BUILD_GMOCK:BOOL=ON
+
+//Build lua libraries
+BUILD_LUA_LIBS:BOOL=OFF
 
 //Path to a program.
 CMAKE_ADDR2LINE:FILEPATH=/usr/bin/addr2line
@@ -286,11 +361,44 @@ CMAKE_STRIP:FILEPATH=/usr/bin/strip
 // Studio IDE projects all commands are done without /nologo.
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
-//Value Computed by CMake
-GoogleTests_BINARY_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varB/testing
+//Path to a program.
+COCOS_COMMAND:FILEPATH=COCOS_COMMAND-NOTFOUND
+
+//The directory containing a CMake configuration file for CURL.
+CURL_DIR:PATH=CURL_DIR-NOTFOUND
+
+//Path to a file.
+CURL_INCLUDE_DIR:PATH=/usr/include/x86_64-linux-gnu
+
+//Path to a library.
+CURL_LIBRARY_DEBUG:FILEPATH=CURL_LIBRARY_DEBUG-NOTFOUND
+
+//Path to a library.
+CURL_LIBRARY_RELEASE:FILEPATH=/usr/lib/x86_64-linux-gnu/libcurl.so
+
+//The directory containing a CMake configuration file for GLEW.
+GLEW_DIR:PATH=GLEW_DIR-NOTFOUND
+
+//Path to a file.
+GLEW_INCLUDE_DIR:PATH=/usr/include
+
+//Path to a library.
+GLEW_SHARED_LIBRARY_DEBUG:FILEPATH=GLEW_SHARED_LIBRARY_DEBUG-NOTFOUND
+
+//Path to a library.
+GLEW_SHARED_LIBRARY_RELEASE:FILEPATH=/usr/lib/x86_64-linux-gnu/libGLEW.so
+
+//Path to a library.
+GLEW_STATIC_LIBRARY_DEBUG:FILEPATH=GLEW_STATIC_LIBRARY_DEBUG-NOTFOUND
+
+//Path to a library.
+GLEW_STATIC_LIBRARY_RELEASE:FILEPATH=GLEW_STATIC_LIBRARY_RELEASE-NOTFOUND
 
 //Value Computed by CMake
-GoogleTests_SOURCE_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/varB/testing
+GoogleTests_BINARY_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varC/testing
+
+//Value Computed by CMake
+GoogleTests_SOURCE_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/varC/testing
 
 //Value Computed by CMake
 GoogleTests_varA_BINARY_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varA/testing
@@ -302,6 +410,48 @@ GoogleTests_varA_SOURCE_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/varA/testing
 // may want to turn this OFF.)
 INSTALL_GTEST:BOOL=ON
 
+//Path to a file.
+OPENGL_EGL_INCLUDE_DIR:PATH=/usr/include
+
+//Path to a file.
+OPENGL_GLX_INCLUDE_DIR:PATH=/usr/include
+
+//Path to a file.
+OPENGL_INCLUDE_DIR:PATH=/usr/include
+
+//Path to a library.
+OPENGL_egl_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libEGL.so
+
+//Path to a library.
+OPENGL_gl_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libGL.so
+
+//Path to a library.
+OPENGL_glu_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libGLU.so
+
+//Path to a library.
+OPENGL_glx_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libGLX.so
+
+//Path to a library.
+OPENGL_opengl_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libOpenGL.so
+
+//Path to a file.
+OPENGL_xmesa_INCLUDE_DIR:PATH=OPENGL_xmesa_INCLUDE_DIR-NOTFOUND
+
+//pkg-config executable
+PKG_CONFIG_EXECUTABLE:FILEPATH=/usr/bin/pkg-config
+
+//Path to a library.
+PNG_LIBRARY_DEBUG:FILEPATH=PNG_LIBRARY_DEBUG-NOTFOUND
+
+//Path to a library.
+PNG_LIBRARY_RELEASE:FILEPATH=/usr/lib/x86_64-linux-gnu/libpng.so
+
+//Path to a file.
+PNG_PNG_INCLUDE_DIR:PATH=/usr/include
+
+//Path to a program.
+PYTHON_COMMAND:FILEPATH=/usr/bin/python2
+
 //Path to a program.
 PYTHON_EXECUTABLE:FILEPATH=/usr/bin/python
 
@@ -311,14 +461,107 @@ ProcessorCount_cmd_nproc:FILEPATH=/usr/bin/nproc
 //Path to a program.
 ProcessorCount_cmd_sysctl:FILEPATH=/usr/sbin/sysctl
 
+//Path to a file.
+SQLITE3_INCLUDE_DIRS:PATH=/usr/include
+
+//Path to a library.
+SQLITE3_LIBRARIES:FILEPATH=/usr/lib/x86_64-linux-gnu/libsqlite3.so
+
 //Value Computed by CMake
-gmock_BINARY_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varB/testing/googletest-master/googlemock
+SchemeConstuctor_BINARY_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/application/SchemeConstuctor
+
+//Value Computed by CMake
+SchemeConstuctor_SOURCE_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/application/SchemeConstuctor
+
+//Path to a file.
+ZLIB_INCLUDE_DIR:PATH=/usr/include
+
+//Path to a library.
+ZLIB_LIBRARY_DEBUG:FILEPATH=ZLIB_LIBRARY_DEBUG-NOTFOUND
+
+//Path to a library.
+ZLIB_LIBRARY_RELEASE:FILEPATH=/usr/lib/x86_64-linux-gnu/libz.so
+
+//Value Computed by CMake
+box2d_BINARY_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/application/SchemeConstuctor/engine/external/Box2D
+
+//Value Computed by CMake
+box2d_SOURCE_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/application/SchemeConstuctor/cocos2d/external/Box2D
+
+//Value Computed by CMake
+bullet_BINARY_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/application/SchemeConstuctor/engine/external/bullet
+
+//Value Computed by CMake
+bullet_SOURCE_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/application/SchemeConstuctor/cocos2d/external/bullet
+
+//Value Computed by CMake
+chipmunk_BINARY_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/application/SchemeConstuctor/engine/external/chipmunk
+
+//Value Computed by CMake
+chipmunk_SOURCE_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/application/SchemeConstuctor/cocos2d/external/chipmunk
+
+//Value Computed by CMake
+clipper_BINARY_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/application/SchemeConstuctor/engine/external/clipper
+
+//Value Computed by CMake
+clipper_SOURCE_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/application/SchemeConstuctor/cocos2d/external/clipper
+
+//Dependencies for the target
+cocos2d_LIB_DEPENDS:STATIC=general;external;general;dl;general;X11;general;Xi;general;Xrandr;general;Xxf86vm;general;Xinerama;general;Xcursor;general;rt;general;m;general;fontconfig;general;freetype;general;gtk-3;general;gdk-3;general;pangocairo-1.0;general;pango-1.0;general;atk-1.0;general;cairo-gobject;general;cairo;general;gdk_pixbuf-2.0;general;gio-2.0;general;gobject-2.0;general;glib-2.0;general;/usr/lib/x86_64-linux-gnu/libz.so;general;/usr/lib/x86_64-linux-gnu/libpng.so;general;/usr/lib/x86_64-linux-gnu/libz.so;general;/usr/lib/x86_64-linux-gnu/libGLEW.so;general;/usr/lib/x86_64-linux-gnu/libGL.so;general;/usr/lib/x86_64-linux-gnu/libGLU.so;general;/usr/lib/x86_64-linux-gnu/libcurl.so;general;-lpthread;general;/usr/lib/x86_64-linux-gnu/libsqlite3.so;
+
+//Value Computed by CMake
+cocos2d_libs_BINARY_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/application/SchemeConstuctor/engine/cocos/core
+
+//Value Computed by CMake
+cocos2d_libs_SOURCE_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/application/SchemeConstuctor/cocos2d/cocos
+
+//Value Computed by CMake
+convertUTF_BINARY_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/application/SchemeConstuctor/engine/external/ConvertUTF
+
+//Value Computed by CMake
+convertUTF_SOURCE_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/application/SchemeConstuctor/cocos2d/external/ConvertUTF
+
+//Value Computed by CMake
+edtaa3func_BINARY_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/application/SchemeConstuctor/engine/external/edtaa3func
+
+//Value Computed by CMake
+edtaa3func_SOURCE_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/application/SchemeConstuctor/cocos2d/external/edtaa3func
+
+//Value Computed by CMake
+external_BINARY_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/application/SchemeConstuctor/engine/external
+
+//Dependencies for the target
+external_LIB_DEPENDS:STATIC=general;ext_box2d;general;ext_chipmunk;general;ext_freetype;general;ext_recast;general;ext_bullet;general;ext_jpeg;general;ext_ssl;general;ext_crypto;general;ext_uv;general;ext_webp;general;ext_websockets;general;ext_tinyxml2;general;ext_xxhash;general;ext_xxtea;general;ext_clipper;general;ext_edtaa3func;general;ext_convertUTF;general;ext_poly2tri;general;ext_md5;general;ext_fmod;general;ext_glfw3;general;ext_unzip;
+
+//Value Computed by CMake
+external_SOURCE_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/application/SchemeConstuctor/cocos2d/external
+
+//Value Computed by CMake
+fmod_BINARY_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/application/SchemeConstuctor/engine/external/linux-specific/fmod
+
+//Value Computed by CMake
+fmod_SOURCE_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/application/SchemeConstuctor/cocos2d/external/linux-specific/fmod
+
+//Value Computed by CMake
+freetype_BINARY_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/application/SchemeConstuctor/engine/external/freetype2
+
+//Value Computed by CMake
+freetype_SOURCE_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/application/SchemeConstuctor/cocos2d/external/freetype2
+
+//Value Computed by CMake
+glfw3_BINARY_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/application/SchemeConstuctor/engine/external/glfw3
+
+//Value Computed by CMake
+glfw3_SOURCE_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/application/SchemeConstuctor/cocos2d/external/glfw3
+
+//Value Computed by CMake
+gmock_BINARY_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varC/testing/googletest-master/googlemock
 
 //Dependencies for the target
 gmock_LIB_DEPENDS:STATIC=general;gtest;
 
 //Value Computed by CMake
-gmock_SOURCE_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/varB/testing/googletest-master/googlemock
+gmock_SOURCE_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/varC/testing/googletest-master/googlemock
 
 //Build all of Google Mock's own tests.
 gmock_build_tests:BOOL=OFF
@@ -327,16 +570,16 @@ gmock_build_tests:BOOL=OFF
 gmock_main_LIB_DEPENDS:STATIC=general;gmock;
 
 //Value Computed by CMake
-googletest-distribution_BINARY_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varB/testing/googletest-master
+googletest-distribution_BINARY_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varC/testing/googletest-master
 
 //Value Computed by CMake
-googletest-distribution_SOURCE_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/varB/testing/googletest-master
+googletest-distribution_SOURCE_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/varC/testing/googletest-master
 
 //Value Computed by CMake
-gtest_BINARY_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varB/testing/googletest-master/googletest
+gtest_BINARY_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varC/testing/googletest-master/googletest
 
 //Value Computed by CMake
-gtest_SOURCE_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/varB/testing/googletest-master/googletest
+gtest_SOURCE_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/varC/testing/googletest-master/googletest
 
 //Build gtest's sample programs.
 gtest_build_samples:BOOL=OFF
@@ -358,22 +601,136 @@ gtest_hide_internal_symbols:BOOL=OFF
 gtest_main_LIB_DEPENDS:STATIC=general;gtest;
 
 //Value Computed by CMake
+jpeg_BINARY_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/application/SchemeConstuctor/engine/external/jpeg
+
+//Value Computed by CMake
+jpeg_SOURCE_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/application/SchemeConstuctor/cocos2d/external/jpeg
+
+//Value Computed by CMake
 lab3A_BINARY_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varA
 
 //Value Computed by CMake
 lab3A_SOURCE_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/varA
 
 //Value Computed by CMake
-lab3B_BINARY_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varB
+lab3B_BINARY_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varC
 
 //Value Computed by CMake
-lab3B_SOURCE_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/varB
+lab3B_SOURCE_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/varC
 
 //Value Computed by CMake
 lab3_BINARY_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug
 
 //Value Computed by CMake
 lab3_SOURCE_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3
+
+//Value Computed by CMake
+md5_BINARY_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/application/SchemeConstuctor/engine/external/md5
+
+//Value Computed by CMake
+md5_SOURCE_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/application/SchemeConstuctor/cocos2d/external/md5
+
+//Value Computed by CMake
+openssl_BINARY_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/application/SchemeConstuctor/engine/external/openssl
+
+//Value Computed by CMake
+openssl_SOURCE_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/application/SchemeConstuctor/cocos2d/external/openssl
+
+//Path to a library.
+pkgcfg_lib_FONTCONFIG_fontconfig:FILEPATH=/usr/lib/x86_64-linux-gnu/libfontconfig.so
+
+//Path to a library.
+pkgcfg_lib_FONTCONFIG_freetype:FILEPATH=/usr/lib/x86_64-linux-gnu/libfreetype.so
+
+//Path to a library.
+pkgcfg_lib_PC_CURL_curl:FILEPATH=/usr/lib/x86_64-linux-gnu/libcurl.so
+
+//Path to a library.
+pkgcfg_lib_PC_GTK3_atk-1.0:FILEPATH=/usr/lib/x86_64-linux-gnu/libatk-1.0.so
+
+//Path to a library.
+pkgcfg_lib_PC_GTK3_cairo:FILEPATH=/usr/lib/x86_64-linux-gnu/libcairo.so
+
+//Path to a library.
+pkgcfg_lib_PC_GTK3_cairo-gobject:FILEPATH=/usr/lib/x86_64-linux-gnu/libcairo-gobject.so
+
+//Path to a library.
+pkgcfg_lib_PC_GTK3_gdk-3:FILEPATH=/usr/lib/x86_64-linux-gnu/libgdk-3.so
+
+//Path to a library.
+pkgcfg_lib_PC_GTK3_gdk_pixbuf-2.0:FILEPATH=/usr/lib/x86_64-linux-gnu/libgdk_pixbuf-2.0.so
+
+//Path to a library.
+pkgcfg_lib_PC_GTK3_gio-2.0:FILEPATH=/usr/lib/x86_64-linux-gnu/libgio-2.0.so
+
+//Path to a library.
+pkgcfg_lib_PC_GTK3_glib-2.0:FILEPATH=/usr/lib/x86_64-linux-gnu/libglib-2.0.so
+
+//Path to a library.
+pkgcfg_lib_PC_GTK3_gobject-2.0:FILEPATH=/usr/lib/x86_64-linux-gnu/libgobject-2.0.so
+
+//Path to a library.
+pkgcfg_lib_PC_GTK3_gtk-3:FILEPATH=/usr/lib/x86_64-linux-gnu/libgtk-3.so
+
+//Path to a library.
+pkgcfg_lib_PC_GTK3_pango-1.0:FILEPATH=/usr/lib/x86_64-linux-gnu/libpango-1.0.so
+
+//Path to a library.
+pkgcfg_lib_PC_GTK3_pangocairo-1.0:FILEPATH=/usr/lib/x86_64-linux-gnu/libpangocairo-1.0.so
+
+//Value Computed by CMake
+poly2tri_BINARY_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/application/SchemeConstuctor/engine/external/poly2tri
+
+//Value Computed by CMake
+poly2tri_SOURCE_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/application/SchemeConstuctor/cocos2d/external/poly2tri
+
+//Value Computed by CMake
+recast_BINARY_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/application/SchemeConstuctor/engine/external/recast
+
+//Value Computed by CMake
+recast_SOURCE_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/application/SchemeConstuctor/cocos2d/external/recast
+
+//Value Computed by CMake
+tinyxml2_BINARY_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/application/SchemeConstuctor/engine/external/tinyxml2
+
+//Value Computed by CMake
+tinyxml2_SOURCE_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/application/SchemeConstuctor/cocos2d/external/tinyxml2
+
+//Value Computed by CMake
+unzip_BINARY_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/application/SchemeConstuctor/engine/external/unzip
+
+//Value Computed by CMake
+unzip_SOURCE_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/application/SchemeConstuctor/cocos2d/external/unzip
+
+//Value Computed by CMake
+uv_BINARY_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/application/SchemeConstuctor/engine/external/uv
+
+//Value Computed by CMake
+uv_SOURCE_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/application/SchemeConstuctor/cocos2d/external/uv
+
+//Value Computed by CMake
+webp_BINARY_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/application/SchemeConstuctor/engine/external/webp
+
+//Value Computed by CMake
+webp_SOURCE_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/application/SchemeConstuctor/cocos2d/external/webp
+
+//Value Computed by CMake
+websockets_BINARY_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/application/SchemeConstuctor/engine/external/websockets
+
+//Value Computed by CMake
+websockets_SOURCE_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/application/SchemeConstuctor/cocos2d/external/websockets
+
+//Value Computed by CMake
+xxhash_BINARY_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/application/SchemeConstuctor/engine/external/xxhash
+
+//Value Computed by CMake
+xxhash_SOURCE_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/application/SchemeConstuctor/cocos2d/external/xxhash
+
+//Value Computed by CMake
+xxtea_BINARY_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/application/SchemeConstuctor/engine/external/xxtea
+
+//Value Computed by CMake
+xxtea_SOURCE_DIR:STATIC=/home/copiedwonder/OOP_Labs/lab3/application/SchemeConstuctor/cocos2d/external/xxtea
 
 
 ########################
@@ -528,7 +885,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=7
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=26
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP
@@ -571,19 +928,199 @@ CMAKE_STRIP-ADVANCED:INTERNAL=1
 CMAKE_UNAME:INTERNAL=/usr/bin/uname
 //ADVANCED property for variable: CMAKE_VERBOSE_MAKEFILE
 CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CURL_DIR
+CURL_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CURL_INCLUDE_DIR
+CURL_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CURL_LIBRARY_DEBUG
+CURL_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CURL_LIBRARY_RELEASE
+CURL_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
+//Details about finding CURL
+FIND_PACKAGE_MESSAGE_DETAILS_CURL:INTERNAL=[/usr/lib/x86_64-linux-gnu/libcurl.so][/usr/include/x86_64-linux-gnu][c ][v7.64.0()]
+//Details about finding Fontconfig
+FIND_PACKAGE_MESSAGE_DETAILS_Fontconfig:INTERNAL=[1][v2.13.1()]
+//Details about finding GLEW
+FIND_PACKAGE_MESSAGE_DETAILS_GLEW:INTERNAL=[/usr/include][/usr/lib/x86_64-linux-gnu/libGLEW.so][v2.1.0()]
+//Details about finding GTK3
+FIND_PACKAGE_MESSAGE_DETAILS_GTK3:INTERNAL=[gtk-3;gdk-3;pangocairo-1.0;pango-1.0;atk-1.0;cairo-gobject;cairo;gdk_pixbuf-2.0;gio-2.0;gobject-2.0;glib-2.0][/usr/include/gtk-3.0;/usr/include/at-spi2-atk/2.0;/usr/include/at-spi-2.0;/usr/include/dbus-1.0;/usr/lib/x86_64-linux-gnu/dbus-1.0/include;/usr/include/gtk-3.0;/usr/include/gio-unix-2.0;/usr/include/cairo;/usr/include/libdrm;/usr/include/pango-1.0;/usr/include/harfbuzz;/usr/include/pango-1.0;/usr/include/fribidi;/usr/include/atk-1.0;/usr/include/cairo;/usr/include/pixman-1;/usr/include/freetype2;/usr/include/libpng16;/usr/include/gdk-pixbuf-2.0;/usr/include/libmount;/usr/include/blkid;/usr/include/uuid;/usr/include/glib-2.0;/usr/lib/x86_64-linux-gnu/glib-2.0/include][v()]
+//Details about finding OpenGL
+FIND_PACKAGE_MESSAGE_DETAILS_OpenGL:INTERNAL=[/usr/lib/x86_64-linux-gnu/libOpenGL.so][/usr/lib/x86_64-linux-gnu/libGLX.so][/usr/include][c ][v()]
+//Details about finding PNG
+FIND_PACKAGE_MESSAGE_DETAILS_PNG:INTERNAL=[/usr/lib/x86_64-linux-gnu/libpng.so][/usr/include][v1.6.36()]
+//Details about finding PkgConfig
+FIND_PACKAGE_MESSAGE_DETAILS_PkgConfig:INTERNAL=[/usr/bin/pkg-config][v0.29()]
 //Details about finding PythonInterp
 FIND_PACKAGE_MESSAGE_DETAILS_PythonInterp:INTERNAL=[/usr/bin/python][v2.7.16()]
 //Details about finding Threads
 FIND_PACKAGE_MESSAGE_DETAILS_Threads:INTERNAL=[TRUE][v()]
+//Details about finding ZLIB
+FIND_PACKAGE_MESSAGE_DETAILS_ZLIB:INTERNAL=[/usr/lib/x86_64-linux-gnu/libz.so][/usr/include][v1.2.11()]
+FONTCONFIG_CFLAGS:INTERNAL=-I/usr/include/uuid;-I/usr/include/freetype2;-I/usr/include/libpng16
+FONTCONFIG_CFLAGS_I:INTERNAL=
+FONTCONFIG_CFLAGS_OTHER:INTERNAL=
+FONTCONFIG_FOUND:INTERNAL=1
+FONTCONFIG_INCLUDEDIR:INTERNAL=/usr/include
+FONTCONFIG_INCLUDE_DIRS:INTERNAL=/usr/include/uuid;/usr/include/freetype2;/usr/include/libpng16
+FONTCONFIG_LDFLAGS:INTERNAL=-lfontconfig;-lfreetype
+FONTCONFIG_LDFLAGS_OTHER:INTERNAL=
+FONTCONFIG_LIBDIR:INTERNAL=/usr/lib/x86_64-linux-gnu
+FONTCONFIG_LIBRARIES:INTERNAL=fontconfig;freetype
+FONTCONFIG_LIBRARY_DIRS:INTERNAL=
+FONTCONFIG_LIBS:INTERNAL=
+FONTCONFIG_LIBS_L:INTERNAL=
+FONTCONFIG_LIBS_OTHER:INTERNAL=
+FONTCONFIG_LIBS_PATHS:INTERNAL=
+FONTCONFIG_MODULE_NAME:INTERNAL=fontconfig
+FONTCONFIG_PREFIX:INTERNAL=/usr
+FONTCONFIG_STATIC_CFLAGS:INTERNAL=-I/usr/include/uuid;-I/usr/include/freetype2;-I/usr/include/libpng16
+FONTCONFIG_STATIC_CFLAGS_I:INTERNAL=
+FONTCONFIG_STATIC_CFLAGS_OTHER:INTERNAL=
+FONTCONFIG_STATIC_INCLUDE_DIRS:INTERNAL=/usr/include/uuid;/usr/include/freetype2;/usr/include/libpng16
+FONTCONFIG_STATIC_LDFLAGS:INTERNAL=-lfontconfig;-luuid;-lexpat;-lfreetype;-lpng16;-lm;-lz;-lm;-lz
+FONTCONFIG_STATIC_LDFLAGS_OTHER:INTERNAL=
+FONTCONFIG_STATIC_LIBDIR:INTERNAL=
+FONTCONFIG_STATIC_LIBRARIES:INTERNAL=fontconfig;uuid;expat;freetype;png16;m;z;m;z
+FONTCONFIG_STATIC_LIBRARY_DIRS:INTERNAL=
+FONTCONFIG_STATIC_LIBS:INTERNAL=
+FONTCONFIG_STATIC_LIBS_L:INTERNAL=
+FONTCONFIG_STATIC_LIBS_OTHER:INTERNAL=
+FONTCONFIG_STATIC_LIBS_PATHS:INTERNAL=
+FONTCONFIG_VERSION:INTERNAL=2.13.1
+FONTCONFIG_fontconfig_INCLUDEDIR:INTERNAL=
+FONTCONFIG_fontconfig_LIBDIR:INTERNAL=
+FONTCONFIG_fontconfig_PREFIX:INTERNAL=
+FONTCONFIG_fontconfig_VERSION:INTERNAL=
+//ADVANCED property for variable: GLEW_INCLUDE_DIR
+GLEW_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: GLEW_SHARED_LIBRARY_DEBUG
+GLEW_SHARED_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: GLEW_SHARED_LIBRARY_RELEASE
+GLEW_SHARED_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: GLEW_STATIC_LIBRARY_DEBUG
+GLEW_STATIC_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: GLEW_STATIC_LIBRARY_RELEASE
+GLEW_STATIC_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OPENGL_EGL_INCLUDE_DIR
+OPENGL_EGL_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OPENGL_GLX_INCLUDE_DIR
+OPENGL_GLX_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OPENGL_INCLUDE_DIR
+OPENGL_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OPENGL_egl_LIBRARY
+OPENGL_egl_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OPENGL_gl_LIBRARY
+OPENGL_gl_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OPENGL_glu_LIBRARY
+OPENGL_glu_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OPENGL_glx_LIBRARY
+OPENGL_glx_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OPENGL_opengl_LIBRARY
+OPENGL_opengl_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OPENGL_xmesa_INCLUDE_DIR
+OPENGL_xmesa_INCLUDE_DIR-ADVANCED:INTERNAL=1
+PC_CURL_CFLAGS:INTERNAL=-I/usr/include/x86_64-linux-gnu
+PC_CURL_CFLAGS_I:INTERNAL=
+PC_CURL_CFLAGS_OTHER:INTERNAL=
+PC_CURL_FOUND:INTERNAL=1
+PC_CURL_INCLUDEDIR:INTERNAL=/usr/include/x86_64-linux-gnu
+PC_CURL_INCLUDE_DIRS:INTERNAL=/usr/include/x86_64-linux-gnu
+PC_CURL_LDFLAGS:INTERNAL=-lcurl
+PC_CURL_LDFLAGS_OTHER:INTERNAL=
+PC_CURL_LIBDIR:INTERNAL=/usr/lib/x86_64-linux-gnu
+PC_CURL_LIBRARIES:INTERNAL=curl
+PC_CURL_LIBRARY_DIRS:INTERNAL=
+PC_CURL_LIBS:INTERNAL=
+PC_CURL_LIBS_L:INTERNAL=
+PC_CURL_LIBS_OTHER:INTERNAL=
+PC_CURL_LIBS_PATHS:INTERNAL=
+PC_CURL_MODULE_NAME:INTERNAL=libcurl
+PC_CURL_PREFIX:INTERNAL=/usr
+PC_CURL_STATIC_CFLAGS:INTERNAL=-I/usr/include/x86_64-linux-gnu
+PC_CURL_STATIC_CFLAGS_I:INTERNAL=
+PC_CURL_STATIC_CFLAGS_OTHER:INTERNAL=
+PC_CURL_STATIC_INCLUDE_DIRS:INTERNAL=/usr/include/x86_64-linux-gnu
+PC_CURL_STATIC_LDFLAGS:INTERNAL=-L/usr/lib/x86_64-linux-gnu/mit-krb5;-lcurl;-lnghttp2;-lidn2;-lrtmp;-lssh2;-lpsl;-lnettle;-lgnutls;-Wl,-z,relro;-lgssapi_krb5;-lkrb5;-lk5crypto;-lcom_err;-llber;-lldap;-llber;-lz
+PC_CURL_STATIC_LDFLAGS_OTHER:INTERNAL=-Wl,-z,relro
+PC_CURL_STATIC_LIBDIR:INTERNAL=
+PC_CURL_STATIC_LIBRARIES:INTERNAL=curl;nghttp2;idn2;rtmp;ssh2;psl;nettle;gnutls;gssapi_krb5;krb5;k5crypto;com_err;lber;ldap;lber;z
+PC_CURL_STATIC_LIBRARY_DIRS:INTERNAL=/usr/lib/x86_64-linux-gnu/mit-krb5
+PC_CURL_STATIC_LIBS:INTERNAL=
+PC_CURL_STATIC_LIBS_L:INTERNAL=
+PC_CURL_STATIC_LIBS_OTHER:INTERNAL=
+PC_CURL_STATIC_LIBS_PATHS:INTERNAL=
+PC_CURL_VERSION:INTERNAL=7.64.0
+PC_CURL_libcurl_INCLUDEDIR:INTERNAL=
+PC_CURL_libcurl_LIBDIR:INTERNAL=
+PC_CURL_libcurl_PREFIX:INTERNAL=
+PC_CURL_libcurl_VERSION:INTERNAL=
+PC_GTK3_CFLAGS:INTERNAL=-pthread;-I/usr/include/gtk-3.0;-I/usr/include/at-spi2-atk/2.0;-I/usr/include/at-spi-2.0;-I/usr/include/dbus-1.0;-I/usr/lib/x86_64-linux-gnu/dbus-1.0/include;-I/usr/include/gtk-3.0;-I/usr/include/gio-unix-2.0;-I/usr/include/cairo;-I/usr/include/libdrm;-I/usr/include/pango-1.0;-I/usr/include/harfbuzz;-I/usr/include/pango-1.0;-I/usr/include/fribidi;-I/usr/include/atk-1.0;-I/usr/include/cairo;-I/usr/include/pixman-1;-I/usr/include/freetype2;-I/usr/include/libpng16;-I/usr/include/gdk-pixbuf-2.0;-I/usr/include/libmount;-I/usr/include/blkid;-I/usr/include/uuid;-I/usr/include/glib-2.0;-I/usr/lib/x86_64-linux-gnu/glib-2.0/include
+PC_GTK3_CFLAGS_I:INTERNAL=
+PC_GTK3_CFLAGS_OTHER:INTERNAL=-pthread
+PC_GTK3_FOUND:INTERNAL=1
+PC_GTK3_INCLUDEDIR:INTERNAL=/usr/include
+PC_GTK3_INCLUDE_DIRS:INTERNAL=/usr/include/gtk-3.0;/usr/include/at-spi2-atk/2.0;/usr/include/at-spi-2.0;/usr/include/dbus-1.0;/usr/lib/x86_64-linux-gnu/dbus-1.0/include;/usr/include/gtk-3.0;/usr/include/gio-unix-2.0;/usr/include/cairo;/usr/include/libdrm;/usr/include/pango-1.0;/usr/include/harfbuzz;/usr/include/pango-1.0;/usr/include/fribidi;/usr/include/atk-1.0;/usr/include/cairo;/usr/include/pixman-1;/usr/include/freetype2;/usr/include/libpng16;/usr/include/gdk-pixbuf-2.0;/usr/include/libmount;/usr/include/blkid;/usr/include/uuid;/usr/include/glib-2.0;/usr/lib/x86_64-linux-gnu/glib-2.0/include
+PC_GTK3_LDFLAGS:INTERNAL=-lgtk-3;-lgdk-3;-lpangocairo-1.0;-lpango-1.0;-latk-1.0;-lcairo-gobject;-lcairo;-lgdk_pixbuf-2.0;-lgio-2.0;-lgobject-2.0;-lglib-2.0
+PC_GTK3_LDFLAGS_OTHER:INTERNAL=
+PC_GTK3_LIBDIR:INTERNAL=/usr/lib/x86_64-linux-gnu
+PC_GTK3_LIBRARIES:INTERNAL=gtk-3;gdk-3;pangocairo-1.0;pango-1.0;atk-1.0;cairo-gobject;cairo;gdk_pixbuf-2.0;gio-2.0;gobject-2.0;glib-2.0
+PC_GTK3_LIBRARY_DIRS:INTERNAL=
+PC_GTK3_LIBS:INTERNAL=
+PC_GTK3_LIBS_L:INTERNAL=
+PC_GTK3_LIBS_OTHER:INTERNAL=
+PC_GTK3_LIBS_PATHS:INTERNAL=
+PC_GTK3_MODULE_NAME:INTERNAL=gtk+-3.0
+PC_GTK3_PREFIX:INTERNAL=/usr
+PC_GTK3_STATIC_CFLAGS:INTERNAL=-pthread;-I/usr/include/gtk-3.0;-I/usr/include/at-spi2-atk/2.0;-I/usr/include/at-spi-2.0;-I/usr/include/dbus-1.0;-I/usr/lib/x86_64-linux-gnu/dbus-1.0/include;-I/usr/include/gtk-3.0;-I/usr/include/gio-unix-2.0;-I/usr/include/cairo;-I/usr/include/libdrm;-I/usr/include/pango-1.0;-I/usr/include/harfbuzz;-I/usr/include/pango-1.0;-I/usr/include/fribidi;-I/usr/include/atk-1.0;-I/usr/include/cairo;-I/usr/include/pixman-1;-I/usr/include/freetype2;-I/usr/include/libpng16;-I/usr/include/gdk-pixbuf-2.0;-I/usr/include/libmount;-I/usr/include/blkid;-I/usr/include/uuid;-I/usr/include/glib-2.0;-I/usr/lib/x86_64-linux-gnu/glib-2.0/include
+PC_GTK3_STATIC_CFLAGS_I:INTERNAL=
+PC_GTK3_STATIC_CFLAGS_OTHER:INTERNAL=-pthread
+PC_GTK3_STATIC_INCLUDE_DIRS:INTERNAL=/usr/include/gtk-3.0;/usr/include/at-spi2-atk/2.0;/usr/include/at-spi-2.0;/usr/include/dbus-1.0;/usr/lib/x86_64-linux-gnu/dbus-1.0/include;/usr/include/gtk-3.0;/usr/include/gio-unix-2.0;/usr/include/cairo;/usr/include/libdrm;/usr/include/pango-1.0;/usr/include/harfbuzz;/usr/include/pango-1.0;/usr/include/fribidi;/usr/include/atk-1.0;/usr/include/cairo;/usr/include/pixman-1;/usr/include/freetype2;/usr/include/libpng16;/usr/include/gdk-pixbuf-2.0;/usr/include/libmount;/usr/include/blkid;/usr/include/uuid;/usr/include/glib-2.0;/usr/lib/x86_64-linux-gnu/glib-2.0/include
+PC_GTK3_STATIC_LDFLAGS:INTERNAL=-lgtk-3;-latk-bridge-2.0;-latspi;-ldbus-1;-lpthread;-lsystemd;-lgdk-3;-lXinerama;-lXi;-lXrandr;-lXcursor;-lXcomposite;-lxkbcommon;-lwayland-cursor;-lwayland-egl;-lwayland-client;-lepoxy;-ldl;-lGL;-lpthread;-pthread;-lm;-ldl;-lEGL;-lpthread;-pthread;-lm;-ldl;-lXdamage;-lXfixes;-lX11-xcb;-lxcb-glx;-lxcb-dri2;-lXxf86vm;-ldrm;-lpangocairo-1.0;-lpangoft2-1.0;-lharfbuzz;-lm;-lgraphite2;-lpango-1.0;-lm;-lfribidi;-latk-1.0;-lcairo-gobject;-lcairo;-lz;-lpixman-1;-lfontconfig;-lexpat;-lfreetype;-lpng16;-lm;-lz;-lm;-lxcb-shm;-lxcb-render;-lXrender;-lXext;-lX11;-lpthread;-lxcb;-lXau;-lXdmcp;-lgdk_pixbuf-2.0;-lm;-lgio-2.0;-ldl;-pthread;-lresolv;-lgmodule-2.0;-pthread;-ldl;-lz;-lmount;-lblkid;-luuid;-lselinux;-lsepol;-lgobject-2.0;-pthread;-lffi;-lglib-2.0;-pthread;-lpcre;-pthread
+PC_GTK3_STATIC_LDFLAGS_OTHER:INTERNAL=-pthread
+PC_GTK3_STATIC_LIBDIR:INTERNAL=
+PC_GTK3_STATIC_LIBRARIES:INTERNAL=gtk-3;atk-bridge-2.0;atspi;dbus-1;pthread;systemd;gdk-3;Xinerama;Xi;Xrandr;Xcursor;Xcomposite;xkbcommon;wayland-cursor;wayland-egl;wayland-client;epoxy;dl;GL;pthread;m;dl;EGL;pthread;m;dl;Xdamage;Xfixes;X11-xcb;xcb-glx;xcb-dri2;Xxf86vm;drm;pangocairo-1.0;pangoft2-1.0;harfbuzz;m;graphite2;pango-1.0;m;fribidi;atk-1.0;cairo-gobject;cairo;z;pixman-1;fontconfig;expat;freetype;png16;m;z;m;xcb-shm;xcb-render;Xrender;Xext;X11;pthread;xcb;Xau;Xdmcp;gdk_pixbuf-2.0;m;gio-2.0;dl;resolv;gmodule-2.0;dl;z;mount;blkid;uuid;selinux;sepol;gobject-2.0;ffi;glib-2.0;pcre
+PC_GTK3_STATIC_LIBRARY_DIRS:INTERNAL=
+PC_GTK3_STATIC_LIBS:INTERNAL=
+PC_GTK3_STATIC_LIBS_L:INTERNAL=
+PC_GTK3_STATIC_LIBS_OTHER:INTERNAL=
+PC_GTK3_STATIC_LIBS_PATHS:INTERNAL=
+PC_GTK3_VERSION:INTERNAL=3.24.5
+PC_GTK3_gtk+-3.0_INCLUDEDIR:INTERNAL=
+PC_GTK3_gtk+-3.0_LIBDIR:INTERNAL=
+PC_GTK3_gtk+-3.0_PREFIX:INTERNAL=
+PC_GTK3_gtk+-3.0_VERSION:INTERNAL=
+//ADVANCED property for variable: PKG_CONFIG_EXECUTABLE
+PKG_CONFIG_EXECUTABLE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: PNG_LIBRARY_DEBUG
+PNG_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: PNG_LIBRARY_RELEASE
+PNG_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: PNG_PNG_INCLUDE_DIR
+PNG_PNG_INCLUDE_DIR-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: PYTHON_EXECUTABLE
 PYTHON_EXECUTABLE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: ProcessorCount_cmd_nproc
 ProcessorCount_cmd_nproc-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: ProcessorCount_cmd_sysctl
 ProcessorCount_cmd_sysctl-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: SQLITE3_INCLUDE_DIRS
+SQLITE3_INCLUDE_DIRS-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: SQLITE3_LIBRARIES
+SQLITE3_LIBRARIES-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: ZLIB_INCLUDE_DIR
+ZLIB_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: ZLIB_LIBRARY_DEBUG
+ZLIB_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: ZLIB_LIBRARY_RELEASE
+ZLIB_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
 //CMAKE_INSTALL_PREFIX during last run
 _GNUInstallDirs_LAST_CMAKE_INSTALL_PREFIX:INTERNAL=/usr/local
-generated_dir:INTERNAL=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varB/testing/googletest-master/googletest/generated
+__pkg_config_arguments_PC_CURL:INTERNAL=QUIET;libcurl
+__pkg_config_arguments_PC_GTK3:INTERNAL=gtk+-3.0;QUIET
+__pkg_config_checked_FONTCONFIG:INTERNAL=1
+__pkg_config_checked_PC_CURL:INTERNAL=1
+__pkg_config_checked_PC_GTK3:INTERNAL=1
+generated_dir:INTERNAL=/home/copiedwonder/OOP_Labs/lab3/cmake-build-debug/varC/testing/googletest-master/googletest/generated
 //ADVANCED property for variable: gmock_build_tests
 gmock_build_tests-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: gtest_build_samples
@@ -596,5 +1133,34 @@ gtest_disable_pthreads-ADVANCED:INTERNAL=1
 gtest_force_shared_crt-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: gtest_hide_internal_symbols
 gtest_hide_internal_symbols-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: pkgcfg_lib_FONTCONFIG_fontconfig
+pkgcfg_lib_FONTCONFIG_fontconfig-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: pkgcfg_lib_FONTCONFIG_freetype
+pkgcfg_lib_FONTCONFIG_freetype-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: pkgcfg_lib_PC_CURL_curl
+pkgcfg_lib_PC_CURL_curl-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: pkgcfg_lib_PC_GTK3_atk-1.0
+pkgcfg_lib_PC_GTK3_atk-1.0-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: pkgcfg_lib_PC_GTK3_cairo
+pkgcfg_lib_PC_GTK3_cairo-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: pkgcfg_lib_PC_GTK3_cairo-gobject
+pkgcfg_lib_PC_GTK3_cairo-gobject-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: pkgcfg_lib_PC_GTK3_gdk-3
+pkgcfg_lib_PC_GTK3_gdk-3-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: pkgcfg_lib_PC_GTK3_gdk_pixbuf-2.0
+pkgcfg_lib_PC_GTK3_gdk_pixbuf-2.0-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: pkgcfg_lib_PC_GTK3_gio-2.0
+pkgcfg_lib_PC_GTK3_gio-2.0-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: pkgcfg_lib_PC_GTK3_glib-2.0
+pkgcfg_lib_PC_GTK3_glib-2.0-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: pkgcfg_lib_PC_GTK3_gobject-2.0
+pkgcfg_lib_PC_GTK3_gobject-2.0-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: pkgcfg_lib_PC_GTK3_gtk-3
+pkgcfg_lib_PC_GTK3_gtk-3-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: pkgcfg_lib_PC_GTK3_pango-1.0
+pkgcfg_lib_PC_GTK3_pango-1.0-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: pkgcfg_lib_PC_GTK3_pangocairo-1.0
+pkgcfg_lib_PC_GTK3_pangocairo-1.0-ADVANCED:INTERNAL=1
+prefix_result:INTERNAL=SSL;IPv6;UnixSockets;libz;AsynchDNS;IDN;GSS-API;PSL;SPNEGO;Kerberos;NTLM;NTLM_WB;TLS-SRP;HTTP2;HTTPS-proxy
 targets_export_name:INTERNAL=GTestTargets
 

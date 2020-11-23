@@ -76,41 +76,6 @@ CMAKE_BINARY_DIR = /home/copiedwonder/OOP_Labs/lab3/cmake-build-debug
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target install/strip
-install/strip: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
-	/snap/clion/129/bin/cmake/linux/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
-.PHONY : install/strip
-
-# Special rule for the target install/strip
-install/strip/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
-	/snap/clion/129/bin/cmake/linux/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
-.PHONY : install/strip/fast
-
-# Special rule for the target install/local
-install/local: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/snap/clion/129/bin/cmake/linux/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local
-
-# Special rule for the target install/local
-install/local/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/snap/clion/129/bin/cmake/linux/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local/fast
-
-# Special rule for the target edit_cache
-edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/snap/clion/129/bin/cmake/linux/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
-.PHONY : edit_cache
-
-# Special rule for the target edit_cache
-edit_cache/fast: edit_cache
-
-.PHONY : edit_cache/fast
-
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
@@ -122,27 +87,16 @@ rebuild_cache/fast: rebuild_cache
 
 .PHONY : rebuild_cache/fast
 
-# Special rule for the target list_install_components
-list_install_components:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
-.PHONY : list_install_components
+# Special rule for the target edit_cache
+edit_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
+	/snap/clion/129/bin/cmake/linux/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+.PHONY : edit_cache
 
-# Special rule for the target list_install_components
-list_install_components/fast: list_install_components
+# Special rule for the target edit_cache
+edit_cache/fast: edit_cache
 
-.PHONY : list_install_components/fast
-
-# Special rule for the target install
-install: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	/snap/clion/129/bin/cmake/linux/bin/cmake -P cmake_install.cmake
-.PHONY : install
-
-# Special rule for the target install
-install/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	/snap/clion/129/bin/cmake/linux/bin/cmake -P cmake_install.cmake
-.PHONY : install/fast
+.PHONY : edit_cache/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -177,95 +131,186 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named lab3B
+# Target rules for targets named SYNC_RESOURCE-SchemeConstuctor
 
 # Build rule for target.
-lab3B: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 lab3B
-.PHONY : lab3B
+SYNC_RESOURCE-SchemeConstuctor: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 SYNC_RESOURCE-SchemeConstuctor
+.PHONY : SYNC_RESOURCE-SchemeConstuctor
 
 # fast build rule for target.
-lab3B/fast:
-	$(MAKE) $(MAKESILENT) -f varB/CMakeFiles/lab3B.dir/build.make varB/CMakeFiles/lab3B.dir/build
-.PHONY : lab3B/fast
+SYNC_RESOURCE-SchemeConstuctor/fast:
+	$(MAKE) $(MAKESILENT) -f application/SchemeConstuctor/CMakeFiles/SYNC_RESOURCE-SchemeConstuctor.dir/build.make application/SchemeConstuctor/CMakeFiles/SYNC_RESOURCE-SchemeConstuctor.dir/build
+.PHONY : SYNC_RESOURCE-SchemeConstuctor/fast
 
 #=============================================================================
-# Target rules for targets named Hex
+# Target rules for targets named SchemeConstuctor
 
 # Build rule for target.
-Hex: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Hex
-.PHONY : Hex
+SchemeConstuctor: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 SchemeConstuctor
+.PHONY : SchemeConstuctor
 
 # fast build rule for target.
-Hex/fast:
-	$(MAKE) $(MAKESILENT) -f varB/source/CMakeFiles/Hex.dir/build.make varB/source/CMakeFiles/Hex.dir/build
-.PHONY : Hex/fast
+SchemeConstuctor/fast:
+	$(MAKE) $(MAKESILENT) -f application/SchemeConstuctor/CMakeFiles/SchemeConstuctor.dir/build.make application/SchemeConstuctor/CMakeFiles/SchemeConstuctor.dir/build
+.PHONY : SchemeConstuctor/fast
 
 #=============================================================================
-# Target rules for targets named GoogleTests_run
+# Target rules for targets named cocos2d
 
 # Build rule for target.
-GoogleTests_run: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 GoogleTests_run
-.PHONY : GoogleTests_run
+cocos2d: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 cocos2d
+.PHONY : cocos2d
 
 # fast build rule for target.
-GoogleTests_run/fast:
-	$(MAKE) $(MAKESILENT) -f varB/testing/CMakeFiles/GoogleTests_run.dir/build.make varB/testing/CMakeFiles/GoogleTests_run.dir/build
-.PHONY : GoogleTests_run/fast
+cocos2d/fast:
+	$(MAKE) $(MAKESILENT) -f application/SchemeConstuctor/engine/cocos/core/CMakeFiles/cocos2d.dir/build.make application/SchemeConstuctor/engine/cocos/core/CMakeFiles/cocos2d.dir/build
+.PHONY : cocos2d/fast
 
 #=============================================================================
-# Target rules for targets named gmock_main
+# Target rules for targets named external
 
 # Build rule for target.
-gmock_main: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gmock_main
-.PHONY : gmock_main
+external: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 external
+.PHONY : external
 
 # fast build rule for target.
-gmock_main/fast:
-	$(MAKE) $(MAKESILENT) -f varB/testing/googletest-master/googlemock/CMakeFiles/gmock_main.dir/build.make varB/testing/googletest-master/googlemock/CMakeFiles/gmock_main.dir/build
-.PHONY : gmock_main/fast
+external/fast:
+	$(MAKE) $(MAKESILENT) -f application/SchemeConstuctor/engine/external/CMakeFiles/external.dir/build.make application/SchemeConstuctor/engine/external/CMakeFiles/external.dir/build
+.PHONY : external/fast
 
 #=============================================================================
-# Target rules for targets named gmock
+# Target rules for targets named ext_recast
 
 # Build rule for target.
-gmock: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gmock
-.PHONY : gmock
+ext_recast: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ext_recast
+.PHONY : ext_recast
 
 # fast build rule for target.
-gmock/fast:
-	$(MAKE) $(MAKESILENT) -f varB/testing/googletest-master/googlemock/CMakeFiles/gmock.dir/build.make varB/testing/googletest-master/googlemock/CMakeFiles/gmock.dir/build
-.PHONY : gmock/fast
+ext_recast/fast:
+	$(MAKE) $(MAKESILENT) -f application/SchemeConstuctor/engine/external/recast/CMakeFiles/ext_recast.dir/build.make application/SchemeConstuctor/engine/external/recast/CMakeFiles/ext_recast.dir/build
+.PHONY : ext_recast/fast
 
 #=============================================================================
-# Target rules for targets named gtest_main
+# Target rules for targets named ext_tinyxml2
 
 # Build rule for target.
-gtest_main: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gtest_main
-.PHONY : gtest_main
+ext_tinyxml2: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ext_tinyxml2
+.PHONY : ext_tinyxml2
 
 # fast build rule for target.
-gtest_main/fast:
-	$(MAKE) $(MAKESILENT) -f varB/testing/googletest-master/googletest/CMakeFiles/gtest_main.dir/build.make varB/testing/googletest-master/googletest/CMakeFiles/gtest_main.dir/build
-.PHONY : gtest_main/fast
+ext_tinyxml2/fast:
+	$(MAKE) $(MAKESILENT) -f application/SchemeConstuctor/engine/external/tinyxml2/CMakeFiles/ext_tinyxml2.dir/build.make application/SchemeConstuctor/engine/external/tinyxml2/CMakeFiles/ext_tinyxml2.dir/build
+.PHONY : ext_tinyxml2/fast
 
 #=============================================================================
-# Target rules for targets named gtest
+# Target rules for targets named ext_xxhash
 
 # Build rule for target.
-gtest: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gtest
-.PHONY : gtest
+ext_xxhash: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ext_xxhash
+.PHONY : ext_xxhash
 
 # fast build rule for target.
-gtest/fast:
-	$(MAKE) $(MAKESILENT) -f varB/testing/googletest-master/googletest/CMakeFiles/gtest.dir/build.make varB/testing/googletest-master/googletest/CMakeFiles/gtest.dir/build
-.PHONY : gtest/fast
+ext_xxhash/fast:
+	$(MAKE) $(MAKESILENT) -f application/SchemeConstuctor/engine/external/xxhash/CMakeFiles/ext_xxhash.dir/build.make application/SchemeConstuctor/engine/external/xxhash/CMakeFiles/ext_xxhash.dir/build
+.PHONY : ext_xxhash/fast
+
+#=============================================================================
+# Target rules for targets named ext_xxtea
+
+# Build rule for target.
+ext_xxtea: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ext_xxtea
+.PHONY : ext_xxtea
+
+# fast build rule for target.
+ext_xxtea/fast:
+	$(MAKE) $(MAKESILENT) -f application/SchemeConstuctor/engine/external/xxtea/CMakeFiles/ext_xxtea.dir/build.make application/SchemeConstuctor/engine/external/xxtea/CMakeFiles/ext_xxtea.dir/build
+.PHONY : ext_xxtea/fast
+
+#=============================================================================
+# Target rules for targets named ext_clipper
+
+# Build rule for target.
+ext_clipper: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ext_clipper
+.PHONY : ext_clipper
+
+# fast build rule for target.
+ext_clipper/fast:
+	$(MAKE) $(MAKESILENT) -f application/SchemeConstuctor/engine/external/clipper/CMakeFiles/ext_clipper.dir/build.make application/SchemeConstuctor/engine/external/clipper/CMakeFiles/ext_clipper.dir/build
+.PHONY : ext_clipper/fast
+
+#=============================================================================
+# Target rules for targets named ext_edtaa3func
+
+# Build rule for target.
+ext_edtaa3func: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ext_edtaa3func
+.PHONY : ext_edtaa3func
+
+# fast build rule for target.
+ext_edtaa3func/fast:
+	$(MAKE) $(MAKESILENT) -f application/SchemeConstuctor/engine/external/edtaa3func/CMakeFiles/ext_edtaa3func.dir/build.make application/SchemeConstuctor/engine/external/edtaa3func/CMakeFiles/ext_edtaa3func.dir/build
+.PHONY : ext_edtaa3func/fast
+
+#=============================================================================
+# Target rules for targets named ext_convertUTF
+
+# Build rule for target.
+ext_convertUTF: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ext_convertUTF
+.PHONY : ext_convertUTF
+
+# fast build rule for target.
+ext_convertUTF/fast:
+	$(MAKE) $(MAKESILENT) -f application/SchemeConstuctor/engine/external/ConvertUTF/CMakeFiles/ext_convertUTF.dir/build.make application/SchemeConstuctor/engine/external/ConvertUTF/CMakeFiles/ext_convertUTF.dir/build
+.PHONY : ext_convertUTF/fast
+
+#=============================================================================
+# Target rules for targets named ext_poly2tri
+
+# Build rule for target.
+ext_poly2tri: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ext_poly2tri
+.PHONY : ext_poly2tri
+
+# fast build rule for target.
+ext_poly2tri/fast:
+	$(MAKE) $(MAKESILENT) -f application/SchemeConstuctor/engine/external/poly2tri/CMakeFiles/ext_poly2tri.dir/build.make application/SchemeConstuctor/engine/external/poly2tri/CMakeFiles/ext_poly2tri.dir/build
+.PHONY : ext_poly2tri/fast
+
+#=============================================================================
+# Target rules for targets named ext_md5
+
+# Build rule for target.
+ext_md5: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ext_md5
+.PHONY : ext_md5
+
+# fast build rule for target.
+ext_md5/fast:
+	$(MAKE) $(MAKESILENT) -f application/SchemeConstuctor/engine/external/md5/CMakeFiles/ext_md5.dir/build.make application/SchemeConstuctor/engine/external/md5/CMakeFiles/ext_md5.dir/build
+.PHONY : ext_md5/fast
+
+#=============================================================================
+# Target rules for targets named ext_unzip
+
+# Build rule for target.
+ext_unzip: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ext_unzip
+.PHONY : ext_unzip
+
+# fast build rule for target.
+ext_unzip/fast:
+	$(MAKE) $(MAKESILENT) -f application/SchemeConstuctor/engine/external/unzip/CMakeFiles/ext_unzip.dir/build.make application/SchemeConstuctor/engine/external/unzip/CMakeFiles/ext_unzip.dir/build
+.PHONY : ext_unzip/fast
 
 # Help Target
 help:
@@ -274,18 +319,21 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... edit_cache"
-	@echo "... install"
-	@echo "... install/local"
-	@echo "... install/strip"
-	@echo "... list_install_components"
 	@echo "... rebuild_cache"
-	@echo "... GoogleTests_run"
-	@echo "... Hex"
-	@echo "... gmock"
-	@echo "... gmock_main"
-	@echo "... gtest"
-	@echo "... gtest_main"
-	@echo "... lab3B"
+	@echo "... SYNC_RESOURCE-SchemeConstuctor"
+	@echo "... SchemeConstuctor"
+	@echo "... cocos2d"
+	@echo "... ext_clipper"
+	@echo "... ext_convertUTF"
+	@echo "... ext_edtaa3func"
+	@echo "... ext_md5"
+	@echo "... ext_poly2tri"
+	@echo "... ext_recast"
+	@echo "... ext_tinyxml2"
+	@echo "... ext_unzip"
+	@echo "... ext_xxhash"
+	@echo "... ext_xxtea"
+	@echo "... external"
 .PHONY : help
 
 
