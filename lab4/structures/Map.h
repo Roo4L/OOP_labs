@@ -6,8 +6,9 @@
 #define LAB4_MAP_H
 #include <memory>
 #include <vector>
-#include <pair>
-#inlcude "cocos2d.h"
+#include <utility>
+#include "cocos2d.h"
+#include "Units.h"
 #include "Monsters.h"
 #include "graph_params.h"
 
@@ -23,7 +24,7 @@ namespace base_structures {
 
     class Cell {
     public:
-        Cell(): type_(BASE_CELL) {
+        Cell(CellType t = BASE_CELL): type_(t) {
             sprite = cocos2d::Sprite::create(cell_sprite[int(CellType)]);
         };
         Cell(const Cell& cp);
@@ -31,16 +32,16 @@ namespace base_structures {
         //TODO constructor from save
         CellType getType() const noexcept { return type_;};
         ~Cell() {
-            sprite::release();
+            sprite_->release();
         }
+        cocos2d::Sprite* sprite_;
     private:
         CellType type_;
-        cocos2d::Sprite* sprite;
     };
 
     class Castle: public Cell {
     public:
-        Castle(): type_(CASTLE) {};
+        Castle(): Cell(CASTLE) {};
         Castle(const Castle& cp);
         Castle(Castle&& cm);
         //TODO constructor from save
@@ -55,55 +56,67 @@ namespace base_structures {
 
     class Dangeon: public Cell {
     public:
-        Dangeon(): type_(DANGEON) {};
+        Dangeon(istream& f): Cell(DANGEON) {
+            MakeWaveFromFile(waves, f);
+        };
         Dangeon(const Dangeon& cp);
         Dangeon(Dangeon&& cm);
         //TODO constructor from save
         int NextWave();
         int getCurWaveNum() const noexcept { return cur_wave_num + 1;};
-        std::list<Monster>::iterator ReleaseMonster();
+        std::shared_ptr<Monster> ReleaseMonster();
     private:
-        const std::array<Wave, 15> WaveList;
+        WaveList waves;
         int cur_wave_it = -1;
         time_t wave_start_num;
         std::shared_ptr<Road> next;
     };
 
-    class Road: public Cell {
+    class Placable: public Cell {
     public:
-        Road(): type_(ROAD), trap_(false) {};
+        Placable(CellType t): Cell(t), unit_(nullptr) {};
+        virtual std::shared_ptr<Unit> setUnit();
+        bool isBusy() const noexcept {return unit_ == nullptr;};
+        void removeUnit() {
+            unit_.replace(nullptr);
+        }
+    protected:
+        std::shared_ptr<Unit> unit_;
+    };
+
+    class Road: public Placable {
+    public:
+        Road(): Placable(ROAD) {};
         Road(const Road& cp);
         Road(Road&& cm);
         //TODO constructor from save
         cocos2d::Vec2 getDirection();
-        std::shared_ptr<MagicTrap> setTrap();
-        int removeTrap();
-        bool isTrapped() const noexcept {return trap_;};
+        std::shared_ptr<Unit> setUnit() override;
     private:
-        bool trap_;
         std::shared_ptr<Road> next;
     };
 
-    class Basement: public Cell {
+    class Basement: public Placable {
     public:
-        Basement(): type_(BASEMENT), tower(false) {};
+        Basement(): Placable(BASEMENT) {};
         Basement(const Basement& cp);
         Basement(Basement&& cm);
         //TODO constructor from save
-        std::shared_ptr<Tower> setTower();
-        int removeTower();
-        bool isBuildUp() const noexcept {return tower_;};
-    private:
-        bool tower_;
+        shared_ptr<Unit> setUnit() override;
     };
 
     struct Map {
         std::vector<std::vector<std::shared_ptr<Cell>>> cell_arr;
-        std::vector<std::vector<std::shared_ptr<Cell>>>::iterator castle;
+        std::shared_ptr<Castle> castle;
 
         int save(std::string filename) const;
         int load(std::string filename);
         int resize(int new_size_x, int new_size_y);
+    };
+
+    struct UnitTable{
+        std::list<std::shared_ptr<Tower>> towers;
+        std::list<std::shared_ptr<MagicTrap>> traps;
     };
 }
 #endif //LAB4_MAP_H
