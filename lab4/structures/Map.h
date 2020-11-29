@@ -20,7 +20,8 @@ namespace base_structures {
         ROAD,
         BASEMENT
     };
-    typedef std::vector<std::pair<std::shared_ptr<Monster>, int>> Wave;
+    typedef std::list<std::pair<std::shared_ptr<Monster>, time_t>> Wave;
+    typedef const vector<Wave> WaveList;
 
     class Cell {
     public:
@@ -56,13 +57,14 @@ namespace base_structures {
 
     class Dangeon: public Cell {
     public:
-        Dangeon(istream& f): Cell(DANGEON) {
-            MakeWaveFromFile(waves, f);
+        Dangeon(std::string filename): Cell(DANGEON) {
+            MakeWaveFromFile(waves, filename);
         };
         Dangeon(const Dangeon& cp);
         Dangeon(Dangeon&& cm);
         //TODO constructor from save
-        int NextWave();
+        int NextWave() const noexcept { cur_wave_it++;};
+        bool isActive() {return isActive_;};
         int getCurWaveNum() const noexcept { return cur_wave_num + 1;};
         std::shared_ptr<Monster> ReleaseMonster();
     private:
@@ -70,6 +72,7 @@ namespace base_structures {
         int cur_wave_it = -1;
         time_t wave_start_num;
         std::shared_ptr<Road> next;
+        bool isActive_ = true;
     };
 
     class Placable: public Cell {
@@ -91,7 +94,7 @@ namespace base_structures {
         Road(Road&& cm);
         //TODO constructor from save
         cocos2d::Vec2 getDirection();
-        std::shared_ptr<Unit> setUnit() override;
+        std::shared_ptr<Unit> setUnit(EffectType type) override;
     private:
         std::shared_ptr<Road> next;
     };
@@ -114,7 +117,7 @@ namespace base_structures {
         int resize(int new_size_x, int new_size_y);
     };
 
-    struct UnitTable{
+    struct UnitTable {
         std::list<std::shared_ptr<Tower>> towers;
         std::list<std::shared_ptr<MagicTrap>> traps;
     };

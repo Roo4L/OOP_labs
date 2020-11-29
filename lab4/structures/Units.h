@@ -27,9 +27,10 @@ namespace base_structures {
     };
     class Unit{
     public:
-        Unit(int x, int y, string sprite_f, int level_ = 0): x_(x), y_(y), level_(level) {
+        Unit(int x, int y, std::string sprite_f, int level = 0): x_(x), y_(y), level_ (level) {
             sprite_ = cocos2d::Sprite::create(sprite_f);
         };
+        virtual bool isUpgradable();
         virtual int Upgrade();
         cocos2d::Sprite* sprite_;
         ~Unit() {
@@ -43,9 +44,12 @@ namespace base_structures {
 
     class Tower: public Unit {
     public:
+        Tower(const Tower& cp);
+        Tower(Tower&& cm);
         Tower(int x, int y, string sprite_f = unit_models[0], int level_ = 0): Unit(x, y, sprite_f, level_) {};
-        shared_ptr<MagicTower> toMagic();
+        shared_ptr<MagicTower> toMagic(EffectType type);
         shared_ptr<Monster> Attack();
+        bool isUpgradable() override;
         int Upgrade() override;
     };
 
@@ -60,13 +64,17 @@ namespace base_structures {
 
     class MagicTower: public Tower, public MagicSignature {
     public:
-        MagicTower(Tower tower, EffectType type): Tower(tower), ;
+        MagicTower(const Tower& tower, EffectType type): Tower(tower), type_(type);
         shared_ptr<Monster> Attack() override;
     };
 
     class MagicTrap: public Unit, public MagicSignature {
     public:
+        MagicTrap(int x, int y, EffectType type, int effect_level = 0,  int tower_level = 0):
+                    Unit(x, y, unit_models[4 + int(type)], tower_level), MagicSignature(type, effect_level) {};
         shared_ptr<Monster> Activate();
+        bool isUpgradable() override;
+        int Upgrade() override;
     };
 }
 

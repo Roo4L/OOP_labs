@@ -20,15 +20,32 @@ namespace base_structures {
     struct Effect {
         time_t debuf_time;
         float debuf_strength;
+        Effect type;
+    };
+
+    enum MonsterModel {
+        WEEK,
+        STRONG
+    };
+
+    struct MonsterDiscriptor {
+        int hp;
+        int speed;
+        int cost;
+        MonsterModel model;
     };
 
     class Monster {
     public:
-        Monster(int hp = 100, int speed = 40, std::string sprite_f = monster_models[0]): hp_(hp), speed_(speed) {
+        Monster(int hp = 100, int speed = 40, int cost = 50, std::string sprite_f = monster_models[0]): hp_(hp), speed_(speed), cost_(cost) {
             sprite_ = cocos2d::Sprite::create(sprite_f);
         }
+        Monster(MonsterDiscriptor& disc): Monster(disc.hp, disc.speed, disc.cost, monster_models[int(disc.model)]) {};
         Monster(const Monster& cp);
-        MOnster(Monster&& cm);
+        Mnster(Monster&& cm);
+        int getCost() const noexcept { return cost_;};
+        int getHP() const noexcept { return hp_;};
+        Monster& setRelation(shared_ptr<Cell> cell);
         Monster& applyDebuf(Effect debuf);
         Monster& getDamage(int damage);
         Monster& Move();
@@ -36,15 +53,16 @@ namespace base_structures {
         ~Monster() {
             sprite_->release();
         }
+        cocos2d::Sprite* sprite_;
     private:
         int hp_ = 100;
         int speed_ = 40;
+        int cost_ = 50;
         std::list<std::pair<Effect, time_t>> debufs;
-        cocos2d::Sprite* sprite_;
-        shared_ptr<Cell> relation;
+        shared_ptr<Cell> relation = nullptr;
     };
 
-    typedef std::list<std::shared_ptr<Monster>> MonsterTable;
+    typedef std::list<std::shared_ptr<Monster>> MonsterTable_;
 }
 
 
