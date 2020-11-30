@@ -18,9 +18,9 @@ namespace base_structures {
     };
 
     struct Effect {
-        time_t debuf_time;
-        float debuf_strength;
-        Effect type;
+        time_t effect_time;
+        float effect_strength;
+        EffectType type;
     };
 
     enum MonsterModel {
@@ -45,7 +45,9 @@ namespace base_structures {
         Mnster(Monster&& cm);
         int getCost() const noexcept { return cost_;};
         int getHP() const noexcept { return hp_;};
+        int getSpeed() const noexcept { return speed_;};
         Monster& setRelation(shared_ptr<Cell> cell);
+        shared_ptr<Cell> getRelation() const noexcept { return relation;};
         Monster& applyDebuf(Effect debuf);
         Monster& getDamage(int damage);
         Monster& Move();
@@ -63,6 +65,8 @@ namespace base_structures {
     };
 
     typedef std::list<std::shared_ptr<Monster>> MonsterTable_;
+
+    static MonsterTable_ MonsterTable;
 }
 
 

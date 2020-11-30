@@ -30,8 +30,8 @@ namespace base_structures {
     }
 
     shared_ptr<Monster> Dangeon::ReleaseMonster() {
-        while (waves[cur_wave_it].front.second time_t <= time() - GAME_START_TIME) {
-            std::shared_ptr<Monster> m = make_shared<Monster>(waves[cur_wave_it].front.first);
+        while (waves[cur_wave_it].front.second time_t <= time() - wave_start) {
+            std::shared_ptr<Monster> m = move(waves[cur_wave_it].front.first);
             waves[cur_wave_it].pop_front();
             //add monster on map
             m->setRelation(next);

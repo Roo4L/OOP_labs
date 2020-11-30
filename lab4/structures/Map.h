@@ -63,14 +63,14 @@ namespace base_structures {
         Dangeon(const Dangeon& cp);
         Dangeon(Dangeon&& cm);
         //TODO constructor from save
-        int NextWave() const noexcept { cur_wave_it++;};
+        int NextWave() const noexcept { cur_wave_it++; wave_start = time();};
         bool isActive() {return isActive_;};
         int getCurWaveNum() const noexcept { return cur_wave_num + 1;};
         std::shared_ptr<Monster> ReleaseMonster();
     private:
         WaveList waves;
         int cur_wave_it = -1;
-        time_t wave_start_num;
+        time_t wave_start = 0;
         std::shared_ptr<Road> next;
         bool isActive_ = true;
     };
@@ -79,7 +79,7 @@ namespace base_structures {
     public:
         Placable(CellType t): Cell(t), unit_(nullptr) {};
         virtual std::shared_ptr<Unit> setUnit();
-        bool isBusy() const noexcept {return unit_ == nullptr;};
+        bool isBusy() const noexcept {return unit_ != nullptr;};
         void removeUnit() {
             unit_.replace(nullptr);
         }
@@ -94,6 +94,7 @@ namespace base_structures {
         Road(Road&& cm);
         //TODO constructor from save
         cocos2d::Vec2 getDirection();
+        std::shared_ptr<Road> getNext() const noexcept { return next;};
         std::shared_ptr<Unit> setUnit(EffectType type) override;
     private:
         std::shared_ptr<Road> next;
@@ -108,7 +109,7 @@ namespace base_structures {
         shared_ptr<Unit> setUnit() override;
     };
 
-    struct Map {
+    struct Map_ {
         std::vector<std::vector<std::shared_ptr<Cell>>> cell_arr;
         std::shared_ptr<Castle> castle;
 
@@ -117,9 +118,12 @@ namespace base_structures {
         int resize(int new_size_x, int new_size_y);
     };
 
-    struct UnitTable {
+    struct UnitTable_ {
         std::list<std::shared_ptr<Tower>> towers;
         std::list<std::shared_ptr<MagicTrap>> traps;
     };
+
+    UnitTable_ UnitTable;
+    Map_ Map;
 }
 #endif //LAB4_MAP_H
