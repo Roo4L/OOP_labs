@@ -36,8 +36,20 @@ namespace base_structures {
         //add monster on map
         m->setRelation(next);
         m->sprite_->setPosition(sprite_->getPositionX(), sprite_->getPositionY());
-        MonsterTable.push_back(m);
         return m;
+    }
+
+    int Dangeon::saveToFile(std::ofstream &os) const {
+        os << int(DANGEON);
+        for (int i = 0; i < waves.size(); ++i) {
+            for (auto& release : waves[i]) {
+                os << i;
+                os << release.first->getHP() << release.first->getSpeed() << release.first->getCost()
+                                                                                    << int(release.first->getModel());
+            }
+        }
+        os << 100;
+        return 0;
     }
 
     cocos2d::Vec2 Road::getDirection() {
@@ -78,45 +90,100 @@ namespace base_structures {
         std::ifstream save_(filename, std::ios::binary);
         if (!save_.is_open())
             return -1;
-        CellType celltype;
+        int celltype;
         int size_x, size_y;
         std::vector <std::pair<int, int>> way_trace;
         if (!save_.eof()) {
             save_ >> size_x >> size_y;
             cell_arr.resize(size_x);
             for (auto &it : cell_arr) {
-                it->resize(size_y);
+                it.resize(size_y);
             }
         }
         for (int i = 0; i < size_x; i++) {
             for (int j = 0; j < size_y; j++) {
-                if (!save_.is_open())
+                if (!save_.eof()) {
+                    save_.close();
                     return -1;
+                }
                 save_ >> celltype;
                 switch (celltype) {
                     case DANGEON:
-                        cell_arr[i][j] = std::make_shared<Dangeon>(save_)
+                        cell_arr[i][j] = std::dynamic_pointer_cast<Cell>(std::make_shared<Dangeon>(save_));
                         break;
                     case BASEMENT:
-                        cell_arr[i][j] = std::make_shared<Basement>();
+                        cell_arr[i][j] = std::dynamic_pointer_cast<Cell>(std::make_shared<Basement>());
                         break;
                     case ROAD:
                         int x, y;
                         save_ >> x >> y;
-                        way_trac.push_back({x, y});
-                        cell_arr[i][j] = std::make_shared<Road>();
+                        way_trace.push_back(std::pair<int,int>(i * size_y + j, x * size_y + y));
+                        cell_arr[i][j] = std::dynamic_pointer_cast<Cell>(std::make_shared<Road>());
                         break;
                     case CASTLE:
                         int hp, gold;
                         save_ >> hp >> gold;
-                        cell_arr[i][j] = std::make_shared<Castle>(hp, gold);
+                        cell_arr[i][j] = std::dynamic_pointer_cast<Cell>(std::make_shared<Castle>(hp, gold));
                         break;
                     default:
-                        cell_arr[i][j] = std::make_shared<Cell>();
+                        cell_arr[i][j] = std::dynamic_pointer_cast<Cell>(std::make_shared<Cell>());
                         break;
                 }
             }
         }
+        for (auto& path : way_trace) {
+            std::shared_ptr<Road> source = std::dynamic_pointer_cast<Road>(
+                    cell_arr[path.first / size_y][path.first % size_y]);
+            source->setNext(std::dynamic_pointer_cast<Road>(cell_arr[path.second / size_y][path.second % size_y]));
+        }
+        save_.close();
+        return 0;
+    }
 
+    int Map_::save(std::string filename) const {
+        std::ofstream os(filename, std::ios::binary);
+        if (!os.is_open())
+            return -1;
+        os << cell_arr.size();
+        os << cell_arr[0].size();
+        for (int i = 0; i < cell_arr.size(); i++) {
+            for (int j = 0; j < cell_arr[i].size(); j++) {
+                os << int(cell_arr[i][j]->getType());
+                switch (cell_arr[i][j]->getType()) {
+                    case DANGEON:
+                        std::dynamic_pointer_cast<Dangeon>(cell_arr[i][j])->saveToFile(os);
+                        break;
+                    case ROAD: {
+                        std::shared_ptr<Road> cell = std::dynamic_pointer_cast<Road>(cell_arr[i][j]);
+                        int x, y;
+                        if (i > 0 && cell_arr[i - 1][j] == cell->getNext()) {
+                            x = i - 1;
+                            y = j;
+                        } else if (i < cell_arr.size() - 1 && cell_arr[i + 1][j] == cell->getNext()) {
+                            x = i + 1;
+                            y = j;
+                        }
+                        if (j > 0 && cell_arr[i][j - 1] == cell->getNext()) {
+                            x = i;
+                            y = j - 1;
+                        } else if (j < cell_arr[0].size() - 1 && cell_arr[i][j + 1] == cell->getNext()) {
+                            x = i;
+                            y = j + 1;
+                        }
+                        os << x << y;
+                        break;
+                    }
+                    case CASTLE: {
+                        std::shared_ptr<Castle> cell = std::dynamic_pointer_cast<Castle>(cell_arr[i][j]);
+                        os << cell->getHp() << cell->getGold();
+                        break;
+                    }
+                    default:
+                        break;
+                }
+            }
+        }
+        os.close();
+        return 0;
     }
 }

@@ -8,12 +8,12 @@
 namespace base_structures {
     std::istream& operator>>(std::istream& is, MonsterDescriptor& desc) noexcept {
         try {
-            MonsterModel model;
+            int model;
             int hp;
             int speed;
             int cost;
             is >> model >> hp >> speed >> cost;
-            desc.model = model;
+            desc.model = MonsterModel(model);
             desc.hp = hp;
             desc.speed = speed;
             desc.cost = cost;
@@ -35,17 +35,18 @@ namespace base_structures {
 
     Monster& Monster::applyDebuf(Effect debuf) {
         // check wheither the same debuf is already applied
-        for (auto& it : debufs) {
+        for (auto it = debufs.begin(); it != debufs.end(); ++it) {
             if (it->first.type == debuf.type) {
-                if (it->first.effect_time > debuf.effect_time ||
-                    it->first.effect_time - time() + it->second) < debuf.effect_time)
+                if (it->first.effect_time > debuf.effect_time || it->first.effect_time +
+                                                (std::chrono::steady_clock::now() - it->second) < debuf.effect_time) {
                     debufs.erase(it);
+                }
                 else
                     return *this;
             }
         }
         // apply debuf
-        debufs.push_back({debuf, time()});
+        debufs.push_back({debuf, std::chrono::steady_clock::now()});
         return *this;
     }
 

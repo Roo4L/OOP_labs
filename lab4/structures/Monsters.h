@@ -8,9 +8,10 @@
 #include <list>
 #include <string>
 #include <utility>
-#inlcude <iostream>
+#include <iostream>
 #include "cocos2d.h"
 #include "Map.h"
+#include "Units.h"
 
 namespace base_structures {
     static const std::string monster_models[] = {
@@ -18,39 +19,23 @@ namespace base_structures {
             "res/monsters/strong_monster.png"
     };
 
-    struct Effect {
-        double effect_time;
-        float effect_strength;
-        EffectType type;
-    };
-
-    enum MonsterModel {
-        WEEK,
-        STRONG
-    };
-
-    struct MonsterDescriptor {
-        int hp;
-        int speed;
-        int cost;
-        MonsterModel model;
-
-        friend std::istream& operator>>(std::istream& is, MonsterDescriptor& desc) noexcept;
-    };
-
     class Monster {
     public:
-        Monster(int hp = 100, int speed = 40, int cost = 50, std::string sprite_f = monster_models[0]): hp_(hp), speed_(speed), cost_(cost) {
+        Monster(std::string sprite_f = monster_models[0]) {
             sprite_ = cocos2d::Sprite::create(sprite_f);
         }
-        Monster(MonsterDescriptor& disc): Monster(disc.hp, disc.speed, disc.cost, monster_models[int(disc.model)]) {};
+        Monster(int hp, int speed, int cost, std::string sprite_f = monster_models[0]): hp_(hp), speed_(speed), cost_(cost) {
+            sprite_ = cocos2d::Sprite::create(sprite_f);
+        }
+        Monster(MonsterDescriptor& disc): Monster(disc.hp, disc.speed, disc.cost, monster_models[int(disc.model)]), model_(disc.model) {};
         Monster(const Monster& cp);
-        Mnster(Monster&& cm);
+        Monster(Monster&& cm);
         int getCost() const noexcept { return cost_;};
         int getHP() const noexcept { return hp_;};
         int getSpeed() const noexcept { return speed_;};
-        Monster& setRelation(shared_ptr<Cell> cell);
-        shared_ptr<Cell> getRelation() const noexcept { return relation;};
+        MonsterModel getModel() const noexcept { return model_;};
+        Monster& setRelation(std::shared_ptr<Cell> cell);
+        std::shared_ptr<Cell> getRelation() const noexcept { return relation;};
         Monster& applyDebuf(Effect debuf);
         Monster& getDamage(int damage);
         Monster& Move();
@@ -63,11 +48,10 @@ namespace base_structures {
         int hp_ = 100;
         int speed_ = 40;
         int cost_ = 50;
-        std::list<std::pair<Effect, double>> debufs;
-        shared_ptr<Cell> relation = nullptr;
+        MonsterModel model_ = MonsterModel::WEEK;
+        std::list<std::pair<Effect, std::chrono::time_point<std::chrono::steady_clock>>> debufs;
+        std::shared_ptr<Cell> relation = nullptr;
     };
-
-    typedef std::list<std::shared_ptr<Monster>> MonsterTable_;
 }
 
 

@@ -5,14 +5,13 @@
 #ifndef LAB4_UNITS_H
 #define LAB4_UNITS_H
 #include <string>
-#include <memory>
+#include "model_types.h"
 #include "cocos2d.h"
 #include "Monsters.h"
 #include "Map.h"
 #include "level_descriptors.h"
 
 namespace base_structures {
-
 
     static const std::string unit_models[] = {
             "res/units/tower.png",
@@ -25,9 +24,8 @@ namespace base_structures {
     };
 
     //attack styles
-
     float closestToCastle(const Tower& t, const Monster& m) {
-        shared_ptr<Road> rel = static_pointer_cast<Road> m.getRelation();
+        std::shared_ptr<Road> rel = static_pointer_cast<Road> m.getRelation();
         int len = 0;
         while (rel != nullptr) {
             len++;
@@ -54,27 +52,15 @@ namespace base_structures {
         weekest,
         strongest,
         fastest
-    }
-    enum AttackStyle {
-        CLOSESTCASTLE,
-        CLOSESTTOWER,
-        WEEKEST,
-        STRONGEST,
-        FASTEST
     };
 
-    enum EffectType {
-        FROZEN,
-        POISON,
-        EXHAUST
-    };
     class Unit{
     public:
         Unit(int x, int y, std::string sprite_f, int level = 0): x_(x), y_(y), level_ (level) {
             sprite_ = cocos2d::Sprite::create(sprite_f);
         };
-        virtual bool isUpgradable();
-        virtual int Upgrade();
+        virtual bool isUpgradable() noexcept;
+        virtual int Upgrade() noexcept;
         cocos2d::Sprite* sprite_;
         ~Unit() {
             sprite_->release();
@@ -89,9 +75,9 @@ namespace base_structures {
     public:
         Tower(const Tower& cp);
         Tower(Tower&& cm);
-        Tower(int x, int y, string sprite_f = unit_models[0], int level_ = 0): Unit(x, y, sprite_f, level_) {};
+        Tower(int x, int y, std::string sprite_f = unit_models[0], int level_ = 0): Unit(x, y, sprite_f, level_) {};
         shared_ptr<MagicTower> toMagic(EffectType type);
-        shared_ptr<Monster> Attack();
+        shared_ptr<Monster> Attack(MonsterTable_& MonsterTable);
         bool isUpgradable() override noexcept;
         int Upgrade() override noexcept;
         bool isReachable(const Monster& monster) const noexcept {
@@ -104,15 +90,6 @@ namespace base_structures {
         Tower& setStyle(AttackStyle style) noexcept {
             style_ = style;
             return *this;
-        }
-        ~Tower() {
-            std::shared_ptr<Basement> cell = static_pointer_cast<Basement> Map.cell_arr[y][x];
-            cell.removeUnit();
-            for (auto& it : UnitTable.towers) {
-                if ((*it).get() == this) {
-                    UnitTable.towers.erase(it);
-                }
-            }
         }
     protected:
         AttackStyle style_ = CLOSESTCASTLE;
@@ -130,14 +107,14 @@ namespace base_structures {
     class MagicTower: public Tower, public MagicSignature {
     public:
         MagicTower(const Tower& tower, EffectType type): Tower(tower), type_(type);
-        shared_ptr<Monster> Attack()) override;
+        shared_ptr<Monster> Attack(MonsterTable_& MonsterTable) override;
     };
 
     class MagicTrap: public Unit, public MagicSignature {
     public:
         MagicTrap(int x, int y, EffectType type, int effect_level = 0,  int tower_level = 0):
                     Unit(x, y, unit_models[4 + int(type)], tower_level), MagicSignature(type, effect_level) {};
-        int Activate();
+        int Activate(MonsterTable_& MonsterTable);
         bool isUpgradable() override noexcept;
         int Upgrade() override noexcept;
         bool isReachable(const Monster& monster) const noexcept {

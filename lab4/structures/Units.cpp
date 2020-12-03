@@ -1,31 +1,31 @@
 //
 // Created by copiedwonder on 23.11.2020.
 //
-
-#include "Units.h"
-#include "Monsters.h"
-#include "level_descriptors.h"
 #include <limits>
+#include <memory>
+#include "model_types.h"
+#include "Units.h"
+#include "level_descriptors.h"
 
 namespace base_structures {
-    std::shared_ptr <MagicTower> Tower::toMagic(EffectType type) {
+    std::shared_ptr<MagicTower> Tower::toMagic(EffectType type) {
         std::shared_ptr <MagicTower> res = std::make_shared<MagicTower>(*this, type);
         this->~Tower();
-        Map.cell_arr[y][x].setUnit(res);
         return res;
     }
 
-    std::shared_ptr <Tower> Tower::Attack()) {
-        shared_ptr<Monster> m = nullptr;
+    std::shared_ptr<Monster> Tower::Attack(MonsterTable_& MonsterTable) {
+        std::shared_ptr<Monster> m = nullptr;
         int regression = std::numeric_limits<int>::max();
         for (auto it : MonsterTable) {
-            if (isReachable(*it) && (int res = ATTACK_CONDITIONS[int(style_)](*this, *(*it)) < regression)) {
+            int res;
+            if (isReachable(*it) && (res = ATTACK_CONDITIONS[int(style_)](*this, *it) < regression) {
                 regression = res;
                 m = *it;
             }
         }
         m->getDamage(TOWER_DESCR[level_].damage);
-        if (!m->isAlive) {
+        if (!m->isAlive()) {
             ~m;
         }
         return m;
@@ -42,7 +42,7 @@ namespace base_structures {
         } else return -1;
     }
 
-    shared_ptr <Monster> MagicTower::Attack()) {
+    std::shared_ptr <Monster> MagicTower::Attack()) {
         shared_ptr<Monster> m = nullptr;
         int regression = std::numeric_limits<int>::max();
         for (auto it : MonsterTable) {

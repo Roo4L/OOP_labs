@@ -7,26 +7,23 @@
 #include <memory>
 #include <vector>
 #include <utility>
+#include "model_types.h"
 #include "cocos2d.h"
 #include "Units.h"
 #include "Monsters.h"
-#include "graph_params.h"
 
 namespace base_structures {
-    enum CellType {
-        BASE_CELL,
-        CASTLE,
-        DANGEON,
-        ROAD,
-        BASEMENT
+    static const std::string cell_sprite[] = {
+            "res/cells/base_cell.png",
+            "res/cells/castle.png",
+            "res/cells/dangeon.png",
+            "res/cells/road.png",
+            "res/cells/basement.png"
     };
-    typedef std::list<std::pair<std::shared_ptr<Monster>, double>> Wave;
-    typedef vector<Wave> WaveList;
-
     class Cell {
     public:
         Cell(CellType t = BASE_CELL): type_(t) {
-            sprite = cocos2d::Sprite::create(cell_sprite[int(CellType)]);
+            sprite_ = cocos2d::Sprite::create(cell_sprite[int(type_)]);
         };
         Cell(const Cell& cp);
         Cell(Cell && cm);
@@ -43,7 +40,7 @@ namespace base_structures {
     class Castle: public Cell {
     public:
         Castle(): Cell(CASTLE) {};
-        Castle(int hp, int gold): Castle(), hp_(hp), gold_(gold) {};
+        Castle(int hp, int gold): hp_(hp), gold_(gold), Cell(CASTLE) {};
         Castle(const Castle& cp);
         Castle(Castle&& cm);
         //TODO constructor from save
@@ -58,29 +55,33 @@ namespace base_structures {
 
     class Dangeon: public Cell {
     public:
-        Dangeon(std::istream& is): Cell(DANGEON) {
-            int k;
-            save_ >> k;
-            while (k != 100) { // End reading when wave num is 100 (delemiter)
+        Dangeon(): Cell(DANGEON) {};
+        Dangeon(std::istream& is): Cell(DANGEON), waves(100) {
+            int k, last_wave_num = -1;
+            is >> k;
+            while (k != 100) { // End reading when wave num is 100 (delimiter)
+                if (k != last_wave_num) last_wave_num = k;
                 double spawn_time;
                 MonsterDescriptor desc;
-                save_ >> spawn_time >> desc;
-
+                is >> desc >> spawn_time;
+                waves[k].push_back({std::make_shared<Monster>(desc), spawn_time});
             }
+            waves.resize(last_wave_num + 1);
         };
         Dangeon(const Dangeon& cp);
         Dangeon(Dangeon&& cm);
         //TODO constructor from save
-        int NextWave() const noexcept { cur_wave_it++;};
+        int NextWave() noexcept { cur_wave_it++;};
         bool isActive() {return isActive_;};
-        int getCurWaveNum() const noexcept { return cur_wave_num + 1;};
+        int getCurWaveNum() const noexcept { return cur_wave_it + 1;};
         std::shared_ptr<Monster> ReleaseMonster();
         double NextMonsterTime() const noexcept {
-            if (waves[cur_wave_it].front() != waves[cur_wave_it].end())
+            if (waves[cur_wave_it].begin() != waves[cur_wave_it].end())
                 return waves[cur_wave_it].front().second;
             else
                 return std::numeric_limits<double>::max();
         }
+        int saveToFile(std::ofstream& os) const;
     private:
         WaveList waves;
         int cur_wave_it = -1;
