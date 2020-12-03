@@ -6,6 +6,24 @@
 #include <stdexcept>
 
 namespace base_structures {
+    std::istream& operator>>(std::istream& is, MonsterDescriptor& desc) noexcept {
+        try {
+            MonsterModel model;
+            int hp;
+            int speed;
+            int cost;
+            is >> model >> hp >> speed >> cost;
+            desc.model = model;
+            desc.hp = hp;
+            desc.speed = speed;
+            desc.cost = cost;
+        }
+        catch (...) {
+            is.setstate(std::ios::failbit);
+        }
+        return is;
+    }
+
     Monster& Monster::setRelation(std::shared_ptr<Cell> cell) {
         if (cell == nullptr) {
             throw std::invalid_argument("Monster can't relate to null cell");

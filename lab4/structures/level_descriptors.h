@@ -15,14 +15,14 @@ struct UnitLevel {
 };
 
 struct EffectLevel {
-    time_t effect_time;
+    double effect_time;
     float effect_strength;
 };
 
-std::vector<UnitLevel> TOWER_DESCR;
-std::vector<UnitLevel> TRAP_DESCR;
-std::vector<EffectLevel> MAGICTOWER_DESCR;
-std::vector<EffectLevel> MAGICTRAP_DESCR;
+static std::vector<UnitLevel> TOWER_DESCR;
+static std::vector<UnitLevel> TRAP_DESCR;
+static std::vector<EffectLevel> MAGICTOWER_DESCR;
+static std::vector<EffectLevel> MAGICTRAP_DESCR;
 
 int LoadUnitDescr(std::vector<UnitLevel>& descr, std::string filename) {
     std::ifstream config(filename, std::ios::binary);

@@ -8,6 +8,7 @@
 #include <list>
 #include <string>
 #include <utility>
+#inlcude <iostream>
 #include "cocos2d.h"
 #include "Map.h"
 
@@ -28,11 +29,13 @@ namespace base_structures {
         STRONG
     };
 
-    struct MonsterDiscriptor {
+    struct MonsterDescriptor {
         int hp;
         int speed;
         int cost;
         MonsterModel model;
+
+        friend std::istream& operator>>(std::istream& is, MonsterDescriptor& desc) noexcept;
     };
 
     class Monster {
@@ -40,7 +43,7 @@ namespace base_structures {
         Monster(int hp = 100, int speed = 40, int cost = 50, std::string sprite_f = monster_models[0]): hp_(hp), speed_(speed), cost_(cost) {
             sprite_ = cocos2d::Sprite::create(sprite_f);
         }
-        Monster(MonsterDiscriptor& disc): Monster(disc.hp, disc.speed, disc.cost, monster_models[int(disc.model)]) {};
+        Monster(MonsterDescriptor& disc): Monster(disc.hp, disc.speed, disc.cost, monster_models[int(disc.model)]) {};
         Monster(const Monster& cp);
         Mnster(Monster&& cm);
         int getCost() const noexcept { return cost_;};

@@ -5,6 +5,7 @@
 #include <chrono>
 #include <cmath>
 #include <list>
+#include <fstream>
 #include "Map.h"
 #include "cocos2d.h"
 
@@ -73,4 +74,49 @@ namespace base_structures {
         return unit_;
     }
 
+    int Map_::load(std::string filename) {
+        std::ifstream save_(filename, std::ios::binary);
+        if (!save_.is_open())
+            return -1;
+        CellType celltype;
+        int size_x, size_y;
+        std::vector <std::pair<int, int>> way_trace;
+        if (!save_.eof()) {
+            save_ >> size_x >> size_y;
+            cell_arr.resize(size_x);
+            for (auto &it : cell_arr) {
+                it->resize(size_y);
+            }
+        }
+        for (int i = 0; i < size_x; i++) {
+            for (int j = 0; j < size_y; j++) {
+                if (!save_.is_open())
+                    return -1;
+                save_ >> celltype;
+                switch (celltype) {
+                    case DANGEON:
+                        cell_arr[i][j] = std::make_shared<Dangeon>(save_)
+                        break;
+                    case BASEMENT:
+                        cell_arr[i][j] = std::make_shared<Basement>();
+                        break;
+                    case ROAD:
+                        int x, y;
+                        save_ >> x >> y;
+                        way_trac.push_back({x, y});
+                        cell_arr[i][j] = std::make_shared<Road>();
+                        break;
+                    case CASTLE:
+                        int hp, gold;
+                        save_ >> hp >> gold;
+                        cell_arr[i][j] = std::make_shared<Castle>(hp, gold);
+                        break;
+                    default:
+                        cell_arr[i][j] = std::make_shared<Cell>();
+                        break;
+                }
+            }
+        }
+
+    }
 }

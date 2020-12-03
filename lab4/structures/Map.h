@@ -43,6 +43,7 @@ namespace base_structures {
     class Castle: public Cell {
     public:
         Castle(): Cell(CASTLE) {};
+        Castle(int hp, int gold): Castle(), hp_(hp), gold_(gold) {};
         Castle(const Castle& cp);
         Castle(Castle&& cm);
         //TODO constructor from save
@@ -51,14 +52,21 @@ namespace base_structures {
         void income(const Monster& frag) noexcept;
         void doDamage(const Monster& frag) noexcept;
     private:
-        int hp_;
-        int gold_;
+        int hp_ = 200;
+        int gold_ = 100;
     };
 
     class Dangeon: public Cell {
     public:
-        Dangeon(std::string filename): Cell(DANGEON) {
-            MakeWaveFromFile(waves, filename);
+        Dangeon(std::istream& is): Cell(DANGEON) {
+            int k;
+            save_ >> k;
+            while (k != 100) { // End reading when wave num is 100 (delemiter)
+                double spawn_time;
+                MonsterDescriptor desc;
+                save_ >> spawn_time >> desc;
+
+            }
         };
         Dangeon(const Dangeon& cp);
         Dangeon(Dangeon&& cm);
@@ -94,12 +102,18 @@ namespace base_structures {
 
     class Road: public Placable {
     public:
-        Road(): Placable(ROAD), next(nullptr) {};
+        Road(std::shared_ptr<Road> n = nullptr): Placable(ROAD), next(n) {};
         Road(const Road& cp);
         Road(Road&& cm);
         //TODO constructor from save
         cocos2d::Vec2 getDirection();
         std::shared_ptr<Road> getNext() const noexcept { return next;};
+        std::shared_ptr<Road> setNext(std::shared_ptr<Road> n) {
+            if (n.get() != this)
+                next = n;
+            else
+                throw std::invalid_argument("Way loop detected.");
+        };
         std::shared_ptr<Unit> setUnit() override {return setUnit(FROZEN);};
         std::shared_ptr<Unit> setUnit(EffectType type);
         std::shared_ptr<Unit> setUnit(std::shared_ptr<Unit> unit);
@@ -123,7 +137,7 @@ namespace base_structures {
 
         int save(std::string filename) const;
         int load(std::string filename);
-        int resize(int new_size_x, int new_size_y);
+        // int resize(int new_size_x, int new_size_y);
     };
 
     struct UnitTable_ {
