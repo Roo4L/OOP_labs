@@ -6,14 +6,7 @@
 #include <stdexcept>
 
 namespace base_structures {
-    Monster::~Monster() {
-        for (auto& it : MonsterTable) {
-            if (it->get() == this) {
-                MonsterTable.erase(it);
-            }
-        }
-    }
-    Monster& Monster::setRelation(shared_ptr<Cell> cell) {
+    Monster& Monster::setRelation(std::shared_ptr<Cell> cell) {
         if (cell == nullptr) {
             throw std::invalid_argument("Monster can't relate to null cell");
         }

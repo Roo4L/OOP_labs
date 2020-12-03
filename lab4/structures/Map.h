@@ -20,8 +20,8 @@ namespace base_structures {
         ROAD,
         BASEMENT
     };
-    typedef std::list<std::pair<std::shared_ptr<Monster>, time_t>> Wave;
-    typedef const vector<Wave> WaveList;
+    typedef std::list<std::pair<std::shared_ptr<Monster>, double>> Wave;
+    typedef vector<Wave> WaveList;
 
     class Cell {
     public:
@@ -36,7 +36,7 @@ namespace base_structures {
             sprite_->release();
         }
         cocos2d::Sprite* sprite_;
-    private:
+    protected:
         CellType type_;
     };
 
@@ -63,14 +63,19 @@ namespace base_structures {
         Dangeon(const Dangeon& cp);
         Dangeon(Dangeon&& cm);
         //TODO constructor from save
-        int NextWave() const noexcept { cur_wave_it++; wave_start = time();};
+        int NextWave() const noexcept { cur_wave_it++;};
         bool isActive() {return isActive_;};
         int getCurWaveNum() const noexcept { return cur_wave_num + 1;};
         std::shared_ptr<Monster> ReleaseMonster();
+        double NextMonsterTime() const noexcept {
+            if (waves[cur_wave_it].front() != waves[cur_wave_it].end())
+                return waves[cur_wave_it].front().second;
+            else
+                return std::numeric_limits<double>::max();
+        }
     private:
         WaveList waves;
         int cur_wave_it = -1;
-        time_t wave_start = 0;
         std::shared_ptr<Road> next;
         bool isActive_ = true;
     };
@@ -89,13 +94,15 @@ namespace base_structures {
 
     class Road: public Placable {
     public:
-        Road(): Placable(ROAD) {};
+        Road(): Placable(ROAD), next(nullptr) {};
         Road(const Road& cp);
         Road(Road&& cm);
         //TODO constructor from save
         cocos2d::Vec2 getDirection();
         std::shared_ptr<Road> getNext() const noexcept { return next;};
-        std::shared_ptr<Unit> setUnit(EffectType type) override;
+        std::shared_ptr<Unit> setUnit() override {return setUnit(FROZEN);};
+        std::shared_ptr<Unit> setUnit(EffectType type);
+        std::shared_ptr<Unit> setUnit(std::shared_ptr<Unit> unit);
     private:
         std::shared_ptr<Road> next;
     };
@@ -107,6 +114,7 @@ namespace base_structures {
         Basement(Basement&& cm);
         //TODO constructor from save
         shared_ptr<Unit> setUnit() override;
+        std::shared_ptr<Unit> setUnit(std::shared_ptr<Unit> unit);
     };
 
     struct Map_ {
@@ -123,7 +131,7 @@ namespace base_structures {
         std::list<std::shared_ptr<MagicTrap>> traps;
     };
 
-    UnitTable_ UnitTable;
-    Map_ Map;
+    // UnitTable_ UnitTable;
+    // Map_ Map;
 }
 #endif //LAB4_MAP_H

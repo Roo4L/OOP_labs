@@ -2,11 +2,11 @@
 // Created by copiedwonder on 23.11.2020.
 //
 
-#include <ctime>
-#include <math>
+#include <chrono>
+#include <cmath>
+#include <list>
 #include "Map.h"
 #include "cocos2d.h"
-#include "GameScene.h"
 
 namespace base_structures {
     Cell::Cell(const Cell &cp) {
@@ -29,16 +29,14 @@ namespace base_structures {
         hp_ -= frag.getHP();
     }
 
-    shared_ptr<Monster> Dangeon::ReleaseMonster() {
-        while (waves[cur_wave_it].front.second time_t <= time() - wave_start) {
-            std::shared_ptr<Monster> m = move(waves[cur_wave_it].front.first);
-            waves[cur_wave_it].pop_front();
-            //add monster on map
-            m->setRelation(next);
-            m->sprite_->setPosition(sprite_->getPositionX(), sprite_->getPositioinY());
-            game_scene->addChile(m->sprite());
-            MonsterTable.push_back(m);
-        }
+    std::shared_ptr<Monster> Dangeon::ReleaseMonster() {
+        std::shared_ptr<Monster> m = move(waves[cur_wave_it].front().first);
+        waves[cur_wave_it].pop_front();
+        //add monster on map
+        m->setRelation(next);
+        m->sprite_->setPosition(sprite_->getPositionX(), sprite_->getPositionY());
+        MonsterTable.push_back(m);
+        return m;
     }
 
     cocos2d::Vec2 Road::getDirection() {
@@ -47,35 +45,31 @@ namespace base_structures {
         return cocos2d::Vec2(x / abs(x) , y / abs(y));
     }
 
-    shared_ptr<Unit> Road::setUnit(EffectType type) {
+    std::shared_ptr<Unit> Road::setUnit(EffectType type) {
         if (unit_ != nullptr) throw std::logic_error("Can't set unit to non-empty cell.");
-        unit_ = make_shared<MagicTrap>(sprite_->getPositionX() / sprite_->getContentSize().x,
-                            sprite_->getPositionY() / sprite_->getContentSize().y,
+        unit_ = std::make_shared<MagicTrap>(sprite_->getPositionX() / sprite_->getContentSize().width,
+                            sprite_->getPositionY() / sprite_->getContentSize().height,
                             type);
-        UnitTable.traps.push_back(unit_);
         return unit_;
     }
 
-    shared_ptr<Unit> Road::setUnit(shared_ptr<Unit> unit) {
+    std::shared_ptr<Unit> Road::setUnit(std::shared_ptr<Unit> unit) {
         if (unit_ != nullptr) throw std::logic_error("Can't set unit to non-empty cell.");
         unit_ = unit;
-        UnitTable.traps.push_back(unit_);
         return unit_;
     }
 
-    shared_ptr<Unit> Basement::setUnit() {
+    std::shared_ptr<Unit> Basement::setUnit() {
         if (unit_ != nullptr) throw std::logic_error("Can't set unit to non-empty cell.");
-        unit_ = make_shared<Tower>(sprite_->getPositionX() / sprite_->getContentSize().x,
-                            sprite_->getPositionY() / sprite_->getContentSize().y,
+        unit_ = make_shared<Tower>(sprite_->getPositionX() / sprite_->getContentSize().width,
+                            sprite_->getPositionY() / sprite_->getContentSize().height,
                             unit_models[0]);
-        UnitTable.towers.push_back(unit_);
         return unit_;
     }
 
-    shared_ptr<Unit> Basement::setUnit(shared_ptr<Unit> unit) {
+    std::shared_ptr<Unit> Basement::setUnit(std::shared_ptr<Unit> unit) {
         if (unit_ != nullptr) throw std::logic_error("Can't set unit to non-empty cell.");
         unit_ = unit;
-        UnitTable.towers.push_back(unit_);
         return unit_;
     }
 

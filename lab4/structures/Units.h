@@ -68,7 +68,6 @@ namespace base_structures {
         POISON,
         EXHAUST
     };
-
     class Unit{
     public:
         Unit(int x, int y, std::string sprite_f, int level = 0): x_(x), y_(y), level_ (level) {
@@ -155,5 +154,4 @@ namespace base_structures {
         }
     }
 }
-
 #endif //LAB4_UNITS_H

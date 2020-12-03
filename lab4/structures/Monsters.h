@@ -18,7 +18,7 @@ namespace base_structures {
     };
 
     struct Effect {
-        time_t effect_time;
+        double effect_time;
         float effect_strength;
         EffectType type;
     };
@@ -60,13 +60,11 @@ namespace base_structures {
         int hp_ = 100;
         int speed_ = 40;
         int cost_ = 50;
-        std::list<std::pair<Effect, time_t>> debufs;
+        std::list<std::pair<Effect, double>> debufs;
         shared_ptr<Cell> relation = nullptr;
     };
 
     typedef std::list<std::shared_ptr<Monster>> MonsterTable_;
-
-    static MonsterTable_ MonsterTable;
 }
 
 
