@@ -4,18 +4,32 @@
 
 #include "base_structures.h"
 #include <algorithm>
+#include <memory>
 namespace base_structures {
+    int LoadUnitDescr(std::vector<UnitLevel> &descr, std::string filename) {
+        std::ifstream config(filename, std::ios::binary);
+        if (!config.is_open()) {
+            return -1;
+        }
+        char *buf = new char[sizeof(UnitLevel)];
+        UnitLevel *level = new UnitLevel();
+        while (!config.eof()) {
+            config.read((char *) level, sizeof(UnitLevel));
+            descr.push_back(*level);
+        }
+        config.close();
+        return 0;
+    }
+
     /*
      * Map definition
      */
     Cell::Cell(const Cell &cp) {
         type_ = cp.type_;
-        sprite_ = cocos2d::Sprite::createWithTexture(cp.sprite_->getTexture());
     }
 
     Castle::Castle(const Castle &cp) {
         type_ = cp.type_;
-        sprite_ = cocos2d::Sprite::createWithTexture(cp.sprite_->getTexture());
         hp_ = cp.hp_;
         gold_ = cp.gold_;
     }
@@ -26,7 +40,7 @@ namespace base_structures {
         hp_ -= frag.getHP();
     }
 
-    Dangeon::Dangeon(std::istream& is): Cell(DANGEON), waves(100) {
+    Dangeon::Dangeon(int x, int y, std::istream& is): Cell(x, y, DANGEON), waves(100) {
         int k, last_wave_num = -1;
         is >> k;
         while (k != 100) { // End reading when wave num is 100 (delimiter)
@@ -39,11 +53,12 @@ namespace base_structures {
         waves.resize(last_wave_num + 1);
     };
     std::shared_ptr<Monster> Dangeon::ReleaseMonster() {
+        if (!isActive() || waves[cur_wave_it].begin() != waves[cur_wave_it].end())
+            return nullptr;
         std::shared_ptr<Monster> m = move(waves[cur_wave_it].front().first);
         waves[cur_wave_it].pop_front();
         //add monster on map
         m->setRelation(next);
-        m->sprite_->setPosition(sprite_->getPositionX(), sprite_->getPositionY());
         return m;
     }
     int Dangeon::saveToFile(std::ofstream &os) const {
@@ -59,16 +74,12 @@ namespace base_structures {
         return 0;
     }
 
-    cocos2d::Vec2 Road::getDirection() {
-        float x = next->sprite_->getPositionX() - sprite_->getPositionX();
-        float y = next->sprite_->getPositionY() - sprite_->getPositionY();
-        return cocos2d::Vec2(x / abs(x) , y / abs(y));
-    }
     std::shared_ptr<Unit> Road::setUnit(EffectType type) {
         if (unit_ != nullptr) throw std::logic_error("Can't set unit to non-empty cell.");
-        unit_ = std::make_shared<MagicTrap>(sprite_->getPositionX() / sprite_->getContentSize().width,
-                                            sprite_->getPositionY() / sprite_->getContentSize().height,
-                                            type);
+        unit_ = std::static_pointer_cast<Unit>(
+                                std::make_shared<MagicTrap>(sprite_->getPositionX() / sprite_->getContentSize().width,
+                                                            sprite_->getPositionY() / sprite_->getContentSize().height,
+                                                                type));
         return unit_;
     }
     std::shared_ptr<Unit> Road::setUnit(std::shared_ptr<Unit> unit) {
@@ -113,24 +124,25 @@ namespace base_structures {
                 save_ >> celltype;
                 switch (celltype) {
                     case DANGEON:
-                        cell_arr[i][j] = std::static_pointer_cast<Cell>(std::make_shared<Dangeon>(save_));
+                        cell_arr[i][j] = std::static_pointer_cast<Cell>(std::make_shared<Dangeon>(i, j, save_));
                         break;
                     case BASEMENT:
-                        cell_arr[i][j] = std::static_pointer_cast<Cell>(std::make_shared<Basement>());
+                        cell_arr[i][j] = std::static_pointer_cast<Cell>(std::make_shared<Basement>(i, j));
                         break;
                     case ROAD:
                         int x, y;
                         save_ >> x >> y;
                         way_trace.push_back(std::pair<int,int>(i * size_y + j, x * size_y + y));
-                        cell_arr[i][j] = std::static_pointer_cast<Cell>(std::make_shared<Road>());
+                        cell_arr[i][j] = std::static_pointer_cast<Cell>(std::make_shared<Road>(i, j));
                         break;
                     case CASTLE:
                         int hp, gold;
                         save_ >> hp >> gold;
-                        cell_arr[i][j] = std::static_pointer_cast<Cell>(std::make_shared<Castle>(hp, gold));
+                        castle = std::make_shared<Castle>(i, j, hp, gold);
+                        cell_arr[i][j] = std::static_pointer_cast<Cell>(castle);
                         break;
                     default:
-                        cell_arr[i][j] = std::make_shared<Cell>();
+                        cell_arr[i][j] = std::make_shared<Cell>(i, j);
                         break;
                 }
             }
@@ -214,6 +226,11 @@ namespace base_structures {
         return -m.getSpeed();
     }
 
+    Tower::Tower(const Tower& cp): Tower(cp.x_, cp.y_) {
+        sprite_ = cocos2d::Sprite::createWithTexture(cp.sprite_->getTexture());
+        level_ = cp.level_;
+    }
+
     std::shared_ptr<MagicTower> Tower::toMagic(EffectType type) {
         std::shared_ptr <MagicTower> res = std::make_shared<MagicTower>(*this, type);
         this->~Tower();
@@ -221,10 +238,10 @@ namespace base_structures {
     }
     std::shared_ptr<Monster> Tower::Attack(MonsterTable_& MonsterTable) {
         std::shared_ptr<Monster> m = nullptr;
-        int regression = std::numeric_limits<int>::max();
+        float regression = std::numeric_limits<float>::max();
         for (auto it : MonsterTable) {
-            int res;
-            if (isReachable(*it) && (res = ATTACK_CONDITIONS[int(style_)](*this, *it) < regression)) {
+            float res;
+            if (isReachable(*it) && ((res = ATTACK_CONDITIONS[int(style_)](*this, *it)) < regression)) {
                 regression = res;
                 m = it;
             }
@@ -250,7 +267,15 @@ namespace base_structures {
     float Tower::getDistance(const Monster& monster) const noexcept {
         return (monster.sprite_->getPosition().getDistance(sprite_->getPosition()));
     }
-
+    bool MagicTower::isEffectUpgradable() noexcept {
+        return (MAGICTOWER_DESCR.size() != effect_level_ + 1);
+    }
+    int MagicTower::UpgradeEffect() noexcept {
+        if (isEffectUpgradable()) {
+            effect_level_++;
+            return 0;
+        } else return -1;
+    }
     std::shared_ptr <Monster> MagicTower::Attack(MonsterTable_& MonsterTable) {
         std::shared_ptr<Monster> m = nullptr;
         int regression = std::numeric_limits<int>::max();
@@ -279,6 +304,15 @@ namespace base_structures {
     int MagicTrap::Upgrade() noexcept {
         if (isUpgradable()) {
             level_++;
+            return 0;
+        } else return -1;
+    }
+    bool MagicTrap::isEffectUpgradable() noexcept {
+        return (MAGICTRAP_DESCR.size() != effect_level_ + 1);
+    }
+    int MagicTrap::UpgradeEffect() noexcept {
+        if (isEffectUpgradable()) {
+            effect_level_++;
             return 0;
         } else return -1;
     }

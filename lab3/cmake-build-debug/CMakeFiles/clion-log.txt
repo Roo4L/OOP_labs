@@ -1,4 +1,4 @@
-/snap/clion/135/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/copiedwonder/OOP_Labs/lab3
+/snap/clion/137/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/copiedwonder/OOP_Labs/lab3
 -- PROJECT_NAME:SchemeConstuctor
 -- PROJECT_SOURCE_DIR:/home/copiedwonder/OOP_Labs/lab3/application/SchemeConstuctor
 -- COCOS2DX_ROOT_PATH:/home/copiedwonder/OOP_Labs/lab3/application/SchemeConstuctor/cocos2d
@@ -16,7 +16,7 @@
 -- ZLIB include dirs: /usr/include
 -- PNG include dirs: /usr/include;/usr/include
 -- GLEW include dirs: /usr/include
-CMake Warning (dev) at /snap/clion/135/bin/cmake/linux/share/cmake-3.17/Modules/FindOpenGL.cmake:305 (message):
+CMake Warning (dev) at /snap/clion/137/bin/cmake/linux/share/cmake-3.17/Modules/FindOpenGL.cmake:305 (message):
   Policy CMP0072 is not set: FindOpenGL prefers GLVND by default when
   available.  Run "cmake --help-policy CMP0072" for policy details.  Use the
   cmake_policy command to set the policy and suppress this warning.

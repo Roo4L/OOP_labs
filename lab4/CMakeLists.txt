@@ -3,5 +3,6 @@ project(lab4)
 
 add_subdirectory(TDS)
 add_subdirectory(structures)
+add_subdirectory(testing)
 
 include_directories(structures)
