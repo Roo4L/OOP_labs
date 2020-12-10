@@ -1,7 +1,3 @@
-//
-// Created by copiedwonder on 05.12.2020.
-//
-
 #include "base_structures.h"
 #include <algorithm>
 #include <memory>
@@ -26,12 +22,14 @@ namespace base_structures {
      */
     Cell::Cell(const Cell &cp) {
         type_ = cp.type_;
+        sprite_ = cocos2d::Sprite::createWithTexture(cp.sprite_->getTexture());
     }
 
     Castle::Castle(const Castle &cp) {
         type_ = cp.type_;
         hp_ = cp.hp_;
         gold_ = cp.gold_;
+        sprite_ = cocos2d::Sprite::createWithTexture(cp.sprite_->getTexture());
     }
     void Castle::income(const Monster& frag) noexcept {
         gold_ += frag.getCost();
@@ -40,10 +38,12 @@ namespace base_structures {
         hp_ -= frag.getHP();
     }
 
-    Dangeon::Dangeon(int x, int y, std::istream& is): Cell(x, y, DANGEON), waves(100) {
+    Dangeon::Dangeon(int x, int y, std::ifstream& is): Cell(x, y, DANGEON), waves(100) {
         int k, last_wave_num = -1;
         is >> k;
-        while (k != 100) { // End reading when wave num is 100 (delimiter)
+        if (!is.good())
+            throw std::invalid_argument("Dangeone Constructor - input file can't be read.");
+        while (k < 100) { // End reading when wave num is 100 (delimiter)
             if (k != last_wave_num) last_wave_num = k;
             double spawn_time;
             MonsterDescriptor desc;
@@ -59,6 +59,7 @@ namespace base_structures {
         waves[cur_wave_it].pop_front();
         //add monster on map
         m->setRelation(next);
+        m->sprite_->setPosition(sprite_->getPositionX(), sprite_->getPositionY());
         return m;
     }
     int Dangeon::saveToFile(std::ofstream &os) const {
@@ -74,12 +75,21 @@ namespace base_structures {
         return 0;
     }
 
+    cocos2d::Vec2 Road::getDirection() {
+        if (next == nullptr) {
+            return {0, 0};
+        }
+        float x = next->sprite_->getPositionX() - sprite_->getPositionX();
+        float y = next->sprite_->getPositionY() - sprite_->getPositionY();
+        return cocos2d::Vec2(sgn(x) , sgn(y));
+    }
+
     std::shared_ptr<Unit> Road::setUnit(EffectType type) {
         if (unit_ != nullptr) throw std::logic_error("Can't set unit to non-empty cell.");
         unit_ = std::static_pointer_cast<Unit>(
-                                std::make_shared<MagicTrap>(sprite_->getPositionX() / sprite_->getContentSize().width,
-                                                            sprite_->getPositionY() / sprite_->getContentSize().height,
-                                                                type));
+                std::make_shared<MagicTrap>(sprite_->getPositionX() / sprite_->getContentSize().width,
+                                            sprite_->getPositionY() / sprite_->getContentSize().height,
+                                            type));
         return unit_;
     }
     std::shared_ptr<Unit> Road::setUnit(std::shared_ptr<Unit> unit) {
@@ -90,9 +100,9 @@ namespace base_structures {
 
     std::shared_ptr<Unit> Basement::setUnit() {
         if (unit_ != nullptr) throw std::logic_error("Can't set unit to non-empty cell.");
-        unit_ = std::make_shared<Tower>(sprite_->getPositionX() / sprite_->getContentSize().width,
-                                   sprite_->getPositionY() / sprite_->getContentSize().height,
-                                   unit_models[0]);
+        unit_ = std::static_pointer_cast<Unit>(
+                        std::make_shared<Tower>(sprite_->getPositionX() / sprite_->getContentSize().width,
+                                        sprite_->getPositionY() / sprite_->getContentSize().height));
         return unit_;
     }
     std::shared_ptr<Unit> Basement::setUnit(std::shared_ptr<Unit> unit) {
@@ -107,7 +117,7 @@ namespace base_structures {
             return -1;
         int celltype;
         int size_x, size_y;
-        std::vector <std::pair<int, int>> way_trace;
+        std::vector<std::pair<int, int>> way_trace;
         if (!save_.eof()) {
             save_ >> size_x >> size_y;
             cell_arr.resize(size_x);
@@ -132,7 +142,7 @@ namespace base_structures {
                     case ROAD:
                         int x, y;
                         save_ >> x >> y;
-                        way_trace.push_back(std::pair<int,int>(i * size_y + j, x * size_y + y));
+                        way_trace.emplace_back(std::pair<int,int>(i * size_y + j, x * size_y + y));
                         cell_arr[i][j] = std::static_pointer_cast<Cell>(std::make_shared<Road>(i, j));
                         break;
                     case CASTLE:
@@ -231,11 +241,6 @@ namespace base_structures {
         level_ = cp.level_;
     }
 
-    std::shared_ptr<MagicTower> Tower::toMagic(EffectType type) {
-        std::shared_ptr <MagicTower> res = std::make_shared<MagicTower>(*this, type);
-        this->~Tower();
-        return res;
-    }
     std::shared_ptr<Monster> Tower::Attack(MonsterTable_& MonsterTable) {
         std::shared_ptr<Monster> m = nullptr;
         float regression = std::numeric_limits<float>::max();
@@ -332,9 +337,6 @@ namespace base_structures {
         }
         return 0;
     }
-    MagicTrap::~MagicTrap() {
-        sprite_->release();
-    }
     /*
      * Monsters definition
      */
@@ -384,7 +386,4 @@ namespace base_structures {
         hp_ -= damage;
         return *this;
     }
-    Monster& Monster::Move() {
-        return *this;
-    };
 }

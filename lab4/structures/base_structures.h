@@ -9,6 +9,7 @@
 #include <list>
 #include <fstream>
 #include <chrono>
+#include "cocos2d.h"
 
 namespace base_structures {
     /*
@@ -49,10 +50,38 @@ namespace base_structures {
         double effect_strength;
         EffectType type;
     };
-    static std::vector<UnitLevel> TOWER_DESCR;
-    static std::vector<UnitLevel> TRAP_DESCR;
-    static std::vector<EffectLevel> MAGICTOWER_DESCR;
-    static std::vector<EffectLevel> MAGICTRAP_DESCR;
+    static std::vector<UnitLevel> TOWER_DESCR = {
+            {
+                100, 10, 50
+            },
+            {
+                120, 15, 50
+            }
+    };
+    static std::vector<UnitLevel> TRAP_DESCR {
+            {
+                50, 20, 50
+            },
+            {
+                80, 30, 50
+            }
+    };
+    static std::vector<EffectLevel> MAGICTOWER_DESCR {
+            {
+                std::chrono::duration<double>(1), 0.25
+            },
+            {
+                std::chrono::duration<double>(1.5), 0.30
+            }
+    };
+    static std::vector<EffectLevel> MAGICTRAP_DESCR {
+            {
+                std::chrono::duration<double>(2), 0.3
+            },
+            {
+                std::chrono::duration<double>(2.5), 0.35
+            }
+    };
 
     int LoadUnitDescr(std::vector<UnitLevel> &descr, std::string filename);
     /*
@@ -65,17 +94,28 @@ namespace base_structures {
         ROAD,
         BASEMENT
     };
+    static const std::string cell_sprite[] = {
+            "/home/copiedwonder/OOP_Labs/lab4/TDS/Resources/res/cells/base_cell.png",
+            "/home/copiedwonder/OOP_Labs/lab4/TDS/Resources/res/cells/castle.png",
+            "/home/copiedwonder/OOP_Labs/lab4/TDS/Resources/res/cells/dangeon.png",
+            "/home/copiedwonder/OOP_Labs/lab4/TDS/Resources/res/cells/road.png",
+            "/home/copiedwonder/OOP_Labs/lab4/TDS/Resources/res/cells/basement.png"
+    };
+
     using Wave = std::list<std::pair<std::shared_ptr<base_structures::Monster>, double>>;
     using WaveList = std::vector<Wave>;
 
     class Cell {
     public:
         Cell(): Cell(0, 0, BASE_CELL) {};
-        Cell(int x, int y, CellType t = BASE_CELL): type_(t) {};
+        Cell(int x, int y, CellType t = BASE_CELL): type_(t) {
+            sprite_ = cocos2d::Sprite::create(cell_sprite[int(type_)]);
+            sprite_->setPosition(x * sprite_->getContentSize().width, y * sprite_->getContentSize().height);
+        };
         Cell(const Cell& cp);
-        Cell(Cell && cm);
         virtual CellType getType() const noexcept { return type_;};
         ~Cell() {}
+        cocos2d::Sprite* sprite_;
     protected:
         CellType type_;
     };
@@ -88,7 +128,6 @@ namespace base_structures {
             }
         };
         Castle(const Castle& cp);
-        Castle(Castle&& cm);
 
         int getHp() const noexcept { return hp_;};
         int getGold() const noexcept { return gold_;};
@@ -101,10 +140,8 @@ namespace base_structures {
     class Dangeon: public Cell {
     public:
         Dangeon(int x, int y): Cell(x, y, DANGEON) {};
-        Dangeon(int x, int y, std::istream& is);
+        Dangeon(int x, int y, std::ifstream& is);
         Dangeon(const Dangeon& cp);
-        Dangeon(Dangeon&& cm);
-
         void NextWave() noexcept { cur_wave_it++;};
         bool isActive() {return isActive_;};
         int getCurWaveNum() const noexcept { return cur_wave_it;};
@@ -138,7 +175,7 @@ namespace base_structures {
     public:
         Road(int x, int y, std::shared_ptr<Road> n = nullptr): Placable(x, y, ROAD), next(n) {};
         Road(const Road& cp);
-        Road(Road&& cm);
+        cocos2d::Vec2 getDirection();
         std::shared_ptr<Road> getNext() const noexcept { return next;};
         Road& setNext(std::shared_ptr<Road> n) {
             n.get() != this ? next = n : throw std::invalid_argument("Way loop detected.");
@@ -154,7 +191,6 @@ namespace base_structures {
     public:
         Basement(int x, int y): Placable(x, y, BASEMENT) {};
         Basement(const Basement& cp);
-        Basement(Basement&& cm);
         std::shared_ptr<Unit> setUnit() override;
         std::shared_ptr<Unit> setUnit(std::shared_ptr<Unit> unit);
     };
@@ -175,6 +211,10 @@ namespace base_structures {
         STRONG
     };
 
+    static const std::string monster_models[] = {
+            "res/monsters/week_monster.jpeg",
+            "res/monsters/strong_monster.jpeg"
+    };
 
     struct MonsterDescriptor {
         int hp;
@@ -186,11 +226,12 @@ namespace base_structures {
     };
     class Monster {
     public:
-        Monster() {};
-        Monster(int hp, int speed, int cost, MonsterModel model): hp_(hp), speed_(speed), cost_(cost), model_(model) {};
+        Monster(): Monster(100, 40, 50, WEEK) {};
+        Monster(int hp, int speed, int cost, MonsterModel model): hp_(hp), speed_(speed), cost_(cost), model_(model) {
+            sprite_ = cocos2d::Sprite::create(monster_models[int(model)]);
+        };
         Monster(MonsterDescriptor& disc): Monster(disc.hp, disc.speed, disc.cost, disc.model) {};
         Monster(const Monster& cp);
-        Monster(Monster&& cm);
         int getCost() const noexcept { return cost_;};
         int getHP() const noexcept { return hp_;};
         int getSpeed() const noexcept { return speed_;};
@@ -200,6 +241,7 @@ namespace base_structures {
         Monster& applyDebuf(Effect debuf);
         Monster& getDamage(int damage);
         bool isAlive() const noexcept { return hp_ > 0; };
+        cocos2d::Sprite* sprite_;
     private:
         int hp_ = 100;
         int speed_ = 40;
@@ -214,6 +256,18 @@ namespace base_structures {
     /*
      * Units interface
      */
+
+    static const std::string unit_models[] = {
+            "res/units/tower.png",
+            "res/units/frozen_tower.png",
+            "res/units/poison_tower.png",
+            "res/units/exhaust_tower.png",
+            "res/units/frozen_trap.png",
+            "res/units/poison_trap.png",
+            "res/untis/exhaust_trap.png"
+    };
+
+
     //attack styles
     enum AttackStyle {
         CLOSESTCASTLE,
@@ -237,10 +291,14 @@ namespace base_structures {
 
     class Unit{
     public:
-        Unit(int x, int y, int level = 0): x_(x), y_(y), level_ (level) {};
+        Unit(int x, int y, std::string model, int level = 0): x_(x), y_(y), level_ (level) {
+            sprite_ = cocos2d::Sprite::create();
+            sprite_->setPosition(x * sprite_->getContentSize().width, y * sprite_->getContentSize().height);
+        };
         virtual bool isUpgradable() noexcept = 0;
         virtual int Upgrade() noexcept = 0;
         int getLevel() const noexcept { return level_;};
+        cocos2d::Sprite* sprite_;
     protected:
         int x_;
         int y_;
@@ -249,14 +307,13 @@ namespace base_structures {
     class Tower: public Unit {
     public:
         Tower(const Tower& cp);
-        Tower(Tower&& cm);
-        Tower(int x, int y, int level_ = 0): Unit(x, y, level_) {};
-         // std::shared_ptr<MagicTower> toMagic(EffectType type);
+        Tower(int x, int y, int level = 0): Unit(x, y, unit_models[0], level) {};
+        // std::shared_ptr<MagicTower> toMagic(EffectType type);
         virtual std::shared_ptr<Monster> Attack(MonsterTable_& MonsterTable);
         bool isUpgradable() noexcept override;
         int Upgrade() noexcept override;
-        // bool isReachable(const Monster& monster) const noexcept;
-        // float getDistance(const Monster& monster) const noexcept;
+        bool isReachable(const Monster& monster) const noexcept;
+        float getDistance(const Monster& monster) const noexcept;
         AttackStyle getStyle() const noexcept { return style_;};
         Tower& setStyle(AttackStyle style) noexcept {
             style_ = style;
@@ -278,7 +335,7 @@ namespace base_structures {
     };
     class MagicTower: public Tower, public MagicSignature {
     public:
-        MagicTower(const Tower& tower, EffectType type): Tower(tower), MagicSignature(type){};
+        MagicTower(const Tower& tower, EffectType type, int effect_level = 0): Tower(tower), MagicSignature(type, effect_level){};
         std::shared_ptr<Monster> Attack(MonsterTable_& MonsterTable) override;
         bool isEffectUpgradable() noexcept override;
         int UpgradeEffect() noexcept override;
@@ -286,22 +343,25 @@ namespace base_structures {
     class MagicTrap: public Unit, public MagicSignature {
     public:
         MagicTrap(int x, int y, EffectType type, int effect_level = 0,  int trap_level = 0):
-                Unit(x, y, trap_level), MagicSignature(type, effect_level) {};
+                Unit(x, y, unit_models[4 + int(type)], trap_level), MagicSignature(type, effect_level) {};
         int Activate(MonsterTable_& MonsterTable);
         bool isUpgradable() noexcept override;
         int Upgrade() noexcept override;
         bool isEffectUpgradable() noexcept override;
         int UpgradeEffect() noexcept override;
-        //bool isReachable(const Monster& monster) const noexcept {
-        //    return (monster.sprite_->getPosition().getDistance(sprite_->getPosition()) <= TRAP_DESCR[level_].rad);
-        //}
-        ~MagicTrap();
+        bool isReachable(const Monster& monster) const noexcept {
+            return (monster.sprite_->getPosition().getDistance(sprite_->getPosition()) <= TRAP_DESCR[level_].rad);
+        }
     };
 
     struct UnitTable_ {
         std::list<std::shared_ptr<Tower>> towers;
         std::list<std::shared_ptr<MagicTrap>> traps;
     };
+
+    template <typename T> int sgn(T val) {
+        return (T(0) < val) - (val < T(0));
+    }
 }
 
 #endif //LAB4_BASE_STRUCTURES_H

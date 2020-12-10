@@ -1,0 +1,11 @@
+Road.getDirection()
+Cell.sprite_
+Monster.Move()
+Monster.sprite_
+Unit.sprite_
+Tower.toMagic()
+Tower.isReachable()
+Tower.getDistance()
+MagicTrap.isReachable()
+float closestToTower(const Tower& t, const Monster& m)
+
