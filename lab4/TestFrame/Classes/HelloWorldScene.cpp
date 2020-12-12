@@ -37,120 +37,130 @@ namespace base_structures {
     }
 
     TEST(MapTest, CastleConsturctor) {
-    Castle a(0, 0);
-    EXPECT_EQ(CASTLE, a.getType());
-    EXPECT_EQ(200, a.getHp());
-    EXPECT_EQ(100, a.getGold());
-    Castle b(0, 0, 1304, 1000);
-    EXPECT_EQ(CASTLE, b.getType());
-    EXPECT_EQ(1304, b.getHp());
-    EXPECT_EQ(1000, b.getGold());
-    EXPECT_THROW(Castle c(0, 0, -4, 1000), std::invalid_argument);
+        Castle a(0, 0);
+        EXPECT_EQ(CASTLE, a.getType());
+        EXPECT_EQ(200, a.getHp());
+        EXPECT_EQ(100, a.getGold());
+        Castle b(0, 0, 1304, 1000);
+        EXPECT_EQ(CASTLE, b.getType());
+        EXPECT_EQ(1304, b.getHp());
+        EXPECT_EQ(1000, b.getGold());
+        EXPECT_THROW(Castle c(0, 0, -4, 1000), std::invalid_argument);
     }
 
     TEST(MapTest, CastleIncome) {
-    Castle a(0, 0);
-    Monster m;
-    a.income(m);
-    EXPECT_EQ(CASTLE, a.getType());
-    EXPECT_EQ(150, a.getGold());
-    EXPECT_EQ(200, a.getHp());
-    Castle b(0, 0, 1304, 1000);
-    Monster mm(100, 100, 120, WEEK);
-    b.income(mm);
-    EXPECT_EQ(CASTLE, b.getType());
-    EXPECT_EQ(1304, b.getHp());
-    EXPECT_EQ(1120, b.getGold());
+        Castle a(0, 0);
+        Monster m;
+        a.income(m);
+        EXPECT_EQ(CASTLE, a.getType());
+        EXPECT_EQ(150, a.getGold());
+        EXPECT_EQ(200, a.getHp());
+        Castle b(0, 0, 1304, 1000);
+        Monster mm(100, 100, 120, WEEK);
+        b.income(mm);
+        EXPECT_EQ(CASTLE, b.getType());
+        EXPECT_EQ(1304, b.getHp());
+        EXPECT_EQ(1120, b.getGold());
     }
 
     TEST(MapTest, CastleDoDamage) {
-    Castle a(0, 0);
-    Monster m;
-    a.doDamage(m);
-    EXPECT_EQ(CASTLE, a.getType());
-    EXPECT_EQ(100, a.getGold());
-    EXPECT_EQ(100, a.getHp());
-    Castle b(0, 0, 1304, 1000);
-    Monster mm(1100, 100, 120, WEEK);
-    b.doDamage(mm);
-    EXPECT_EQ(CASTLE, b.getType());
-    EXPECT_EQ(204, b.getHp());
-    EXPECT_EQ(1000, b.getGold());
-    Castle c(0, 0, 50, 50);
-    Monster mmm(100, 100, 100, WEEK);
-    c.doDamage(mmm);
-    EXPECT_EQ(CASTLE, c.getType());
-    EXPECT_EQ(-50, c.getHp());
-    EXPECT_EQ(50, c.getGold());
+        Castle a(0, 0);
+        Monster m;
+        a.doDamage(m);
+        EXPECT_EQ(CASTLE, a.getType());
+        EXPECT_EQ(100, a.getGold());
+        EXPECT_EQ(100, a.getHp());
+        Castle b(0, 0, 1304, 1000);
+        Monster mm(1100, 100, 120, WEEK);
+        b.doDamage(mm);
+        EXPECT_EQ(CASTLE, b.getType());
+        EXPECT_EQ(204, b.getHp());
+        EXPECT_EQ(1000, b.getGold());
+        Castle c(0, 0, 50, 50);
+        Monster mmm(100, 100, 100, WEEK);
+        c.doDamage(mmm);
+        EXPECT_EQ(CASTLE, c.getType());
+        EXPECT_EQ(-50, c.getHp());
+        EXPECT_EQ(50, c.getGold());
     }
 
     TEST(MapTest, DangeonConstructor) {
-    Dangeon a(0, 0);
-    EXPECT_EQ(DANGEON, a.getType());
-    EXPECT_EQ(-1, a.getCurWaveNum());
-    EXPECT_TRUE(a.isActive());
-    // std::ofstream obuf("../FileSamples/DangeonConstructorTest.bin", std::ios::binary);
-    // obuf << 100 << 100 << 100 << int(WEEK);
-    // obuf.close();
-    std::ifstream ibuf("../FileSamples/DangeonConstructorTest.bin", std::ios::binary);
-    if (!ibuf.is_open())
-        throw std::invalid_argument("Test file doesn't exist or currupted.");
-    Dangeon b(0, 0, ibuf);
-    EXPECT_EQ(DANGEON, b.getType());
-    EXPECT_EQ(-1, b.getCurWaveNum());
-    EXPECT_TRUE(b.isActive());
-    ibuf.close();
-    //TODO Check monster in waves
-    }
-
-    TEST(MapTest, DangeonWaves) {
-
+        Dangeon a(0, 0);
+        EXPECT_EQ(DANGEON, a.getType());
+        EXPECT_EQ(-1, a.getCurWaveNum());
+        EXPECT_TRUE(a.isActive());
+        std::ofstream obuf("/home/copiedwonder/OOP_Labs/lab4/TestFrame/FileSamples/DangeonConstructorTest.bin", std::ios::binary);
+        int k = 0;
+        MonsterDescriptor desc = {100, 100, 100, WEEK};
+        double spawn_time = 3.;
+        obuf.write((char *) &k, sizeof(int));
+        obuf.write((char *) &desc, sizeof(MonsterDescriptor));
+        obuf.write((char *) &spawn_time, sizeof(double));
+        k = 100;
+        if (!obuf.write((char *) &k, sizeof(int)))
+            throw std::invalid_argument("DangeonContructorTest.bin can't be created.");
+        obuf.close();
+        std::ifstream ibuf("/home/copiedwonder/OOP_Labs/lab4/TestFrame/FileSamples/DangeonConstructorTest.bin", std::ios::binary);
+        if (!ibuf.is_open())
+            throw std::invalid_argument("Test file doesn't exist or currupted.");
+        Dangeon b(0, 0, ibuf);
+        EXPECT_EQ(DANGEON, b.getType());
+        EXPECT_EQ(-1, b.getCurWaveNum());
+        EXPECT_TRUE(b.isActive());
+        ibuf.close();
+        //TODO Check monster in waves
     }
 
     TEST(MapTest, RoadConstructor) {
-    Road a(0, 0);
-    EXPECT_EQ(ROAD, a.getType());
-    EXPECT_EQ(nullptr, a.getNext());
-    EXPECT_EQ(cocos2d::Vec2(0, 0), a.getDirection());
-    std::shared_ptr<Road> n = std::make_shared<Road>(1, 0);
-    Road b(0, 0, n);
-    EXPECT_EQ(ROAD, b.getType());
-    EXPECT_EQ(n, b.getNext());
-    EXPECT_EQ(cocos2d::Vec2(1, 0), b.getDirection());
+        Road a(0, 0);
+        EXPECT_EQ(ROAD, a.getType());
+        EXPECT_EQ(nullptr, a.getNext());
+        EXPECT_EQ(cocos2d::Vec2(0, 0), a.getDirection());
+        std::shared_ptr<Road> n = std::make_shared<Road>(1, 0);
+        Road b(0, 0, n);
+        EXPECT_EQ(ROAD, b.getType());
+        EXPECT_EQ(n, b.getNext());
+        EXPECT_EQ(cocos2d::Vec2(1, 0), b.getDirection());
     }
 
     TEST(MapTest, RoadSetUnit) {
-    Road a(0, 0);
-    std::shared_ptr<MagicTrap> u = std::dynamic_pointer_cast<MagicTrap>(a.setUnit());
-    EXPECT_EQ(ROAD, a.getType());
-    EXPECT_EQ(nullptr, a.getNext());
-    EXPECT_EQ(cocos2d::Vec2(0, 0), a.getDirection());
-    EXPECT_TRUE(a.isBusy());
-    EXPECT_EQ(u->getType(), FROZEN);
-    EXPECT_EQ(u->getEffectLevel(), 0);
-    EXPECT_EQ(u->getLevel(), 0);
+        Road a(0, 0);
+        std::shared_ptr<MagicTrap> u = std::dynamic_pointer_cast<MagicTrap>(a.setUnit());
+        EXPECT_EQ(ROAD, a.getType());
+        EXPECT_EQ(nullptr, a.getNext());
+        EXPECT_EQ(cocos2d::Vec2(0, 0), a.getDirection());
+        EXPECT_TRUE(a.isBusy());
+        EXPECT_EQ(u->getType(), FROZEN);
+        EXPECT_EQ(u->getEffectLevel(), 0);
+        EXPECT_EQ(u->getLevel(), 0);
     }
-
     TEST(MapTest, BasementConstructor) {
-    Basement a(0, 0);
-    EXPECT_EQ(BASEMENT, a.getType());
+        Basement a(0, 0);
+        EXPECT_EQ(BASEMENT, a.getType());
     }
     TEST(MapTest, BasementSetUnit) {
-    Basement a(0, 0);
-    std::shared_ptr<Tower> u = std::dynamic_pointer_cast<Tower>(a.setUnit());
-    EXPECT_EQ(BASEMENT, a.getType());
-    EXPECT_TRUE(a.isBusy());
-    EXPECT_EQ(u->getLevel(), 0);
+        Basement a(0, 0);
+        std::shared_ptr<Tower> u = std::dynamic_pointer_cast<Tower>(a.setUnit());
+        EXPECT_EQ(BASEMENT, a.getType());
+        EXPECT_TRUE(a.isBusy());
+        EXPECT_EQ(u->getLevel(), 0);
     }
 
     TEST(MapTest, MapLoad) {
-    Map_ Map;
-    if (Map.load("/home/copiedwonder/OOP_Labs/lab4/TestFrame/FileSamples/test_map_1.bin") != 0)
-        throw std::invalid_argument("Save not found or currupted.");
-    EXPECT_EQ(Map.cell_arr[0][0]->getType(), BASE_CELL);
-    EXPECT_EQ(Map.cell_arr[1][0]->getType(), CASTLE);
-    EXPECT_EQ(Map.castle->getHp(), 0x100);
-    EXPECT_EQ(Map.castle->getGold(), 0x10);
+        Map_ Map;
+        Map.cell_arr.resize(2);
+        Map.cell_arr[0].emplace_back(std::make_shared<Cell>(0, 0));
+        Map.castle = std::make_shared<Castle>(1, 0, 150, 50);
+        Map.cell_arr[1].emplace_back(Map.castle);
+        if (Map.save("/home/copiedwonder/OOP_Labs/lab4/TestFrame/FileSamples/test_map_1.bin") != 0)
+            throw std::invalid_argument("Couldn't make save file.");
+        Map_ Map2;
+        if (Map2.load("/home/copiedwonder/OOP_Labs/lab4/TestFrame/FileSamples/test_map_1.bin") != 0)
+            throw std::invalid_argument("Save not found or currupted.");
+        EXPECT_EQ(Map2.cell_arr[0][0]->getType(), BASE_CELL);
+        EXPECT_EQ(Map2.cell_arr[1][0]->getType(), CASTLE);
+        EXPECT_EQ(Map2.castle->getHp(), 150);
+        EXPECT_EQ(Map2.castle->getGold(), 50);
     }
 
     TEST(MonsterTest, MonsterConstructor) {
@@ -228,7 +238,7 @@ namespace base_structures {
         Tower a(0 ,0);
         EXPECT_TRUE(a.isUpgradable());
         Tower b(0, 0, TOWER_DESCR.size() - 1);
-        EXPECT_FALSE(a.isUpgradable());
+        EXPECT_FALSE(b.isUpgradable());
     }
     TEST(UnitTest, TowerUpgrade) {
         Tower a(0, 1);
@@ -279,7 +289,7 @@ namespace base_structures {
     TEST(UnitTest, MagicTrapIsUpgradable) {
         MagicTrap a(3, 4, FROZEN);
         EXPECT_TRUE(a.isUpgradable());
-        MagicTrap b(0, 0, EXHAUST, TRAP_DESCR.size() - 1);
+        MagicTrap b(0, 0, EXHAUST, 0,TRAP_DESCR.size() - 1);
         EXPECT_FALSE(b.isUpgradable());
     }
     TEST(UnitTest, MagicTrapUpgrade) {
@@ -292,7 +302,7 @@ namespace base_structures {
     TEST(UnitTest, MagicTrapIsEffectUpgradable) {
         MagicTrap a(0, 0, FROZEN);
         EXPECT_TRUE(a.isEffectUpgradable());
-        MagicTrap b(0, 0, FROZEN, 0,MAGICTOWER_DESCR.size() -1);
+        MagicTrap b(0, 0, FROZEN, MAGICTOWER_DESCR.size() -1);
         EXPECT_FALSE(b.isEffectUpgradable());
     }
     TEST(UnitTest, MagicTrapUpgradeEffect) {
@@ -364,8 +374,26 @@ bool HelloWorld::init()
         closeItem->setPosition(Vec2(x,y));
     }
 
+    auto testItem = MenuItemImage::create(
+            "CloseNormal.png",
+            "CloseSelected.png",
+            CC_CALLBACK_1(HelloWorld::menuTestCallback, this));
+
+    if (testItem == nullptr ||
+        testItem->getContentSize().width <= 0 ||
+        testItem->getContentSize().height <= 0)
+    {
+        problemLoading("'CloseNormal.png' and 'CloseSelected.png'");
+    }
+    else
+    {
+        float x = origin.x + testItem->getContentSize().width/2;
+        float y = origin.y + testItem->getContentSize().height/2;
+        testItem->setPosition(Vec2(x,y));
+    }
+
     // create menu, it's an autorelease object
-    auto menu = Menu::create(closeItem, NULL);
+    auto menu = Menu::create(testItem, closeItem, NULL);
     menu->setPosition(Vec2::ZERO);
     this->addChild(menu, 1);
 
@@ -404,8 +432,6 @@ bool HelloWorld::init()
         // add the sprite as a child to this layer
         this->addChild(sprite, 0);
     }
-    ::testing::InitGoogleTest();
-    return RUN_ALL_TESTS();
     return true;
 }
 
@@ -421,4 +447,9 @@ void HelloWorld::menuCloseCallback(Ref* pSender)
     //_eventDispatcher->dispatchEvent(&customEndEvent);
 
 
+}
+
+void HelloWorld::menuTestCallback(cocos2d::Ref *pSender) {
+    ::testing::InitGoogleTest();
+    RUN_ALL_TESTS();
 }

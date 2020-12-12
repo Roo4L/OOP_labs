@@ -112,7 +112,6 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     // run
     director->runWithScene(scene);
-
     return true;
 }
 

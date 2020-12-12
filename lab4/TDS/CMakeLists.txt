@@ -57,11 +57,15 @@ endif()
 # add cross-platforms source files and header files 
 list(APPEND GAME_SOURCE
      Classes/AppDelegate.cpp
-     Classes/HelloWorldScene.cpp
+     Classes/MenuScene.cpp
+     Classes/GameScene.cpp
+     Classes/CreateScene.cpp
      )
 list(APPEND GAME_HEADER
      Classes/AppDelegate.h
-     Classes/HelloWorldScene.h
+     Classes/MenuScene.h
+     Classes/GameScene.h
+     Classes/CreateScene.h
      )
 
 if(ANDROID)
@@ -129,10 +133,13 @@ else()
     target_link_libraries(${APP_NAME} -Wl,--whole-archive cpp_android_spec -Wl,--no-whole-archive)
 endif()
 
-target_link_libraries(${APP_NAME} cocos2d)
+target_link_libraries(${APP_NAME}
+                            cocos2d
+                            my_logic)
 target_include_directories(${APP_NAME}
         PRIVATE Classes
         PRIVATE ${COCOS2DX_ROOT_PATH}/cocos/audio/include/
+        PRIVATE ../structures
 )
 
 # mark app resources

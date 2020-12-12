@@ -132,13 +132,13 @@ endif()
 add_subdirectory(googletest-master)
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 target_link_libraries(${APP_NAME} cocos2d
-                                    my_logic
-                                    gtest
-                                    gtest_main)
+        my_logic
+        gtest
+        gtest_main)
 target_include_directories(${APP_NAME}
         PRIVATE Classes
         PRIVATE ${COCOS2DX_ROOT_PATH}/cocos/audio/include/
-        PRIVATE ../structures/
+        PRIVATE ../structures
 )
 
 # mark app resources

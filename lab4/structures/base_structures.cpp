@@ -25,6 +25,22 @@ namespace base_structures {
         sprite_ = cocos2d::Sprite::createWithTexture(cp.sprite_->getTexture());
     }
 
+    Cell& Cell::operator=(const Cell& cp) {
+        type_ = cp.type_;
+        sprite_ = cocos2d::Sprite::createWithTexture(cp.sprite_->getTexture());
+        sprite_->setContentSize(cp.sprite_->getContentSize());
+        sprite_->setPosition(cp.sprite_->getPosition());
+        return *this;
+    }
+
+    Cell& Cell::operator=(Cell&& cm) {
+        type_ = cm.type_;
+        sprite_ = cm.sprite_;
+        cm.type_ = BASE_CELL;
+        cm.sprite_ = nullptr;
+        return *this;
+    }
+
     Castle::Castle(const Castle &cp) {
         type_ = cp.type_;
         hp_ = cp.hp_;
@@ -40,15 +56,19 @@ namespace base_structures {
 
     Dangeon::Dangeon(int x, int y, std::ifstream& is): Cell(x, y, DANGEON), waves(100) {
         int k, last_wave_num = -1;
-        is >> k;
+        is.read((char *) &k, sizeof(int));
         if (!is.good())
             throw std::invalid_argument("Dangeone Constructor - input file can't be read.");
         while (k < 100) { // End reading when wave num is 100 (delimiter)
             if (k != last_wave_num) last_wave_num = k;
             double spawn_time;
             MonsterDescriptor desc;
-            is >> desc >> spawn_time;
+            is.read((char *) &desc, sizeof(MonsterDescriptor));
+            if (!is.read((char *) &spawn_time, sizeof(double)))
+                throw std::invalid_argument("Dangeon Constructor - input file is currupted.");
             waves[k].push_back({std::make_shared<Monster>(desc), spawn_time});
+            if (!is.read((char *) &k, sizeof(int)))
+                throw std::invalid_argument("Dangeon Constructor - input file is currupted.");;
         }
         waves.resize(last_wave_num + 1);
     };
@@ -63,15 +83,23 @@ namespace base_structures {
         return m;
     }
     int Dangeon::saveToFile(std::ofstream &os) const {
-        os << int(DANGEON);
+        CellType type = DANGEON;
+        os.write((char *) &type, sizeof(int));
         for (int i = 0; i < waves.size(); ++i) {
             for (auto& release : waves[i]) {
-                os << i;
-                os << release.first->getHP() << release.first->getSpeed() << release.first->getCost()
-                   << int(release.first->getModel());
+                os.write((char *) &i, sizeof(int));
+                int hp = release.first->getHP();
+                int speed = release.first->getSpeed();
+                int cost = release.first->getCost();
+                MonsterModel model = release.first->getModel();
+                os.write((char *) &hp, sizeof(int));
+                os.write((char *) &speed, sizeof(int));
+                os.write((char *) &cost, sizeof(int));
+                os.write((char *) &model, sizeof(int));
             }
         }
-        os << 100;
+        int delim = 100;
+        os.write((char *) &delim, sizeof(int));
         return 0;
     }
 
@@ -119,7 +147,8 @@ namespace base_structures {
         int size_x, size_y;
         std::vector<std::pair<int, int>> way_trace;
         if (!save_.eof()) {
-            save_ >> size_x >> size_y;
+            save_.read((char *) &size_x, sizeof(int));
+            save_.read((char *) &size_y, sizeof(int));
             cell_arr.resize(size_x);
             for (auto &it : cell_arr) {
                 it.resize(size_y);
@@ -127,11 +156,11 @@ namespace base_structures {
         }
         for (int i = 0; i < size_x; i++) {
             for (int j = 0; j < size_y; j++) {
-                if (!save_.eof()) {
+                if (save_.eof()) {
                     save_.close();
                     return -1;
                 }
-                save_ >> celltype;
+                save_.read((char *) &celltype, sizeof(int));
                 switch (celltype) {
                     case DANGEON:
                         cell_arr[i][j] = std::static_pointer_cast<Cell>(std::make_shared<Dangeon>(i, j, save_));
@@ -141,13 +170,15 @@ namespace base_structures {
                         break;
                     case ROAD:
                         int x, y;
-                        save_ >> x >> y;
+                        save_.read((char *) &x, sizeof(int));
+                        save_.read((char *) &y, sizeof(int));
                         way_trace.emplace_back(std::pair<int,int>(i * size_y + j, x * size_y + y));
                         cell_arr[i][j] = std::static_pointer_cast<Cell>(std::make_shared<Road>(i, j));
                         break;
                     case CASTLE:
                         int hp, gold;
-                        save_ >> hp >> gold;
+                        save_.read((char *) &hp, sizeof(int));
+                        save_.read((char *) &gold, sizeof(int));
                         castle = std::make_shared<Castle>(i, j, hp, gold);
                         cell_arr[i][j] = std::static_pointer_cast<Cell>(castle);
                         break;
@@ -169,12 +200,15 @@ namespace base_structures {
         std::ofstream os(filename, std::ios::binary);
         if (!os.is_open())
             return -1;
-        os << cell_arr.size();
-        os << cell_arr[0].size();
-        for (int i = 0; i < cell_arr.size(); i++) {
+        int size_x = cell_arr.size();
+        os.write((char *) &size_x, sizeof(int));
+        int size_y =  cell_arr[0].size();
+        os.write((char *) &size_y, sizeof(int));
+        for (int i = 0; i < size_x; i++) {
             for (int j = 0; j < cell_arr[i].size(); j++) {
-                os << int(cell_arr[i][j]->getType());
-                switch (cell_arr[i][j]->getType()) {
+                CellType type = cell_arr[i][j]->getType();
+                os.write((char *) &type, sizeof(int));
+                switch (type) {
                     case DANGEON:
                         std::dynamic_pointer_cast<Dangeon>(cell_arr[i][j])->saveToFile(os);
                         break;
@@ -195,12 +229,16 @@ namespace base_structures {
                             x = i;
                             y = j + 1;
                         }
-                        os << x << y;
+                        os.write((char *) &x, sizeof(int));
+                        os.write((char *) &y, sizeof(int));
                         break;
                     }
                     case CASTLE: {
                         std::shared_ptr<Castle> cell = std::dynamic_pointer_cast<Castle>(cell_arr[i][j]);
-                        os << cell->getHp() << cell->getGold();
+                        int hp = cell->getHp();
+                        int gold = cell->getGold();
+                        os.write((char *) &hp, sizeof(int));
+                        os.write((char *) &gold, sizeof(int));
                         break;
                     }
                     default:
@@ -258,7 +296,7 @@ namespace base_structures {
         return m;
     }
     bool Tower::isUpgradable() noexcept {
-        return (TOWER_DESCR.size() != level_ + 1);
+        return (TOWER_DESCR.size() != (level_ + 1));
     }
     int Tower::Upgrade() noexcept {
         if (isUpgradable()) {
@@ -302,9 +340,8 @@ namespace base_structures {
         }
         return m;
     }
-
     bool MagicTrap::isUpgradable() noexcept {
-        return (TRAP_DESCR.size() != level_ + 1);
+        return (TRAP_DESCR.size() != (level_ + 1));
     }
     int MagicTrap::Upgrade() noexcept {
         if (isUpgradable()) {
@@ -313,7 +350,7 @@ namespace base_structures {
         } else return -1;
     }
     bool MagicTrap::isEffectUpgradable() noexcept {
-        return (MAGICTRAP_DESCR.size() != effect_level_ + 1);
+        return (MAGICTRAP_DESCR.size() != (effect_level_ + 1));
     }
     int MagicTrap::UpgradeEffect() noexcept {
         if (isEffectUpgradable()) {
@@ -340,23 +377,6 @@ namespace base_structures {
     /*
      * Monsters definition
      */
-    std::istream& operator>>(std::istream& is, MonsterDescriptor& desc) noexcept {
-        try {
-            int model;
-            int hp;
-            int speed;
-            int cost;
-            is >> model >> hp >> speed >> cost;
-            desc.model = MonsterModel(model);
-            desc.hp = hp;
-            desc.speed = speed;
-            desc.cost = cost;
-        }
-        catch (...) {
-            is.setstate(std::ios::failbit);
-        }
-        return is;
-    }
 
     Monster& Monster::setRelation(std::shared_ptr<Road> cell) {
         if (cell == nullptr) {

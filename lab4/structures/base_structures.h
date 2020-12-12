@@ -12,6 +12,7 @@
 #include "cocos2d.h"
 
 namespace base_structures {
+    static const float TILE_SIZE = 40.0;
     /*
      * Type predefinition
      */
@@ -113,6 +114,8 @@ namespace base_structures {
             sprite_->setPosition(x * sprite_->getContentSize().width, y * sprite_->getContentSize().height);
         };
         Cell(const Cell& cp);
+        Cell& operator=(const Cell& cp);
+        Cell& operator=(Cell&& cm);
         virtual CellType getType() const noexcept { return type_;};
         ~Cell() {}
         cocos2d::Sprite* sprite_;
@@ -196,6 +199,13 @@ namespace base_structures {
     };
 
     struct Map_ {
+        Map_(int width, int height): cell_arr(width, std::vector<std::shared_ptr<base_structures::Cell>>(height)) {
+            for (int i = 0; i < width; i++) {
+                for (int j = 0; j < height; j++) {
+                    cell_arr[i][j] = move(std::make_shared<base_structures::Cell>(i, j));
+                }
+            }
+        }
         std::vector<std::vector<std::shared_ptr<Cell>>> cell_arr;
         std::shared_ptr<Castle> castle;
 
@@ -221,8 +231,6 @@ namespace base_structures {
         int speed;
         int cost;
         MonsterModel model;
-
-        friend std::istream& operator>>(std::istream& is, MonsterDescriptor& desc) noexcept;
     };
     class Monster {
     public:
@@ -264,7 +272,7 @@ namespace base_structures {
             "res/units/exhaust_tower.png",
             "res/units/frozen_trap.png",
             "res/units/poison_trap.png",
-            "res/untis/exhaust_trap.png"
+            "res/units/exhaust_trap.png"
     };
 
 
@@ -292,8 +300,8 @@ namespace base_structures {
     class Unit{
     public:
         Unit(int x, int y, std::string model, int level = 0): x_(x), y_(y), level_ (level) {
-            sprite_ = cocos2d::Sprite::create();
-            sprite_->setPosition(x * sprite_->getContentSize().width, y * sprite_->getContentSize().height);
+            sprite_ = cocos2d::Sprite::create(model);
+            sprite_->setPosition({x * TILE_SIZE, y * TILE_SIZE});
         };
         virtual bool isUpgradable() noexcept = 0;
         virtual int Upgrade() noexcept = 0;
