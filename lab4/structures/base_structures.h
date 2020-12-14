@@ -261,7 +261,7 @@ namespace base_structures {
         std::shared_ptr<Road> relation = nullptr;
     };
 
-    using MonsterTable_ = mystl::list<std::shared_ptr<Monster>>;
+    using MonsterTable_ = std::list<std::shared_ptr<Monster>>;
 
     /*
      * Units interface

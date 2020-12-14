@@ -52,8 +52,8 @@ namespace mystl {
             virtual list<T>::iterator& operator--();
             virtual list<T>::iterator operator+(size_t count) const;
             virtual list<T>::iterator operator-(size_t count) const;
-            friend bool operator==(const list<T>::iterator& lhs, const list<T>::iterator& rhs);
-            friend bool operator!=(const list<T>::iterator& lhs, const list<T>::iterator& rhs);
+            bool operator==(const iterator& rhs);
+            bool operator!=(const iterator& rhs);
             friend mystl::list<T>;
         };
         class reverse_iterator: public list<T>::iterator {
@@ -77,8 +77,8 @@ namespace mystl {
             virtual list<T>::const_iterator& operator--();
             virtual list<T>::const_iterator operator+(size_t count) const;
             virtual list<T>::const_iterator operator-(size_t count) const;
-            friend bool operator==(const list<T>::const_iterator& lhs, const list<T>::const_iterator& rhs);
-            friend bool operator!=(const list<T>::const_iterator& lhs, const list<T>::const_iterator& rhs);
+            bool operator==(const const_iterator& rhs);
+            bool operator!=(const const_iterator& rhs);
             friend mystl::list<T>;
         };
 
@@ -194,14 +194,15 @@ namespace mystl {
     }
 
     template<typename T>
-    bool operator==(const typename list<T>::iterator &lhs, const typename list<T>::iterator &rhs) {
-        return (lhs.el_ == rhs.el_);
+    bool list<T>::iterator::operator==(const iterator &rhs) {
+        return (this->el_ == rhs.el_);
     }
 
     template<typename T>
-    bool operator!=(const typename list<T>::iterator &lhs, const typename list<T>::iterator &rhs) {
-        return !(lhs == rhs);
+    bool list<T>::iterator::operator!=(const iterator &rhs) {
+        return !(*this == rhs);
     }
+
 
     template<typename T>
     typename list<T>::reverse_iterator &list<T>::reverse_iterator::operator++() {
@@ -301,13 +302,13 @@ namespace mystl {
     }
 
     template<typename T>
-    bool operator==(const typename list<T>::const_iterator &lhs, const typename list<T>::const_iterator &rhs) {
-        return (lhs.el_ == rhs.el_);
+    bool list<T>::const_iterator::operator==(const const_iterator &rhs) {
+        return (this->el_ == rhs.el_);
     }
 
     template<typename T>
-    bool operator!=(const typename list<T>::const_iterator &lhs, const typename list<T>::const_iterator &rhs) {
-        return !(lhs == rhs);
+    bool list<T>::const_iterator::operator!=(const const_iterator &rhs) {
+        return !(*this == rhs);
     }
 
     template<typename T>
