@@ -10,6 +10,7 @@
 #include <fstream>
 #include <chrono>
 #include "cocos2d.h"
+#include "list.h"
 
 namespace base_structures {
     static const float TILE_SIZE = 40.0;
@@ -199,6 +200,9 @@ namespace base_structures {
     };
 
     struct Map_ {
+        std::vector<std::vector<std::shared_ptr<Cell>>> cell_arr;
+        std::shared_ptr<Castle> castle;
+        Map_() = default;
         Map_(int width, int height): cell_arr(width, std::vector<std::shared_ptr<base_structures::Cell>>(height)) {
             for (int i = 0; i < width; i++) {
                 for (int j = 0; j < height; j++) {
@@ -206,8 +210,6 @@ namespace base_structures {
                 }
             }
         }
-        std::vector<std::vector<std::shared_ptr<Cell>>> cell_arr;
-        std::shared_ptr<Castle> castle;
 
         int save(std::string filename) const;
         int load(std::string filename);
@@ -259,7 +261,7 @@ namespace base_structures {
         std::shared_ptr<Road> relation = nullptr;
     };
 
-    using MonsterTable_ = std::list<std::shared_ptr<Monster>>;
+    using MonsterTable_ = mystl::list<std::shared_ptr<Monster>>;
 
     /*
      * Units interface

@@ -60,12 +60,14 @@ list(APPEND GAME_SOURCE
      Classes/MenuScene.cpp
      Classes/GameScene.cpp
      Classes/CreateScene.cpp
+     Classes/Popup.cpp
      )
 list(APPEND GAME_HEADER
      Classes/AppDelegate.h
      Classes/MenuScene.h
      Classes/GameScene.h
      Classes/CreateScene.h
+     Classes/Popup.h
      )
 
 if(ANDROID)

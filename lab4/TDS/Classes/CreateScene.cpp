@@ -29,6 +29,7 @@
 #include "ui/CocosGUI.h"
 #include "base_structures.h"
 #include <iostream>
+#include "Popup.h"
 
 USING_NS_CC;
 
@@ -92,7 +93,10 @@ void MapConstructor::menuCloseCallback(Ref* pSender)
 }
 
 void MapConstructor::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, Event* event) {
-    cocos2d::Sprite* lastCell = this->CellSelected;
+
+    auto visibleSize = Director::getInstance()->getVisibleSize();
+    Vec2 origin = Director::getInstance()->getVisibleOrigin();
+
     int x = this->CellSelected->getPositionX() / TILE_WIDTH;
     int y = this->CellSelected->getPositionY() / TILE_WIDTH;
     switch(keyCode) {
@@ -130,27 +134,39 @@ void MapConstructor::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, Even
             switch(Map.cell_arr[x][y]->getType()) {
                 case base_structures::CASTLE: {
                     auto castle = std::dynamic_pointer_cast<base_structures::Castle>(Map.cell_arr[x][y]);
-                    auto txtFieldHP = ui::TextField::create("HP: " + std::to_string(castle->getHp()),
-                                                            "fonts/arial.ttf",
-                                                            24);
-                    txtFieldHP->setPlaceHolderColor({255, 255, 255});
-                    auto txtFieldGold = ui::TextField::create("Gold: " + std::to_string(castle->getGold()),
-                                                              "fonts/arial.ttf",
-                                                              24);
-                    txtFieldGold->setPlaceHolderColor({255, 255, 255});
-                    auto visibleSize = Director::getInstance()->getVisibleSize();
-                    txtFieldHP->setPosition({visibleSize.width / 2,
-                                             visibleSize.height / 2});
-                    txtFieldGold->setPosition({visibleSize.width / 2,
-                                               visibleSize.height / 2 - txtFieldHP->getContentSize().height});
-                    this->addChild(txtFieldHP, 3);
-                    this->addChild(txtFieldGold, 3);
+                    auto editBoxHP = ui::EditBox::create(Size(100, 40), ui::Scale9Sprite::create("editBox_back.png"));
+                    editBoxHP->setFont("fonts/arial.ttf", 50);
+                    editBoxHP->setFontColor(cocos2d::Color3B::BLACK);
+                    editBoxHP->setPlaceHolder("HP:");
+                    editBoxHP->setPlaceholderFontColor(cocos2d::Color3B::BLACK);
+                    editBoxHP->setPosition(cocos2d::Vec2(visibleSize.width / 2, visibleSize.height /2));
+                    editBoxHP->setReturnType(ui::EditBox::KeyboardReturnType::DONE);
+                    editBoxHP->setMaxLength(6);
+                    editBoxHP->setDelegate(this);
+                    auto editBoxGold = ui::EditBox::create(Size(100, 40), ui::Scale9Sprite::create("editBox_back.png"));
+                    editBoxGold->setFontSize(24);
+                    editBoxGold->setFontColor(cocos2d::Color3B::BLACK);
+                    editBoxGold->setPlaceHolder("Gold:");
+                    editBoxGold->setPlaceholderFontColor(cocos2d::Color3B::BLACK);
+                    editBoxGold->setPosition(cocos2d::Vec2(visibleSize.width / 2, visibleSize.height /2 - editBoxHP->getContentSize().height));
+                    this->addChild(editBoxGold, 3);
+                    this->addChild(editBoxHP, 3);
                     break;
                 }
-                case base_structures::DANGEON:
+                case base_structures::DANGEON: {
+                    UICustom::Popup *popup = UICustom::Popup::createAsConfirmDialogue("Test 1",
+                                                                                      "This is a confirmation Popup",
+                                                                                      [=]() {
+                                                                                          log("Ok is pressed");
+                                                                                      });
+                    this->addChild(popup, 4);
                     break;
+                }
                 default:
                     break;
             }
     }
+}
+
+void MapConstructor::editBoxEditingDidEndWithAction(cocos2d::ui::EditBox* editBox, EditBoxEndAction action) {
 }
