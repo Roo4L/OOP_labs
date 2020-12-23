@@ -54,6 +54,14 @@ namespace base_structures {
     void Castle::income(const Monster& frag) noexcept {
         gold_ += frag.getCost();
     }
+    bool Castle::spend(int cost) noexcept {
+        if (gold_ >= cost) {
+            gold_ -= cost;
+            return true;
+        }
+        else
+            return false;
+    }
     void Castle::doDamage(const Monster &frag) noexcept {
         hp_ -= frag.getHP();
     }
@@ -78,8 +86,9 @@ namespace base_structures {
         this->sprite_->setAnchorPoint(cocos2d::Vec2(0.5, 0.4));
     }
     std::shared_ptr<Monster> Dangeon::ReleaseMonster(std::chrono::time_point<std::chrono::steady_clock> wave_start) {
-        if (!isActive() || waves[cur_wave_it].begin() == waves[cur_wave_it].end())
+        if (!isActive() || waves[cur_wave_it].begin() == waves[cur_wave_it].end()) {
             return nullptr;
+        }
         if (std::chrono::duration_cast<std::chrono::seconds>(std::chrono::steady_clock::now() - wave_start).count() > waves[cur_wave_it].front().second) {
             std::shared_ptr<base_structures::Monster> m = waves[cur_wave_it].front().first;
             waves[cur_wave_it].pop_front();
@@ -447,8 +456,8 @@ namespace base_structures {
         std::list<std::pair<base_structures::Effect, std::chrono::time_point<std::chrono::steady_clock>>> deleted;
         for (auto it = debufs.begin(); it != debufs.end(); ++it) {
             if (it->first.type == debuf.type) {
-                if (it->first.effect_time > debuf.effect_time || it->first.effect_time +
-                                                                 (std::chrono::steady_clock::now() - it->second) < debuf.effect_time) {
+                if (it->first.effect_time < debuf.effect_time ||
+                        it->first.effect_time + it->second - std::chrono::steady_clock::now() < debuf.effect_time) {
                     deleted.push_back(*it);
                 }
                 else
@@ -475,7 +484,7 @@ namespace base_structures {
     void Monster::UpdateDebufs() {
         std::vector<std::pair<Effect, std::chrono::time_point<std::chrono::steady_clock>>> deleted;
         for (auto& debuf : debufs) {
-            if ((std::chrono::steady_clock::now() - debuf.second).count() > debuf.first.effect_time.count()) {
+            if (std::chrono::duration_cast<std::chrono::duration<double>>(std::chrono::steady_clock::now() - debuf.second).count() > debuf.first.effect_time.count()) {
                 deleted.push_back(debuf);
             }
         }

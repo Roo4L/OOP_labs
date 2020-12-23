@@ -87,6 +87,15 @@ namespace UICustom {
     public:
         static LosePopup* create(std::string level_name);
     };
+
+    class WinPopup : public Popup {
+        cocos2d::Label* label;
+
+        void noDismiss(const bool animated = true);
+        void yesDismiss(std::string level_name, const bool animated = true);
+    public:
+        static WinPopup* create(std::string level_name);
+    };
 }
 
 #endif /* Popup_h */

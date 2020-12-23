@@ -4,6 +4,7 @@
 
 #include "ChooseLevelScene.h"
 #include "GameScene.h"
+#include "MenuScene.h"
 #include <vector>
 #include <string>
 #include <experimental/filesystem>
@@ -59,6 +60,10 @@ bool ChooseLevelScene::init()
             }
         });
 
+        auto key_listener = EventListenerKeyboard::create();
+        key_listener->onKeyReleased = CC_CALLBACK_2(ChooseLevelScene::onKeyReleased, this);
+        _eventDispatcher->addEventListenerWithSceneGraphPriority(key_listener, this);
+
         this->addChild(button, 1);
     }
     return true;
@@ -78,4 +83,15 @@ std::vector<std::string> getLevelNames(std::string dir_path) {
 void ChooseLevelScene::menuBackCallback(Ref* pSender)
 {
 
+}
+
+void ChooseLevelScene::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event *event) {
+    switch(keyCode) {
+        case cocos2d::EventKeyboard::KeyCode::KEY_ESCAPE: {
+            Director::getInstance()->replaceScene(::Menu::create());
+            break;
+        }
+        default:
+            break;
+    }
 }

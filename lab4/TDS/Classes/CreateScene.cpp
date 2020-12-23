@@ -26,6 +26,7 @@
  ****************************************************************************/
 
 #include "CreateScene.h"
+#include "MenuScene.h"
 #include "ui/CocosGUI.h"
 #include "base_structures.h"
 #include <iostream>
@@ -192,14 +193,15 @@ void MapConstructor::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, Even
             this->addChild(dialog, 4);
             break;
         }
-        case cocos2d::EventKeyboard::KeyCode::KEY_ENTER:
-            switch(Map.cell_arr[x][y]->getType()) {
+        case cocos2d::EventKeyboard::KeyCode::KEY_ENTER: {
+            switch (Map.cell_arr[x][y]->getType()) {
                 case base_structures::CASTLE: {
                     break;
                 }
                 case base_structures::DANGEON: {
-                    std::shared_ptr<base_structures::Dangeon> dang = std::dynamic_pointer_cast<base_structures::Dangeon>(Map.cell_arr[x][y]);
-                    UICustom::DangeonMenu* dialog = UICustom::DangeonMenu::create(dang);
+                    std::shared_ptr<base_structures::Dangeon> dang = std::dynamic_pointer_cast<base_structures::Dangeon>(
+                            Map.cell_arr[x][y]);
+                    UICustom::DangeonMenu *dialog = UICustom::DangeonMenu::create(dang);
                     this->pause();
                     _eventDispatcher->pauseEventListenersForTarget(this);
                     this->addChild(dialog, 4);
@@ -211,6 +213,15 @@ void MapConstructor::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, Even
                 default:
                     break;
             }
+            break;
+        }
+        case cocos2d::EventKeyboard::KeyCode::KEY_ESCAPE: {
+            Director::getInstance()->replaceScene(::Menu::create());
+            break;
+        }
+        default:
+            break;
+
     }
 }
 

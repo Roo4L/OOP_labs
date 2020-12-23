@@ -307,7 +307,7 @@ namespace UICustom {
             menu->alignItemsHorizontallyWithPadding(FONT::LABEL_OFFSET/2);
 
             CONFIRM_DIALOGUE_SIZE_OFFSET = Size(CONFIRM_DIALOGUE_SIZE_OFFSET.width + 100,300);;
-            node->initBg(winSize / 3 + CONFIRM_DIALOGUE_SIZE_OFFSET, "Save map?");
+            node->initBg(winSize / 3 + CONFIRM_DIALOGUE_SIZE_OFFSET, "Sadly");
             node->autorelease();
             return node;
         }
@@ -383,6 +383,60 @@ namespace UICustom {
     }
 
     void LosePopup::noDismiss(const bool animated)
+    {
+        if(animated){
+            this->runAction(Sequence::create(FadeTo::create(ANIMATION_TIME,0),RemoveSelf::create(), NULL));
+        }
+        else{
+            this->removeFromParentAndCleanup(true);
+        }
+        Director::getInstance()->replaceScene(::Menu::createScene());
+    }
+
+    WinPopup* WinPopup::create(std::string level_name) {
+        WinPopup *node = new (std::nothrow)WinPopup();
+        Size winSize = Director::getInstance()->getWinSize();
+        if(node && node->init())
+        {
+            node->label = cocos2d::Label::createWithTTF("You won! Repeat?", "fonts/Marker Felt.ttf", 30);
+            node->label->setPosition(winSize.width/2, winSize.height/2);
+
+            MenuItemImage *yesButton = MenuItemImage::create(IMAGEPATH::OK_BUTTON,IMAGEPATH::OK_BUTTON_PRESSED,[=](Ref *sender){
+                node->yesDismiss( level_name, true);
+            });
+
+            MenuItemImage *noButton = MenuItemImage::create(IMAGEPATH::CANCEL_BUTTON, IMAGEPATH::CANCEL_BUTTON_PRESSED, [node](Ref *sender){
+                node->noDismiss(true);
+            });
+
+            cocos2d::Menu *menu = cocos2d::Menu::create(yesButton,noButton,NULL);
+            node->addChild(menu,2);
+            node->addChild(node->label, 2);
+            menu->setPosition(winSize.width/2, winSize.height/4);
+            menu->alignItemsHorizontallyWithPadding(FONT::LABEL_OFFSET/2);
+
+            CONFIRM_DIALOGUE_SIZE_OFFSET = Size(CONFIRM_DIALOGUE_SIZE_OFFSET.width + 100,300);;
+            node->initBg(winSize / 3 + CONFIRM_DIALOGUE_SIZE_OFFSET, "Congratulations.");
+            node->autorelease();
+            return node;
+        }
+
+        CC_SAFE_DELETE(node);
+        return nullptr;
+    }
+
+    void WinPopup::yesDismiss(std::string level_name, const bool animated)
+    {
+        if(animated){
+            this->runAction(Sequence::create(FadeTo::create(ANIMATION_TIME,0),RemoveSelf::create(), NULL));
+        }
+        else{
+            this->removeFromParentAndCleanup(true);
+        }
+        Director::getInstance()->replaceScene(::Game::createScene(level_name));
+    }
+
+    void WinPopup::noDismiss(const bool animated)
     {
         if(animated){
             this->runAction(Sequence::create(FadeTo::create(ANIMATION_TIME,0),RemoveSelf::create(), NULL));

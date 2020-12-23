@@ -17,6 +17,7 @@ public:
 
     // a selector callback
     void menuBackCallback(cocos2d::Ref* pSender);
+    void onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
 
     // implement the "static create()" method manually
     CREATE_FUNC(ChooseLevelScene);

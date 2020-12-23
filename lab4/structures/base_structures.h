@@ -148,10 +148,11 @@ namespace base_structures {
         int getHp() const noexcept { return hp_;};
         int getGold() const noexcept { return gold_;};
         void income(const Monster& frag) noexcept;
+        bool spend(int cost = 50) noexcept;
         void doDamage(const Monster& frag) noexcept;
     private:
         int hp_ = 200;
-        int gold_ = 100;
+        int gold_ = 300;
     };
     class Dangeon: public Cell {
     public:
@@ -175,7 +176,9 @@ namespace base_structures {
             return *this;
         }
         double NextMonsterTime() const noexcept {
-            if (waves[cur_wave_it].begin() != waves[cur_wave_it].end())
+            if (!isActive_)
+                return std::numeric_limits<double>::max();
+            else if (waves[cur_wave_it].begin() != waves[cur_wave_it].end())
                 return waves[cur_wave_it].front().second;
             else
                 return std::numeric_limits<double>::max();
@@ -185,7 +188,7 @@ namespace base_structures {
         WaveList waves;
         int cur_wave_it = -1;
         std::shared_ptr<Road> next = nullptr;
-        bool isActive_ = false;
+        bool isActive_ = true;
     };
     class Placable: public Cell {
     public:
