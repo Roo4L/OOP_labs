@@ -15,9 +15,14 @@ static const int TILE_WIDTH = 50;
 
 class MapConstructor : public cocos2d::Scene, public cocos2d::ui::EditBoxDelegate
 {
+    enum WorkMode {
+        INSERT,
+        WAY
+    };
 public:
     static cocos2d::Scene* createScene();
     cocos2d::Sprite* CellSelected;
+    WorkMode mode = INSERT;
     base_structures::Map_ Map = base_structures::Map_(MAP_WIDTH, MAP_HEIGHT);
     virtual bool init();
 

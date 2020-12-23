@@ -139,8 +139,8 @@ bool ::Menu::init()
 }
 
 void ::Menu::menuStartGameCallback(cocos2d::Ref *pSender) {
-    auto game = ::Game::createScene();
-    cocos2d::Director::getInstance()->replaceScene(game);
+    auto choose_level = ::ChooseLevelScene::createScene();
+    cocos2d::Director::getInstance()->replaceScene(choose_level);
 }
 
 

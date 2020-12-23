@@ -61,6 +61,7 @@ list(APPEND GAME_SOURCE
      Classes/GameScene.cpp
      Classes/CreateScene.cpp
      Classes/Popup.cpp
+     Classes/ChooseLevelScene.cpp
      )
 list(APPEND GAME_HEADER
      Classes/AppDelegate.h
@@ -68,6 +69,7 @@ list(APPEND GAME_HEADER
      Classes/GameScene.h
      Classes/CreateScene.h
      Classes/Popup.h
+     Classes/ChooseLevelScene.h
      )
 
 if(ANDROID)
@@ -137,7 +139,8 @@ endif()
 
 target_link_libraries(${APP_NAME}
                             cocos2d
-                            my_logic)
+                            my_logic
+                            stdc++fs)
 target_include_directories(${APP_NAME}
         PRIVATE Classes
         PRIVATE ${COCOS2DX_ROOT_PATH}/cocos/audio/include/

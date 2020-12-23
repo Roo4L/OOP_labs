@@ -83,8 +83,51 @@ void MapConstructor::onMouseDown(cocos2d::Event* event) {
     log("Click! X: %f. Y: %f.", e->getCursorX(), e->getCursorY());
     int x = static_cast<int>(round(e->getCursorX()/TILE_WIDTH));
     int y = static_cast<int>(round(e->getCursorY()/TILE_WIDTH));
-    log("CellSelected: (%d,%d)", x, y);
-    this->CellSelected->setPosition(this->Map.cell_arr[x][y]->sprite_->getPosition());
+    switch (this->mode) {
+        case INSERT:
+            log("CellSelected: (%d,%d)", x, y);
+            this->CellSelected->setPosition(this->Map.cell_arr[x][y]->sprite_->getPosition());
+            break;
+        case WAY: {
+            int x_prev = this->CellSelected->getPositionX() / TILE_WIDTH;
+            int y_prev = this->CellSelected->getPositionY() / TILE_WIDTH;
+            log("CellSelected: (%d,%d)", x, y);
+            if (x_prev != x || y_prev != y) {
+                this->CellSelected->setPosition(this->Map.cell_arr[x][y]->sprite_->getPosition());
+                switch (this->Map.cell_arr[x][y]->getType()) {
+                    case base_structures::ROAD: {
+                        switch (this->Map.cell_arr[x_prev][y_prev]->getType()) {
+                            case base_structures::ROAD: {
+                                std::dynamic_pointer_cast<base_structures::Road>(Map.cell_arr[x_prev][y_prev])->setNext(
+                                        std::dynamic_pointer_cast<base_structures::Road>(Map.cell_arr[x][y])
+                                );
+                                break;
+                            }
+                            case base_structures::DANGEON: {
+                                std::dynamic_pointer_cast<base_structures::Dangeon>(Map.cell_arr[x_prev][y_prev])->setNext(
+                                        std::dynamic_pointer_cast<base_structures::Road>(Map.cell_arr[x][y])
+                                );
+                                break;
+                            }
+                        }
+                        auto draw = cocos2d::DrawNode::create();
+                        draw->drawLine(Point(x_prev * TILE_WIDTH, y_prev * TILE_WIDTH),
+                                       Point(x * TILE_WIDTH, y * TILE_WIDTH), Color4F::WHITE);
+                        this->addChild(draw, 2);
+                        break;
+                    }
+                    case base_structures::CASTLE: {
+                        std::dynamic_pointer_cast<base_structures::Road>(Map.cell_arr[x_prev][y_prev])->setNext(nullptr);
+                        this->mode = INSERT;
+                        break;
+                    }
+                }
+            }
+            break;
+        }
+        default:
+            break;
+    }
 }
 void MapConstructor::menuCloseCallback(Ref* pSender)
 {
@@ -110,7 +153,7 @@ void MapConstructor::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, Even
             this->removeChild(this->Map.cell_arr[x][y]->sprite_);
             this->Map.cell_arr[x][y] = std::static_pointer_cast<base_structures::Cell>(
                                                 std::make_shared<base_structures::Castle>(x, y));
-            this->addChild(this->Map.cell_arr[x][y]->sprite_, 0);
+            this->addChild(this->Map.cell_arr[x][y]->sprite_, 1);
             break;
         case cocos2d::EventKeyboard::KeyCode::KEY_2:
             this->removeChild(this->Map.cell_arr[x][y]->sprite_);
@@ -130,36 +173,39 @@ void MapConstructor::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, Even
                                                 std::make_shared<base_structures::Basement>(x, y));
             this->addChild(this->Map.cell_arr[x][y]->sprite_, 0);
             break;
+        case cocos2d::EventKeyboard::KeyCode::KEY_ALT: {
+            if (Map.cell_arr[x][y]->getType() == base_structures::DANGEON) {
+                if (this->mode == INSERT) {
+                    this->mode = WAY;
+                }
+                else {
+                    this->mode = INSERT;
+                }
+            }
+            break;
+        }
+        case cocos2d::EventKeyboard::KeyCode::KEY_S: {
+            log("Save key was pressed.");
+            UICustom::MapSavePopup* dialog = UICustom::MapSavePopup::create(this->Map);
+            this->pause();
+            _eventDispatcher->pauseEventListenersForTarget(this);
+            this->addChild(dialog, 4);
+            break;
+        }
         case cocos2d::EventKeyboard::KeyCode::KEY_ENTER:
             switch(Map.cell_arr[x][y]->getType()) {
                 case base_structures::CASTLE: {
-                    auto castle = std::dynamic_pointer_cast<base_structures::Castle>(Map.cell_arr[x][y]);
-                    auto editBoxHP = ui::EditBox::create(Size(100, 40), ui::Scale9Sprite::create("editBox_back.png"));
-                    editBoxHP->setFont("fonts/arial.ttf", 50);
-                    editBoxHP->setFontColor(cocos2d::Color3B::BLACK);
-                    editBoxHP->setPlaceHolder("HP:");
-                    editBoxHP->setPlaceholderFontColor(cocos2d::Color3B::BLACK);
-                    editBoxHP->setPosition(cocos2d::Vec2(visibleSize.width / 2, visibleSize.height /2));
-                    editBoxHP->setReturnType(ui::EditBox::KeyboardReturnType::DONE);
-                    editBoxHP->setMaxLength(6);
-                    editBoxHP->setDelegate(this);
-                    auto editBoxGold = ui::EditBox::create(Size(100, 40), ui::Scale9Sprite::create("editBox_back.png"));
-                    editBoxGold->setFontSize(24);
-                    editBoxGold->setFontColor(cocos2d::Color3B::BLACK);
-                    editBoxGold->setPlaceHolder("Gold:");
-                    editBoxGold->setPlaceholderFontColor(cocos2d::Color3B::BLACK);
-                    editBoxGold->setPosition(cocos2d::Vec2(visibleSize.width / 2, visibleSize.height /2 - editBoxHP->getContentSize().height));
-                    this->addChild(editBoxGold, 3);
-                    this->addChild(editBoxHP, 3);
                     break;
                 }
                 case base_structures::DANGEON: {
-                    UICustom::Popup *popup = UICustom::Popup::createAsConfirmDialogue("Test 1",
-                                                                                      "This is a confirmation Popup",
-                                                                                      [=]() {
-                                                                                          log("Ok is pressed");
-                                                                                      });
-                    this->addChild(popup, 4);
+                    std::shared_ptr<base_structures::Dangeon> dang = std::dynamic_pointer_cast<base_structures::Dangeon>(Map.cell_arr[x][y]);
+                    UICustom::DangeonMenu* dialog = UICustom::DangeonMenu::create(dang);
+                    this->pause();
+                    _eventDispatcher->pauseEventListenersForTarget(this);
+                    this->addChild(dialog, 4);
+                    break;
+                }
+                case base_structures::ROAD: {
                     break;
                 }
                 default:
@@ -168,5 +214,10 @@ void MapConstructor::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, Even
     }
 }
 
+
+
 void MapConstructor::editBoxEditingDidEndWithAction(cocos2d::ui::EditBox* editBox, EditBoxEndAction action) {
 }
+
+
+

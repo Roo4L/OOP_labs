@@ -17,6 +17,10 @@ namespace base_structures {
         return 0;
     }
 
+    bool Effect::operator==(const Effect &other) const {
+        return (type == other.type) && (effect_time == other.effect_time) && (effect_strength == other.effect_strength);
+    }
+
     /*
      * Map definition
      */
@@ -66,25 +70,40 @@ namespace base_structures {
             is.read((char *) &desc, sizeof(MonsterDescriptor));
             if (!is.read((char *) &spawn_time, sizeof(double)))
                 throw std::invalid_argument("Dangeon Constructor - input file is currupted.");
-            waves[k].push_back({std::make_shared<Monster>(desc), spawn_time});
+            waves[k].push_back({std::make_shared<base_structures::Monster>(desc), spawn_time});
             if (!is.read((char *) &k, sizeof(int)))
-                throw std::invalid_argument("Dangeon Constructor - input file is currupted.");;
+                throw std::invalid_argument("Dangeon Constructor - input file is currupted.");
         }
         waves.resize(last_wave_num + 1);
-    };
-    std::shared_ptr<Monster> Dangeon::ReleaseMonster() {
-        if (!isActive() || waves[cur_wave_it].begin() != waves[cur_wave_it].end())
-            return nullptr;
-        std::shared_ptr<Monster> m = move(waves[cur_wave_it].front().first);
-        waves[cur_wave_it].pop_front();
-        //add monster on map
-        m->setRelation(next);
-        m->sprite_->setPosition(sprite_->getPositionX(), sprite_->getPositionY());
-        return m;
+        this->sprite_->setAnchorPoint(cocos2d::Vec2(0.5, 0.4));
     }
+    std::shared_ptr<Monster> Dangeon::ReleaseMonster(std::chrono::time_point<std::chrono::steady_clock> wave_start) {
+        if (!isActive() || waves[cur_wave_it].begin() == waves[cur_wave_it].end())
+            return nullptr;
+        if (std::chrono::duration_cast<std::chrono::seconds>(std::chrono::steady_clock::now() - wave_start).count() > waves[cur_wave_it].front().second) {
+            std::shared_ptr<base_structures::Monster> m = waves[cur_wave_it].front().first;
+            waves[cur_wave_it].pop_front();
+            //add monster on map
+            m->sprite_ = cocos2d::Sprite::create(monster_models[m->getModel()]);
+            m->setRelation(next);
+            m->sprite_->setPosition(this->next->sprite_->getPosition());
+            return m;
+        }
+        else
+            return nullptr;
+    }
+
+    void Dangeon::AddWave(int count) {
+        for (int i = 0; i < count; i++) {
+            waves.push_back(Wave());
+        }
+    }
+
+    void Dangeon::AddMonster(std::pair<Monster, double> monster) {
+        waves.back().push_back({std::make_shared<Monster>(monster.first), monster.second});
+    }
+
     int Dangeon::saveToFile(std::ofstream &os) const {
-        CellType type = DANGEON;
-        os.write((char *) &type, sizeof(int));
         for (int i = 0; i < waves.size(); ++i) {
             for (auto& release : waves[i]) {
                 os.write((char *) &i, sizeof(int));
@@ -96,10 +115,16 @@ namespace base_structures {
                 os.write((char *) &speed, sizeof(int));
                 os.write((char *) &cost, sizeof(int));
                 os.write((char *) &model, sizeof(int));
+                double spawn_time = release.second;
+                os.write((char *) &spawn_time, sizeof(double));
             }
         }
         int delim = 100;
         os.write((char *) &delim, sizeof(int));
+        int x = next->sprite_->getPositionX() / TILE_SIZE;
+        int y = next->sprite_->getPositionY() / TILE_SIZE;
+        os.write((char *) &x, sizeof(int));
+        os.write((char *) &y, sizeof(int));
         return 0;
     }
 
@@ -140,11 +165,12 @@ namespace base_structures {
     }
 
     int Map_::load(std::string filename) {
-        std::ifstream save_(filename, std::ios::binary);
+        std::ifstream save_(SAVE_PATH + filename, std::ios::binary);
         if (!save_.is_open())
             return -1;
         int celltype;
         int size_x, size_y;
+        std::vector<std::pair<int, int>> dangeon_way_trace;
         std::vector<std::pair<int, int>> way_trace;
         if (!save_.eof()) {
             save_.read((char *) &size_x, sizeof(int));
@@ -156,15 +182,20 @@ namespace base_structures {
         }
         for (int i = 0; i < size_x; i++) {
             for (int j = 0; j < size_y; j++) {
-                if (save_.eof()) {
+                if (save_.eof() || !save_.good()) {
                     save_.close();
                     return -1;
                 }
                 save_.read((char *) &celltype, sizeof(int));
                 switch (celltype) {
-                    case DANGEON:
+                    case DANGEON: {
                         cell_arr[i][j] = std::static_pointer_cast<Cell>(std::make_shared<Dangeon>(i, j, save_));
+                        int x, y;
+                        save_.read((char *) &x, sizeof(int));
+                        save_.read((char *) &y, sizeof(int));
+                        dangeon_way_trace.push_back({i * size_y + j, x * size_y + y});
                         break;
+                    }
                     case BASEMENT:
                         cell_arr[i][j] = std::static_pointer_cast<Cell>(std::make_shared<Basement>(i, j));
                         break;
@@ -191,13 +222,23 @@ namespace base_structures {
         for (auto& path : way_trace) {
             std::shared_ptr<Road> source = std::dynamic_pointer_cast<Road>(
                     cell_arr[path.first / size_y][path.first % size_y]);
-            source->setNext(std::dynamic_pointer_cast<Road>(cell_arr[path.second / size_y][path.second % size_y]));
+            if (path.second != size_x * size_y) {
+                source->setNext(std::dynamic_pointer_cast<Road>(cell_arr[path.second / size_y][path.second % size_y]));
+            }
+            else {
+                source->setNext(nullptr);
+            }
+        }
+        for (auto& path : dangeon_way_trace) {
+            std::shared_ptr<Dangeon> dang = std::dynamic_pointer_cast<Dangeon>(
+                    cell_arr[path.first / size_y][path.first % size_y]);
+            dang->setNext(std::dynamic_pointer_cast<Road>(cell_arr[path.second / size_y][path.second % size_y]));
         }
         save_.close();
         return 0;
     }
     int Map_::save(std::string filename) const {
-        std::ofstream os(filename, std::ios::binary);
+        std::ofstream os(SAVE_PATH + filename, std::ios::binary);
         if (!os.is_open())
             return -1;
         int size_x = cell_arr.size();
@@ -215,6 +256,10 @@ namespace base_structures {
                     case ROAD: {
                         std::shared_ptr<Road> cell = std::dynamic_pointer_cast<Road>(cell_arr[i][j]);
                         int x, y;
+                        if (cell->getNext() == nullptr) {
+                            x = size_x;
+                            y = 0;
+                        }
                         if (i > 0 && cell_arr[i - 1][j] == cell->getNext()) {
                             x = i - 1;
                             y = j;
@@ -279,6 +324,10 @@ namespace base_structures {
         level_ = cp.level_;
     }
 
+    Tower::Tower(const Tower& cp, std::string model): Tower(cp.x_, cp.y_, model) {
+        level_ = cp.level_;
+    }
+
     std::shared_ptr<Monster> Tower::Attack(MonsterTable_& MonsterTable) {
         std::shared_ptr<Monster> m = nullptr;
         float regression = std::numeric_limits<float>::max();
@@ -289,9 +338,11 @@ namespace base_structures {
                 m = it;
             }
         }
-        m->getDamage(TOWER_DESCR[level_].damage);
-        if (!m->isAlive()) {
-            MonsterTable.erase(std::find(MonsterTable.begin(), MonsterTable.end(), m));
+        if (m != nullptr) {
+            m->getDamage(TOWER_DESCR[level_].damage);
+            if (!m->isAlive()) {
+                MonsterTable.erase(std::find(MonsterTable.begin(), MonsterTable.end(), m));
+            }
         }
         return m;
     }
@@ -329,14 +380,16 @@ namespace base_structures {
                 m = it;
             }
         }
-        m->getDamage(TOWER_DESCR[level_].damage);
-        if (!m->isAlive()) {
-            MonsterTable.erase(std::find(MonsterTable.begin(), MonsterTable.end(), m));
-        }
-        else {
-            m->applyDebuf({MAGICTOWER_DESCR[effect_level_].effect_time,
-                           MAGICTOWER_DESCR[effect_level_].effect_strength,
-                           type_});
+        if (m != nullptr) {
+            m->getDamage(TOWER_DESCR[level_].damage);
+            if (!m->isAlive()) {
+                MonsterTable.erase(std::find(MonsterTable.begin(), MonsterTable.end(), m));
+            }
+            else {
+                m->applyDebuf({MAGICTOWER_DESCR[effect_level_].effect_time,
+                               MAGICTOWER_DESCR[effect_level_].effect_strength,
+                               type_});
+            }
         }
         return m;
     }
@@ -358,21 +411,24 @@ namespace base_structures {
             return 0;
         } else return -1;
     }
-    int MagicTrap::Activate(MonsterTable_& MonsterTable) { //TODO rethink return type
+    std::vector<std::shared_ptr<Monster>> MagicTrap::Activate(MonsterTable_& MonsterTable) { //TODO rethink return type
+        std::vector<std::shared_ptr<Monster>> ret;
         for (auto it : MonsterTable) {
             if (isReachable(*it)) {
                 it->getDamage(TRAP_DESCR[level_].damage);
-                if (!it->isAlive()) {
-                    MonsterTable.erase(std::find(MonsterTable.begin(), MonsterTable.end(), it));
-                }
-                else {
+                ret.push_back(it);
+                if (it->isAlive()) {
                     it->applyDebuf({MAGICTRAP_DESCR[effect_level_].effect_time,
                                     MAGICTRAP_DESCR[effect_level_].effect_strength,
                                     type_});
                 }
             }
         }
-        return 0;
+        for (auto it : ret) {
+            if (!it->isAlive())
+                MonsterTable.erase(std::find(MonsterTable.begin(), MonsterTable.end(), it));
+        }
+        return ret;
     }
     /*
      * Monsters definition
@@ -388,22 +444,57 @@ namespace base_structures {
     }
     Monster& Monster::applyDebuf(Effect debuf) {
         // check wheither the same debuf is already applied
+        std::list<std::pair<base_structures::Effect, std::chrono::time_point<std::chrono::steady_clock>>> deleted;
         for (auto it = debufs.begin(); it != debufs.end(); ++it) {
             if (it->first.type == debuf.type) {
                 if (it->first.effect_time > debuf.effect_time || it->first.effect_time +
                                                                  (std::chrono::steady_clock::now() - it->second) < debuf.effect_time) {
-                    debufs.erase(it);
+                    deleted.push_back(*it);
                 }
                 else
                     return *this;
             }
         }
+        for (auto debuf : deleted) {
+            debufs.erase(std::find(debufs.begin(), debufs.end(), debuf));
+        }
         // apply debuf
         debufs.push_back({debuf, std::chrono::steady_clock::now()});
         return *this;
     }
+
+    double Monster::slowEffectStrength() const {
+        for (const auto& debuf : debufs) {
+            if (debuf.first.type == FROZEN) {
+                return (1 - debuf.first.effect_strength);
+            }
+        }
+        return 1;
+    }
+
+    void Monster::UpdateDebufs() {
+        std::vector<std::pair<Effect, std::chrono::time_point<std::chrono::steady_clock>>> deleted;
+        for (auto& debuf : debufs) {
+            if ((std::chrono::steady_clock::now() - debuf.second).count() > debuf.first.effect_time.count()) {
+                deleted.push_back(debuf);
+            }
+        }
+
+        for (auto& debuf : deleted) {
+            debufs.erase(std::find(debufs.begin(), debufs.end(), debuf));
+        }
+    }
+
     Monster& Monster::getDamage(int damage) {
         hp_ -= damage;
         return *this;
+    }
+
+    Monster::Monster(const Monster &cp) {
+        hp_ = cp.hp_;
+        speed_ = cp.speed_;
+        cost_ = cp.cost_;
+        model_ = cp.model_;
+        sprite_ = cocos2d::Sprite::createWithTexture(cp.sprite_->getTexture());
     }
 }

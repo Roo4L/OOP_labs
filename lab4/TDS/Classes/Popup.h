@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
+#include "base_structures.h"
 
 /*
  -Displays a popup
@@ -53,10 +54,39 @@ namespace UICustom {
         static Popup* create(const std::string &title, const std::string &msg, cocos2d::Label *lbl, const std::function<void ()> &YesFunc);
         
         
-    private:
+    protected:
         void initBg(const cocos2d::Size size,const std::string &title);
     };
-    
+
+    class DangeonMenu : public Popup {
+        cocos2d::ui::TextField* HPfield;
+        cocos2d::ui::TextField* ModelField;
+        cocos2d::ui::TextField* SpawnField;
+        cocos2d::ui::TextField* WaveField;
+        cocos2d::Label* stats;
+
+        void dismiss(const bool animated = true) override;
+    public:
+        static DangeonMenu* create(std::shared_ptr<base_structures::Dangeon> dang);
+    };
+
+    class MapSavePopup : public Popup {
+        cocos2d::ui::TextField* nameField;
+
+        void noDismiss(const bool animated = true);
+        void yesDismiss(const bool animated = true);
+    public:
+        static MapSavePopup* create(base_structures::Map_& Map);
+    };
+
+    class LosePopup : public Popup {
+        cocos2d::Label* label;
+
+        void noDismiss(const bool animated = true);
+        void yesDismiss(std::string level_name, const bool animated = true);
+    public:
+        static LosePopup* create(std::string level_name);
+    };
 }
 
 #endif /* Popup_h */

@@ -7,6 +7,9 @@
 //
 
 #include "Popup.h"
+#include "MenuScene.h"
+#include "GameScene.h"
+#include "MenuScene.h"
 
 USING_NS_CC;
 
@@ -130,7 +133,6 @@ namespace UICustom {
         Size winSize = Director::getInstance()->getWinSize();
         if(node && node->init())
         {
-            
             if(!lbl){
                 lbl = Label::createWithTTF(msg, FONT::GAME_FONT,FONT::DESCRIPTION_TEXT_SIZE);
             }
@@ -152,7 +154,7 @@ namespace UICustom {
                 });
                 
                 
-                Menu *menu = Menu::create(yesButton,noButton,NULL);
+                cocos2d::Menu *menu = cocos2d::Menu::create(yesButton,noButton,NULL);
                 node->addChild(menu,2);
                 menu->setPosition(winSize.width/2, winSize.height/2 - lbl->getContentSize().height/2 - 75);
                 menu->alignItemsHorizontallyWithPadding(FONT::LABEL_OFFSET/2);
@@ -199,7 +201,196 @@ namespace UICustom {
         heading->enableOutline(Color4B::BLACK,FONT::LABEL_STROKE);
         heading->enableShadow(Color4B::BLACK, Size(0, -3));
     }
-    
-    
+
+
+    DangeonMenu* DangeonMenu::create(std::shared_ptr<base_structures::Dangeon> dang) {
+        DangeonMenu *node = new (std::nothrow)DangeonMenu();
+        Size winSize = Director::getInstance()->getWinSize();
+        if(node && node->init())
+        {
+            node->stats = Label::createWithTTF("Waves: " + dang->getCurWaveNum(), "fonts/arial.ttf", 24);
+            node->stats->setPosition({winSize.width/3, winSize.height/3*2 - FONT::LABEL_OFFSET/2});
+            node->stats->setTextColor(Color4B::BLACK);
+
+            node->HPfield = TextField::create("HP: ", "fonts/arial.ttf", 24);
+            node->HPfield->setPosition({winSize.width/3 * 2, winSize.height/3*2 - FONT::LABEL_OFFSET/2});
+            node->HPfield->setTextColor(Color4B::BLACK);
+
+            node->ModelField = TextField::create("Model: ", "fonts/arial.ttf", 24);
+            node->ModelField->setPosition({winSize.width/3 * 2, winSize.height/3*2 - FONT::LABEL_OFFSET/2
+                                                        - node->HPfield->getContentSize().height});
+            node->ModelField->setTextColor(Color4B::BLACK);
+
+            node->SpawnField = TextField::create("Spawn time: ", "fonts/arial.ttf", 24);
+            node->SpawnField->setPosition({winSize.width/3 * 2, winSize.height/3*2 - FONT::LABEL_OFFSET/2
+                                                    - node->HPfield->getContentSize().height - node->ModelField->getContentSize().height});
+            node->SpawnField->setTextColor(Color4B::BLACK);
+
+            node->WaveField = TextField::create("Wave: ", "fonts/arial.ttf", 24);
+            node->WaveField->setPosition({winSize.width/3 * 2, winSize.height/3*2 - FONT::LABEL_OFFSET/2
+                                                                - node->HPfield->getContentSize().height
+                                                                - node->ModelField->getContentSize().height
+                                                                - node->SpawnField->getContentSize().height});
+            node->WaveField->setTextColor(Color4B::BLACK);
+
+            MenuItemImage *yesButton = MenuItemImage::create(IMAGEPATH::OK_BUTTON,IMAGEPATH::OK_BUTTON_PRESSED,[=](Ref *sender){
+                int hp = std::stoi(node->HPfield->getString());
+                int model = std::stoi(node->ModelField->getString());
+                double spawn_time = std::stod(node->SpawnField->getString());
+                int wave = std::stoi(node->WaveField->getString());
+
+                if (dang->getWavesCount() <= wave) {
+                    dang->AddWave(wave - dang->getWavesCount() + 1);
+                }
+                dang->AddMonster({base_structures::Monster(hp, 40, 50, base_structures::MonsterModel(model)), spawn_time});
+                node->dismiss(true);
+            });
+
+            MenuItemImage *noButton = MenuItemImage::create(IMAGEPATH::CANCEL_BUTTON, IMAGEPATH::CANCEL_BUTTON_PRESSED, [node](Ref *sender){
+                node->dismiss(true);
+            });
+
+            cocos2d::Menu *menu = cocos2d::Menu::create(yesButton,noButton,NULL);
+            node->addChild(menu,2);
+            node->addChild(node->stats, 2);
+            node->addChild(node->HPfield, 2);
+            node->addChild(node->ModelField, 2);
+            node->addChild(node->SpawnField, 2);
+            node->addChild(node->WaveField, 2);
+            menu->setPosition(winSize.width/2, winSize.height/4);
+            menu->alignItemsHorizontallyWithPadding(FONT::LABEL_OFFSET/2);
+
+            CONFIRM_DIALOGUE_SIZE_OFFSET = Size(CONFIRM_DIALOGUE_SIZE_OFFSET.width + 100,300);;
+            node->initBg(winSize / 3 + CONFIRM_DIALOGUE_SIZE_OFFSET, "Dangeon dialog");
+            node->autorelease();
+            return node;
+        }
+
+        CC_SAFE_DELETE(node);
+        return nullptr;
+    }
+
+    void DangeonMenu::dismiss(const bool animated)
+    {
+        if(animated){
+            this->runAction(Sequence::create(FadeTo::create(ANIMATION_TIME,0),RemoveSelf::create(), NULL));
+        }
+        else{
+            this->removeFromParentAndCleanup(true);
+        }
+        this->getParent()->resume();
+        _eventDispatcher->resumeEventListenersForTarget(this->getParent());
+    }
+
+    MapSavePopup* MapSavePopup::create(base_structures::Map_& Map) {
+        MapSavePopup *node = new (std::nothrow)MapSavePopup();
+        Size winSize = Director::getInstance()->getWinSize();
+        if(node && node->init())
+        {
+            node->nameField = TextField::create("Map Name: ", "fonts/arial.ttf", 24);
+            node->nameField->setPosition({winSize.width/2, winSize.height/3*2 - FONT::LABEL_OFFSET/2});
+            node->nameField->setTextColor(Color4B::BLACK);
+
+            MenuItemImage *yesButton = MenuItemImage::create(IMAGEPATH::OK_BUTTON,IMAGEPATH::OK_BUTTON_PRESSED,[=](Ref *sender){
+                Map.save(node->nameField->getString() + ".bin");
+                node->yesDismiss(true);
+            });
+
+            MenuItemImage *noButton = MenuItemImage::create(IMAGEPATH::CANCEL_BUTTON, IMAGEPATH::CANCEL_BUTTON_PRESSED, [node](Ref *sender){
+                node->noDismiss(true);
+            });
+
+            cocos2d::Menu *menu = cocos2d::Menu::create(yesButton,noButton,NULL);
+            node->addChild(menu,2);
+            node->addChild(node->nameField, 2);
+            menu->setPosition(winSize.width/2, winSize.height/4);
+            menu->alignItemsHorizontallyWithPadding(FONT::LABEL_OFFSET/2);
+
+            CONFIRM_DIALOGUE_SIZE_OFFSET = Size(CONFIRM_DIALOGUE_SIZE_OFFSET.width + 100,300);;
+            node->initBg(winSize / 3 + CONFIRM_DIALOGUE_SIZE_OFFSET, "Save map?");
+            node->autorelease();
+            return node;
+        }
+
+        CC_SAFE_DELETE(node);
+        return nullptr;
+    }
+
+    void MapSavePopup::yesDismiss(const bool animated)
+    {
+        if(animated){
+            this->runAction(Sequence::create(FadeTo::create(ANIMATION_TIME,0),RemoveSelf::create(), NULL));
+        }
+        else{
+            this->removeFromParentAndCleanup(true);
+        }
+        Director::getInstance()->replaceScene(::Menu::createScene());
+    }
+
+    void MapSavePopup::noDismiss(const bool animated)
+    {
+        if(animated){
+            this->runAction(Sequence::create(FadeTo::create(ANIMATION_TIME,0),RemoveSelf::create(), NULL));
+        }
+        else{
+            this->removeFromParentAndCleanup(true);
+        }
+        this->getParent()->resume();
+        _eventDispatcher->resumeEventListenersForTarget(this->getParent());
+    }
+
+    LosePopup* LosePopup::create(std::string level_name) {
+        LosePopup *node = new (std::nothrow)LosePopup();
+        Size winSize = Director::getInstance()->getWinSize();
+        if(node && node->init())
+        {
+            node->label = cocos2d::Label::createWithTTF("You lose! Restart?", "fonts/Marker Felt.ttf", 30);
+            node->label->setPosition(winSize.width/2, winSize.height/2);
+
+            MenuItemImage *yesButton = MenuItemImage::create(IMAGEPATH::OK_BUTTON,IMAGEPATH::OK_BUTTON_PRESSED,[=](Ref *sender){
+                node->yesDismiss( level_name, true);
+            });
+
+            MenuItemImage *noButton = MenuItemImage::create(IMAGEPATH::CANCEL_BUTTON, IMAGEPATH::CANCEL_BUTTON_PRESSED, [node](Ref *sender){
+                node->noDismiss(true);
+            });
+
+            cocos2d::Menu *menu = cocos2d::Menu::create(yesButton,noButton,NULL);
+            node->addChild(menu,2);
+            node->addChild(node->label, 2);
+            menu->setPosition(winSize.width/2, winSize.height/4);
+            menu->alignItemsHorizontallyWithPadding(FONT::LABEL_OFFSET/2);
+
+            CONFIRM_DIALOGUE_SIZE_OFFSET = Size(CONFIRM_DIALOGUE_SIZE_OFFSET.width + 100,300);;
+            node->initBg(winSize / 3 + CONFIRM_DIALOGUE_SIZE_OFFSET, "Save map?");
+            node->autorelease();
+            return node;
+        }
+
+        CC_SAFE_DELETE(node);
+        return nullptr;
+    }
+
+    void LosePopup::yesDismiss(std::string level_name, const bool animated)
+    {
+        if(animated){
+            this->runAction(Sequence::create(FadeTo::create(ANIMATION_TIME,0),RemoveSelf::create(), NULL));
+        }
+        else{
+            this->removeFromParentAndCleanup(true);
+        }
+        Director::getInstance()->replaceScene(::Game::createScene(level_name));
+    }
+
+    void LosePopup::noDismiss(const bool animated)
+    {
+        if(animated){
+            this->runAction(Sequence::create(FadeTo::create(ANIMATION_TIME,0),RemoveSelf::create(), NULL));
+        }
+        else{
+            this->removeFromParentAndCleanup(true);
+        }
+        Director::getInstance()->replaceScene(::Menu::createScene());
+    }
 }
 

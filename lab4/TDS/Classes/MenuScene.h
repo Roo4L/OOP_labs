@@ -29,7 +29,7 @@
 #ifndef LAB4_MENUSCENE_H
 #define LAB4_MENUSCENE_H
 #include "cocos2d.h"
-#include "GameScene.h"
+#include "ChooseLevelScene.h"
 #include "CreateScene.h"
 
 class Menu : public cocos2d::Scene
