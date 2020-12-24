@@ -1,0 +1,41 @@
+\hypertarget{structbase__structures_1_1Map__}{}\section{base\+\_\+structures\+:\+:Map\+\_\+ Struct Reference}
+\label{structbase__structures_1_1Map__}\index{base\+\_\+structures\+::\+Map\+\_\+@{base\+\_\+structures\+::\+Map\+\_\+}}
+
+
+Class of Tiles Map.  
+
+
+
+
+{\ttfamily \#include $<$base\+\_\+structures.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{structbase__structures_1_1Map___a15d4b8b311a21be26c0457869420296e}\label{structbase__structures_1_1Map___a15d4b8b311a21be26c0457869420296e}} 
+\hyperlink{structbase__structures_1_1Map___a15d4b8b311a21be26c0457869420296e}{Map\+\_\+} (int width, int height)
+\begin{DoxyCompactList}\small\item\em Init map of specified size with base cells. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structbase__structures_1_1Map___abd1176ca5512a52c41a833ff0d0f706c}\label{structbase__structures_1_1Map___abd1176ca5512a52c41a833ff0d0f706c}} 
+int \hyperlink{structbase__structures_1_1Map___abd1176ca5512a52c41a833ff0d0f706c}{save} (std\+::string filename) const
+\begin{DoxyCompactList}\small\item\em Save map to binary file. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structbase__structures_1_1Map___a2ad46f13ba2fe0d09f6d042e23be2cbb}\label{structbase__structures_1_1Map___a2ad46f13ba2fe0d09f6d042e23be2cbb}} 
+int \hyperlink{structbase__structures_1_1Map___a2ad46f13ba2fe0d09f6d042e23be2cbb}{load} (std\+::string filename)
+\begin{DoxyCompactList}\small\item\em Load map from binary save file. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{structbase__structures_1_1Map___a0eb615f42edf0ffb9bc0ed324f7dea99}\label{structbase__structures_1_1Map___a0eb615f42edf0ffb9bc0ed324f7dea99}} 
+std\+::vector$<$ std\+::vector$<$ std\+::shared\+\_\+ptr$<$ \hyperlink{classbase__structures_1_1Cell}{Cell} $>$ $>$ $>$ \hyperlink{structbase__structures_1_1Map___a0eb615f42edf0ffb9bc0ed324f7dea99}{cell\+\_\+arr}
+\begin{DoxyCompactList}\small\item\em Tiles container. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structbase__structures_1_1Map___a043120663bbf69aad79c4908ae3766d3}\label{structbase__structures_1_1Map___a043120663bbf69aad79c4908ae3766d3}} 
+std\+::shared\+\_\+ptr$<$ \hyperlink{classbase__structures_1_1Castle}{Castle} $>$ \hyperlink{structbase__structures_1_1Map___a043120663bbf69aad79c4908ae3766d3}{castle}
+\begin{DoxyCompactList}\small\item\em Quick ref to castle on the map. Only one castle is permitted. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Class of Tiles Map. 
+
+The documentation for this struct was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+structures/base\+\_\+structures.\+h\item 
+structures/base\+\_\+structures.\+cpp\end{DoxyCompactItemize}

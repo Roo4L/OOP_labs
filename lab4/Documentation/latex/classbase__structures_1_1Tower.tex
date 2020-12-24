@@ -1,0 +1,88 @@
+\hypertarget{classbase__structures_1_1Tower}{}\section{base\+\_\+structures\+:\+:Tower Class Reference}
+\label{classbase__structures_1_1Tower}\index{base\+\_\+structures\+::\+Tower@{base\+\_\+structures\+::\+Tower}}
+
+
+\hyperlink{classbase__structures_1_1Tower}{Tower} unit class.  
+
+
+
+
+{\ttfamily \#include $<$base\+\_\+structures.\+h$>$}
+
+
+
+Inheritance diagram for base\+\_\+structures\+:\+:Tower\+:
+% FIG 0
+
+
+Collaboration diagram for base\+\_\+structures\+:\+:Tower\+:
+% FIG 1
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1Tower_aac91e892264021f990ec317a79552a06}\label{classbase__structures_1_1Tower_aac91e892264021f990ec317a79552a06}} 
+{\bfseries Tower} (const \hyperlink{classbase__structures_1_1Tower}{Tower} \&cp)
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1Tower_aea96cb9cf96ed679bcdebafd5499af18}\label{classbase__structures_1_1Tower_aea96cb9cf96ed679bcdebafd5499af18}} 
+{\bfseries Tower} (const \hyperlink{classbase__structures_1_1Tower}{Tower} \&cp, std\+::string model)
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1Tower_ab11a1cebdefb93c49943aa0c59b3a461}\label{classbase__structures_1_1Tower_ab11a1cebdefb93c49943aa0c59b3a461}} 
+{\bfseries Tower} (int x, int y, std\+::string model=unit\+\_\+models\mbox{[}0\mbox{]}, int level=0)
+\item 
+virtual std\+::shared\+\_\+ptr$<$ \hyperlink{classbase__structures_1_1Monster}{Monster} $>$ \hyperlink{classbase__structures_1_1Tower_a59b5bb7e3782ea27f53a89866dceabde}{Attack} (Monster\+Table\+\_\+ \&Monster\+Table)
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1Tower_acb8189d5ac8f35992fc2e33b60dad29e}\label{classbase__structures_1_1Tower_acb8189d5ac8f35992fc2e33b60dad29e}} 
+bool {\bfseries is\+Upgradable} () noexcept override
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1Tower_a3dba0ab4ea12eed5182a951c7edc9945}\label{classbase__structures_1_1Tower_a3dba0ab4ea12eed5182a951c7edc9945}} 
+int {\bfseries Upgrade} () noexcept override
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1Tower_ac211d840efd1f4baa2f3dc17d73800e2}\label{classbase__structures_1_1Tower_ac211d840efd1f4baa2f3dc17d73800e2}} 
+bool {\bfseries is\+Reachable} (const \hyperlink{classbase__structures_1_1Monster}{Monster} \&monster) const noexcept
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1Tower_a5c9cad208ca424e7f618b5997ae73c1b}\label{classbase__structures_1_1Tower_a5c9cad208ca424e7f618b5997ae73c1b}} 
+float {\bfseries get\+Distance} (const \hyperlink{classbase__structures_1_1Monster}{Monster} \&monster) const noexcept
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1Tower_a64b5b93dcd360ef50338ddbd779492e2}\label{classbase__structures_1_1Tower_a64b5b93dcd360ef50338ddbd779492e2}} 
+Attack\+Style {\bfseries get\+Style} () const noexcept
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1Tower_afa9a8342b9d2eb5940b6d3878c1788b5}\label{classbase__structures_1_1Tower_afa9a8342b9d2eb5940b6d3878c1788b5}} 
+\hyperlink{classbase__structures_1_1Tower}{Tower} \& {\bfseries set\+Style} (Attack\+Style style) noexcept
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1Tower_a8c7b1597313e16804611c1be84761849}\label{classbase__structures_1_1Tower_a8c7b1597313e16804611c1be84761849}} 
+Attack\+Style {\bfseries style\+\_\+} = C\+L\+O\+S\+E\+S\+T\+C\+A\+S\+T\+LE
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+\hyperlink{classbase__structures_1_1Tower}{Tower} unit class. 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classbase__structures_1_1Tower_a59b5bb7e3782ea27f53a89866dceabde}\label{classbase__structures_1_1Tower_a59b5bb7e3782ea27f53a89866dceabde}} 
+\index{base\+\_\+structures\+::\+Tower@{base\+\_\+structures\+::\+Tower}!Attack@{Attack}}
+\index{Attack@{Attack}!base\+\_\+structures\+::\+Tower@{base\+\_\+structures\+::\+Tower}}
+\subsubsection{\texorpdfstring{Attack()}{Attack()}}
+{\footnotesize\ttfamily std\+::shared\+\_\+ptr$<$ \hyperlink{classbase__structures_1_1Monster}{Monster} $>$ base\+\_\+structures\+::\+Tower\+::\+Attack (\begin{DoxyParamCaption}\item[{Monster\+Table\+\_\+ \&}]{Monster\+Table }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+Choose and attack monster from \hyperlink{classbase__structures_1_1Monster}{Monster} Table basing on \hyperlink{classbase__structures_1_1Tower}{Tower} attack style. Autoremove monster from \hyperlink{classbase__structures_1_1Monster}{Monster} Table if it is dead 
+\begin{DoxyParams}{Parameters}
+{\em Monster\+Table} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Attacked monster 
+\end{DoxyReturn}
+
+
+Reimplemented in \hyperlink{classbase__structures_1_1MagicTower_a8602aa6fe28a969230079369c4c71efc}{base\+\_\+structures\+::\+Magic\+Tower}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+structures/base\+\_\+structures.\+h\item 
+structures/base\+\_\+structures.\+cpp\end{DoxyCompactItemize}

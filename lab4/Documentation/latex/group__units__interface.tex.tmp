@@ -1,0 +1,40 @@
+\hypertarget{group__units__interface}{}\section{Units interface}
+\label{group__units__interface}\index{Units interface@{Units interface}}
+Collaboration diagram for Units interface\+:
+% FIG 0
+\subsection*{Modules}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{group__attack__styles}{Attack style regression functions}
+\end{DoxyCompactItemize}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classbase__structures_1_1Unit}{base\+\_\+structures\+::\+Unit}
+\begin{DoxyCompactList}\small\item\em Abstarct unit class. \end{DoxyCompactList}\item 
+class \hyperlink{classbase__structures_1_1Tower}{base\+\_\+structures\+::\+Tower}
+\begin{DoxyCompactList}\small\item\em \hyperlink{classbase__structures_1_1Tower}{Tower} unit class. \end{DoxyCompactList}\item 
+class \hyperlink{classbase__structures_1_1MagicSignature}{base\+\_\+structures\+::\+Magic\+Signature}
+\begin{DoxyCompactList}\small\item\em Abstract class for magic units. \end{DoxyCompactList}\item 
+class \hyperlink{classbase__structures_1_1MagicTower}{base\+\_\+structures\+::\+Magic\+Tower}
+\begin{DoxyCompactList}\small\item\em Magic tower unit class. \end{DoxyCompactList}\item 
+class \hyperlink{classbase__structures_1_1MagicTrap}{base\+\_\+structures\+::\+Magic\+Trap}
+\begin{DoxyCompactList}\small\item\em Magic trap unit class. \end{DoxyCompactList}\item 
+struct \hyperlink{structbase__structures_1_1UnitTable__}{base\+\_\+structures\+::\+Unit\+Table\+\_\+}
+\begin{DoxyCompactList}\small\item\em Container class for all units on the map. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{group__units__interface_ga66ee14ce16cba75d79b5365e9d62103c}\label{group__units__interface_ga66ee14ce16cba75d79b5365e9d62103c}} 
+enum {\bfseries Attack\+Style} \{ \newline
+{\bfseries C\+L\+O\+S\+E\+S\+T\+C\+A\+S\+T\+LE}, 
+{\bfseries C\+L\+O\+S\+E\+S\+T\+T\+O\+W\+ER}, 
+{\bfseries W\+E\+E\+K\+E\+ST}, 
+{\bfseries S\+T\+R\+O\+N\+G\+E\+ST}, 
+\newline
+{\bfseries F\+A\+S\+T\+E\+ST}
+ \}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}

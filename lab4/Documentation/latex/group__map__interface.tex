@@ -1,0 +1,62 @@
+\hypertarget{group__map__interface}{}\section{Map interface}
+\label{group__map__interface}\index{Map interface@{Map interface}}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classbase__structures_1_1Cell}{base\+\_\+structures\+::\+Cell}
+\item 
+class \hyperlink{classbase__structures_1_1Castle}{base\+\_\+structures\+::\+Castle}
+\item 
+class \hyperlink{classbase__structures_1_1Dangeon}{base\+\_\+structures\+::\+Dangeon}
+\begin{DoxyCompactList}\small\item\em Class of dangeon tile. \end{DoxyCompactList}\item 
+class \hyperlink{classbase__structures_1_1Placable}{base\+\_\+structures\+::\+Placable}
+\begin{DoxyCompactList}\small\item\em Abstract class for tiles any units (not monsters!) can be placed. \end{DoxyCompactList}\item 
+class \hyperlink{classbase__structures_1_1Road}{base\+\_\+structures\+::\+Road}
+\begin{DoxyCompactList}\small\item\em Class of road tile. \end{DoxyCompactList}\item 
+class \hyperlink{classbase__structures_1_1Basement}{base\+\_\+structures\+::\+Basement}
+\begin{DoxyCompactList}\small\item\em Class of basement tile. \end{DoxyCompactList}\item 
+struct \hyperlink{structbase__structures_1_1Map__}{base\+\_\+structures\+::\+Map\+\_\+}
+\begin{DoxyCompactList}\small\item\em Class of Tiles Map. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{group__map__interface_gaf3cfb0493cb701414cde95f5293de7c7}\label{group__map__interface_gaf3cfb0493cb701414cde95f5293de7c7}} 
+using {\bfseries base\+\_\+structures\+::\+Wave} = std\+::list$<$ std\+::pair$<$ std\+::shared\+\_\+ptr$<$ \hyperlink{classbase__structures_1_1Monster}{base\+\_\+structures\+::\+Monster} $>$, double $>$ $>$
+\item 
+\mbox{\Hypertarget{group__map__interface_ga56dac6ab8bd99d328624c5c79cb8e36b}\label{group__map__interface_ga56dac6ab8bd99d328624c5c79cb8e36b}} 
+using {\bfseries base\+\_\+structures\+::\+Wave\+List} = std\+::vector$<$ Wave $>$
+\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{group__map__interface_ga7a79b122dbd494c4eea32680c5df34c1}{base\+\_\+structures\+::\+Cell\+Type} \{ \newline
+\hyperlink{group__map__interface_gga7a79b122dbd494c4eea32680c5df34c1a27c590e53e5b28bde1d1b9cfb8a18cd5}{base\+\_\+structures\+::\+B\+A\+S\+E\+\_\+\+C\+E\+LL}, 
+{\bfseries C\+A\+S\+T\+LE}, 
+{\bfseries D\+A\+N\+G\+E\+ON}, 
+{\bfseries R\+O\+AD}, 
+\newline
+{\bfseries B\+A\+S\+E\+M\+E\+NT}
+ \}\begin{DoxyCompactList}\small\item\em Types of map tiles. \end{DoxyCompactList}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+\subsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{group__map__interface_ga7a79b122dbd494c4eea32680c5df34c1}\label{group__map__interface_ga7a79b122dbd494c4eea32680c5df34c1}} 
+\index{Map interface@{Map interface}!Cell\+Type@{Cell\+Type}}
+\index{Cell\+Type@{Cell\+Type}!Map interface@{Map interface}}
+\subsubsection{\texorpdfstring{Cell\+Type}{CellType}}
+{\footnotesize\ttfamily enum \hyperlink{group__map__interface_ga7a79b122dbd494c4eea32680c5df34c1}{base\+\_\+structures\+::\+Cell\+Type}}
+
+
+
+Types of map tiles. 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{B\+A\+S\+E\+\_\+\+C\+E\+LL@{B\+A\+S\+E\+\_\+\+C\+E\+LL}!Map interface@{Map interface}}\index{Map interface@{Map interface}!B\+A\+S\+E\+\_\+\+C\+E\+LL@{B\+A\+S\+E\+\_\+\+C\+E\+LL}}}\mbox{\Hypertarget{group__map__interface_gga7a79b122dbd494c4eea32680c5df34c1a27c590e53e5b28bde1d1b9cfb8a18cd5}\label{group__map__interface_gga7a79b122dbd494c4eea32680c5df34c1a27c590e53e5b28bde1d1b9cfb8a18cd5}} 
+B\+A\+S\+E\+\_\+\+C\+E\+LL&Generic type. \\
+\hline
+
+\end{DoxyEnumFields}

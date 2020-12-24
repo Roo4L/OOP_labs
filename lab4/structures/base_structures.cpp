@@ -45,6 +45,13 @@ namespace base_structures {
         return *this;
     }
 
+    Castle::Castle(int x, int y, int hp, int gold): hp_(hp), gold_(gold), Cell(x, y, CASTLE) {
+        if (hp <= 0 || gold <= 0) {
+            throw std::invalid_argument("Castle params are negative.");
+        }
+        this->sprite_->setAnchorPoint(cocos2d::Vec2(0.5, 0.4));
+    };
+
     Castle::Castle(const Castle &cp) {
         type_ = cp.type_;
         hp_ = cp.hp_;
@@ -171,6 +178,14 @@ namespace base_structures {
         if (unit_ != nullptr) throw std::logic_error("Can't set unit to non-empty cell.");
         unit_ = unit;
         return unit_;
+    }
+
+    Map_::Map_(int width, int height): cell_arr(width, std::vector<std::shared_ptr<base_structures::Cell>>(height)) {
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                cell_arr[i][j] = move(std::make_shared<base_structures::Cell>(i, j));
+            }
+        }
     }
 
     int Map_::load(std::string filename) {

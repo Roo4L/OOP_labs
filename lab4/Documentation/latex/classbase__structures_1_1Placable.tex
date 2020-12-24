@@ -1,0 +1,52 @@
+\hypertarget{classbase__structures_1_1Placable}{}\section{base\+\_\+structures\+:\+:Placable Class Reference}
+\label{classbase__structures_1_1Placable}\index{base\+\_\+structures\+::\+Placable@{base\+\_\+structures\+::\+Placable}}
+
+
+Abstract class for tiles any units (not monsters!) can be placed.  
+
+
+
+
+{\ttfamily \#include $<$base\+\_\+structures.\+h$>$}
+
+
+
+Inheritance diagram for base\+\_\+structures\+:\+:Placable\+:
+% FIG 0
+
+
+Collaboration diagram for base\+\_\+structures\+:\+:Placable\+:
+% FIG 1
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1Placable_a7caae270ca49d3830e8aa4a3a46f1e19}\label{classbase__structures_1_1Placable_a7caae270ca49d3830e8aa4a3a46f1e19}} 
+{\bfseries Placable} (int x, int y, \hyperlink{group__map__interface_ga7a79b122dbd494c4eea32680c5df34c1}{Cell\+Type} t)
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1Placable_a177f8b1b10c7340f85d02a0ce1f507c7}\label{classbase__structures_1_1Placable_a177f8b1b10c7340f85d02a0ce1f507c7}} 
+virtual std\+::shared\+\_\+ptr$<$ \hyperlink{classbase__structures_1_1Unit}{Unit} $>$ {\bfseries set\+Unit} ()=0
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1Placable_a18da0a1dc458642db255f4e1151d4a19}\label{classbase__structures_1_1Placable_a18da0a1dc458642db255f4e1151d4a19}} 
+std\+::shared\+\_\+ptr$<$ \hyperlink{classbase__structures_1_1Unit}{Unit} $>$ {\bfseries get\+Unit} ()
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1Placable_acefdcb26351b589832cda9d8e3666353}\label{classbase__structures_1_1Placable_acefdcb26351b589832cda9d8e3666353}} 
+bool {\bfseries is\+Busy} () const noexcept
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1Placable_a85244a618fc825f189b8c76026189929}\label{classbase__structures_1_1Placable_a85244a618fc825f189b8c76026189929}} 
+void {\bfseries remove\+Unit} ()
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1Placable_a2ff96a51bb8bce25aad6bed4fd7bbf22}\label{classbase__structures_1_1Placable_a2ff96a51bb8bce25aad6bed4fd7bbf22}} 
+std\+::shared\+\_\+ptr$<$ \hyperlink{classbase__structures_1_1Unit}{Unit} $>$ \hyperlink{classbase__structures_1_1Placable_a2ff96a51bb8bce25aad6bed4fd7bbf22}{unit\+\_\+} = nullptr
+\begin{DoxyCompactList}\small\item\em Ref to emplaced unit. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Abstract class for tiles any units (not monsters!) can be placed. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+structures/base\+\_\+structures.\+h\end{DoxyCompactItemize}

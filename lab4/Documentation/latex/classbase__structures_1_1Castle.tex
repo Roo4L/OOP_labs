@@ -1,0 +1,64 @@
+\hypertarget{classbase__structures_1_1Castle}{}\section{base\+\_\+structures\+:\+:Castle Class Reference}
+\label{classbase__structures_1_1Castle}\index{base\+\_\+structures\+::\+Castle@{base\+\_\+structures\+::\+Castle}}
+
+
+{\ttfamily \#include $<$base\+\_\+structures.\+h$>$}
+
+
+
+Inheritance diagram for base\+\_\+structures\+:\+:Castle\+:
+% FIG 0
+
+
+Collaboration diagram for base\+\_\+structures\+:\+:Castle\+:
+% FIG 1
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1Castle_a6ad8f2e53c46e92c50e879168095bf08}\label{classbase__structures_1_1Castle_a6ad8f2e53c46e92c50e879168095bf08}} 
+{\bfseries Castle} (int x, int y)
+\item 
+\hyperlink{classbase__structures_1_1Castle_a88617f122b64d0f6353e6b776c538af3}{Castle} (int x, int y, int hp, int gold)
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1Castle_a678b23dd63cc223fcf3196a4a0654a95}\label{classbase__structures_1_1Castle_a678b23dd63cc223fcf3196a4a0654a95}} 
+{\bfseries Castle} (const \hyperlink{classbase__structures_1_1Castle}{Castle} \&cp)
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1Castle_a9d6c9d184a239f6ef7903342426f5a42}\label{classbase__structures_1_1Castle_a9d6c9d184a239f6ef7903342426f5a42}} 
+int {\bfseries get\+Hp} () const noexcept
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1Castle_a4328429909f52ff8c4c54d2d81d6a6be}\label{classbase__structures_1_1Castle_a4328429909f52ff8c4c54d2d81d6a6be}} 
+int {\bfseries get\+Gold} () const noexcept
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1Castle_a2d136a07841143527ffc0d44b3efd934}\label{classbase__structures_1_1Castle_a2d136a07841143527ffc0d44b3efd934}} 
+void \hyperlink{classbase__structures_1_1Castle_a2d136a07841143527ffc0d44b3efd934}{income} (const \hyperlink{classbase__structures_1_1Monster}{Monster} \&frag) noexcept
+\begin{DoxyCompactList}\small\item\em Increase money by the cost of monster. Do this when monster dies. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classbase__structures_1_1Castle_a73e8c50ded6741037206c91cf2ae7567}\label{classbase__structures_1_1Castle_a73e8c50ded6741037206c91cf2ae7567}} 
+bool \hyperlink{classbase__structures_1_1Castle_a73e8c50ded6741037206c91cf2ae7567}{spend} (int cost=50) noexcept
+\begin{DoxyCompactList}\small\item\em Spend money for new unit. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classbase__structures_1_1Castle_a7e432078dcb5e45a69a22e5f098a2100}\label{classbase__structures_1_1Castle_a7e432078dcb5e45a69a22e5f098a2100}} 
+void \hyperlink{classbase__structures_1_1Castle_a7e432078dcb5e45a69a22e5f098a2100}{do\+Damage} (const \hyperlink{classbase__structures_1_1Monster}{Monster} \&frag) noexcept
+\begin{DoxyCompactList}\small\item\em Decrease castle hp by the current monster hp. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Class of castle tile 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classbase__structures_1_1Castle_a88617f122b64d0f6353e6b776c538af3}\label{classbase__structures_1_1Castle_a88617f122b64d0f6353e6b776c538af3}} 
+\index{base\+\_\+structures\+::\+Castle@{base\+\_\+structures\+::\+Castle}!Castle@{Castle}}
+\index{Castle@{Castle}!base\+\_\+structures\+::\+Castle@{base\+\_\+structures\+::\+Castle}}
+\subsubsection{\texorpdfstring{Castle()}{Castle()}}
+{\footnotesize\ttfamily base\+\_\+structures\+::\+Castle\+::\+Castle (\begin{DoxyParamCaption}\item[{int}]{x,  }\item[{int}]{y,  }\item[{int}]{hp,  }\item[{int}]{gold }\end{DoxyParamCaption})}
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em std\+::invalid\+\_\+argument} & If HP or Gold values are negative \\
+\hline
+\end{DoxyExceptions}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+structures/base\+\_\+structures.\+h\item 
+structures/base\+\_\+structures.\+cpp\end{DoxyCompactItemize}

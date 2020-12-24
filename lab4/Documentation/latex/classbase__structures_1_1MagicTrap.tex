@@ -1,0 +1,69 @@
+\hypertarget{classbase__structures_1_1MagicTrap}{}\section{base\+\_\+structures\+:\+:Magic\+Trap Class Reference}
+\label{classbase__structures_1_1MagicTrap}\index{base\+\_\+structures\+::\+Magic\+Trap@{base\+\_\+structures\+::\+Magic\+Trap}}
+
+
+Magic trap unit class.  
+
+
+
+
+{\ttfamily \#include $<$base\+\_\+structures.\+h$>$}
+
+
+
+Inheritance diagram for base\+\_\+structures\+:\+:Magic\+Trap\+:
+% FIG 0
+
+
+Collaboration diagram for base\+\_\+structures\+:\+:Magic\+Trap\+:
+% FIG 1
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1MagicTrap_abb2624055f03e2fa5ac15c43f7251c65}\label{classbase__structures_1_1MagicTrap_abb2624055f03e2fa5ac15c43f7251c65}} 
+{\bfseries Magic\+Trap} (int x, int y, Effect\+Type type, int effect\+\_\+level=0, int trap\+\_\+level=0)
+\item 
+std\+::vector$<$ std\+::shared\+\_\+ptr$<$ \hyperlink{classbase__structures_1_1Monster}{Monster} $>$ $>$ \hyperlink{classbase__structures_1_1MagicTrap_abf07990e9b4de0990474820f083b5f8f}{Activate} (Monster\+Table\+\_\+ \&Monster\+Table)
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1MagicTrap_a12db2c4ec072db951183f8440b909058}\label{classbase__structures_1_1MagicTrap_a12db2c4ec072db951183f8440b909058}} 
+bool {\bfseries is\+Upgradable} () noexcept override
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1MagicTrap_a2de5ede4969585c62b786844b7d2ad3c}\label{classbase__structures_1_1MagicTrap_a2de5ede4969585c62b786844b7d2ad3c}} 
+int {\bfseries Upgrade} () noexcept override
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1MagicTrap_abe4207699f32108af9fcca2ab13eac0c}\label{classbase__structures_1_1MagicTrap_abe4207699f32108af9fcca2ab13eac0c}} 
+bool {\bfseries is\+Effect\+Upgradable} () noexcept override
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1MagicTrap_a5faff4b2e0f8907038eb7bd7ab7f3a19}\label{classbase__structures_1_1MagicTrap_a5faff4b2e0f8907038eb7bd7ab7f3a19}} 
+int {\bfseries Upgrade\+Effect} () noexcept override
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1MagicTrap_a42d1cc879b1b98e18872b3ec4ed6df14}\label{classbase__structures_1_1MagicTrap_a42d1cc879b1b98e18872b3ec4ed6df14}} 
+bool {\bfseries is\+Reachable} (const \hyperlink{classbase__structures_1_1Monster}{Monster} \&monster) const noexcept
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Magic trap unit class. 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classbase__structures_1_1MagicTrap_abf07990e9b4de0990474820f083b5f8f}\label{classbase__structures_1_1MagicTrap_abf07990e9b4de0990474820f083b5f8f}} 
+\index{base\+\_\+structures\+::\+Magic\+Trap@{base\+\_\+structures\+::\+Magic\+Trap}!Activate@{Activate}}
+\index{Activate@{Activate}!base\+\_\+structures\+::\+Magic\+Trap@{base\+\_\+structures\+::\+Magic\+Trap}}
+\subsubsection{\texorpdfstring{Activate()}{Activate()}}
+{\footnotesize\ttfamily std\+::vector$<$ std\+::shared\+\_\+ptr$<$ \hyperlink{classbase__structures_1_1Monster}{Monster} $>$ $>$ base\+\_\+structures\+::\+Magic\+Trap\+::\+Activate (\begin{DoxyParamCaption}\item[{Monster\+Table\+\_\+ \&}]{Monster\+Table }\end{DoxyParamCaption})}
+
+Attack all reachable monsters from \hyperlink{classbase__structures_1_1Monster}{Monster} Table and apply effects on them. Autoremove monsters from \hyperlink{classbase__structures_1_1Monster}{Monster} Table if they are dead. 
+\begin{DoxyParams}{Parameters}
+{\em Monster\+Table} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Attacked mosnters 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+structures/base\+\_\+structures.\+h\item 
+structures/base\+\_\+structures.\+cpp\end{DoxyCompactItemize}

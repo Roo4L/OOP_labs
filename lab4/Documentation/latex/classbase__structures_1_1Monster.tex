@@ -1,0 +1,82 @@
+\hypertarget{classbase__structures_1_1Monster}{}\section{base\+\_\+structures\+:\+:Monster Class Reference}
+\label{classbase__structures_1_1Monster}\index{base\+\_\+structures\+::\+Monster@{base\+\_\+structures\+::\+Monster}}
+
+
+Base monster class.  
+
+
+
+
+{\ttfamily \#include $<$base\+\_\+structures.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1Monster_ad405db6adb794b711bce1fc94c752984}\label{classbase__structures_1_1Monster_ad405db6adb794b711bce1fc94c752984}} 
+{\bfseries Monster} (int hp, int speed, int cost, \hyperlink{group__monster__interface_ga92d84ad7c1ff9ec724366d3b4d0de044}{Monster\+Model} model)
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1Monster_aa6bdfded6716cbf84f63c0982a226272}\label{classbase__structures_1_1Monster_aa6bdfded6716cbf84f63c0982a226272}} 
+{\bfseries Monster} (\hyperlink{structbase__structures_1_1MonsterDescriptor}{Monster\+Descriptor} \&disc)
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1Monster_a780a9e4ef847a87bb181e96cb5bc7c06}\label{classbase__structures_1_1Monster_a780a9e4ef847a87bb181e96cb5bc7c06}} 
+{\bfseries Monster} (const \hyperlink{classbase__structures_1_1Monster}{Monster} \&cp)
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1Monster_a57ad200919bba59776a58335c463563a}\label{classbase__structures_1_1Monster_a57ad200919bba59776a58335c463563a}} 
+int {\bfseries get\+Cost} () const noexcept
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1Monster_aaa9e7c620c077a351dd90ad1ac9a6f8f}\label{classbase__structures_1_1Monster_aaa9e7c620c077a351dd90ad1ac9a6f8f}} 
+int {\bfseries get\+HP} () const noexcept
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1Monster_a6da17ce47679f5d6eb321682d12a2f0b}\label{classbase__structures_1_1Monster_a6da17ce47679f5d6eb321682d12a2f0b}} 
+int {\bfseries get\+Speed} () const noexcept
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1Monster_a5e49f6153f1fce7d0f99f875b4bc543f}\label{classbase__structures_1_1Monster_a5e49f6153f1fce7d0f99f875b4bc543f}} 
+\hyperlink{group__monster__interface_ga92d84ad7c1ff9ec724366d3b4d0de044}{Monster\+Model} {\bfseries get\+Model} () const noexcept
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1Monster_a5a7f23d09ed103a42288ef6a2c1bf3d1}\label{classbase__structures_1_1Monster_a5a7f23d09ed103a42288ef6a2c1bf3d1}} 
+\hyperlink{classbase__structures_1_1Monster}{Monster} \& {\bfseries set\+Relation} (std\+::shared\+\_\+ptr$<$ \hyperlink{classbase__structures_1_1Road}{Road} $>$ cell)
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1Monster_a2b3e8fd08f5180dfdb7fdc713116c523}\label{classbase__structures_1_1Monster_a2b3e8fd08f5180dfdb7fdc713116c523}} 
+std\+::shared\+\_\+ptr$<$ \hyperlink{classbase__structures_1_1Road}{Road} $>$ {\bfseries get\+Relation} () const noexcept
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1Monster_a20b0650ed5255d27f9d19776192eead4}\label{classbase__structures_1_1Monster_a20b0650ed5255d27f9d19776192eead4}} 
+\hyperlink{classbase__structures_1_1Monster}{Monster} \& {\bfseries apply\+Debuf} (\hyperlink{structbase__structures_1_1Effect}{Effect} debuf)
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1Monster_acdec092b9fcb38bc8638611e575ba667}\label{classbase__structures_1_1Monster_acdec092b9fcb38bc8638611e575ba667}} 
+void \hyperlink{classbase__structures_1_1Monster_acdec092b9fcb38bc8638611e575ba667}{Update\+Debufs} ()
+\begin{DoxyCompactList}\small\item\em Check whether debufs expired. Used by scheduler on each game frame. \end{DoxyCompactList}\item 
+double \hyperlink{classbase__structures_1_1Monster_ad778a77546fd31bdb4125f7b150211c9}{slow\+Effect\+Strength} () const
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1Monster_af00fc680b342d1593894928d8636cb8e}\label{classbase__structures_1_1Monster_af00fc680b342d1593894928d8636cb8e}} 
+\hyperlink{classbase__structures_1_1Monster}{Monster} \& {\bfseries get\+Damage} (int damage)
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1Monster_af6822bf8011532b4d38aea21937ffd9a}\label{classbase__structures_1_1Monster_af6822bf8011532b4d38aea21937ffd9a}} 
+bool {\bfseries is\+Alive} () const noexcept
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1Monster_a004eeb9f3eae244f105108a3479ab9a1}\label{classbase__structures_1_1Monster_a004eeb9f3eae244f105108a3479ab9a1}} 
+cocos2d\+::\+Sprite $\ast$ {\bfseries sprite\+\_\+} = nullptr
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Base monster class. 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classbase__structures_1_1Monster_ad778a77546fd31bdb4125f7b150211c9}\label{classbase__structures_1_1Monster_ad778a77546fd31bdb4125f7b150211c9}} 
+\index{base\+\_\+structures\+::\+Monster@{base\+\_\+structures\+::\+Monster}!slow\+Effect\+Strength@{slow\+Effect\+Strength}}
+\index{slow\+Effect\+Strength@{slow\+Effect\+Strength}!base\+\_\+structures\+::\+Monster@{base\+\_\+structures\+::\+Monster}}
+\subsubsection{\texorpdfstring{slow\+Effect\+Strength()}{slowEffectStrength()}}
+{\footnotesize\ttfamily double base\+\_\+structures\+::\+Monster\+::slow\+Effect\+Strength (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+\begin{DoxyReturn}{Returns}
+coef of monster speed 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+structures/base\+\_\+structures.\+h\item 
+structures/base\+\_\+structures.\+cpp\end{DoxyCompactItemize}

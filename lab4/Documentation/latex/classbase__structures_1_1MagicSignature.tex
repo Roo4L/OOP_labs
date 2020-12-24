@@ -1,0 +1,50 @@
+\hypertarget{classbase__structures_1_1MagicSignature}{}\section{base\+\_\+structures\+:\+:Magic\+Signature Class Reference}
+\label{classbase__structures_1_1MagicSignature}\index{base\+\_\+structures\+::\+Magic\+Signature@{base\+\_\+structures\+::\+Magic\+Signature}}
+
+
+Abstract class for magic units.  
+
+
+
+
+{\ttfamily \#include $<$base\+\_\+structures.\+h$>$}
+
+
+
+Inheritance diagram for base\+\_\+structures\+:\+:Magic\+Signature\+:
+% FIG 0
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1MagicSignature_a24654b1ec780a324bfc10b19da57db79}\label{classbase__structures_1_1MagicSignature_a24654b1ec780a324bfc10b19da57db79}} 
+{\bfseries Magic\+Signature} (Effect\+Type type, int effect\+\_\+level=0)
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1MagicSignature_a347b92c90c31164d3d2f5a91c1ac0923}\label{classbase__structures_1_1MagicSignature_a347b92c90c31164d3d2f5a91c1ac0923}} 
+virtual bool {\bfseries is\+Effect\+Upgradable} () noexcept=0
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1MagicSignature_a46648bbf4c565e069cd852c6fd5873a9}\label{classbase__structures_1_1MagicSignature_a46648bbf4c565e069cd852c6fd5873a9}} 
+virtual int {\bfseries Upgrade\+Effect} () noexcept=0
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1MagicSignature_a7cba04a43f864a11f56df973fb9faf34}\label{classbase__structures_1_1MagicSignature_a7cba04a43f864a11f56df973fb9faf34}} 
+Effect\+Type {\bfseries get\+Type} () const noexcept
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1MagicSignature_ae7911ebdd5f6618628d7c4d7a8f8c8fb}\label{classbase__structures_1_1MagicSignature_ae7911ebdd5f6618628d7c4d7a8f8c8fb}} 
+int {\bfseries get\+Effect\+Level} () const noexcept
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1MagicSignature_a1a87a17c1bea64cd04c4826ab9db8183}\label{classbase__structures_1_1MagicSignature_a1a87a17c1bea64cd04c4826ab9db8183}} 
+Effect\+Type {\bfseries type\+\_\+}
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1MagicSignature_a979b642f174624d18b0f73b902635e6b}\label{classbase__structures_1_1MagicSignature_a979b642f174624d18b0f73b902635e6b}} 
+int {\bfseries effect\+\_\+level\+\_\+}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Abstract class for magic units. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+structures/base\+\_\+structures.\+h\end{DoxyCompactItemize}

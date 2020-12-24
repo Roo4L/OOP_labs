@@ -1,0 +1,82 @@
+\hypertarget{classbase__structures_1_1Dangeon}{}\section{base\+\_\+structures\+:\+:Dangeon Class Reference}
+\label{classbase__structures_1_1Dangeon}\index{base\+\_\+structures\+::\+Dangeon@{base\+\_\+structures\+::\+Dangeon}}
+
+
+Class of dangeon tile.  
+
+
+
+
+{\ttfamily \#include $<$base\+\_\+structures.\+h$>$}
+
+
+
+Inheritance diagram for base\+\_\+structures\+:\+:Dangeon\+:
+% FIG 0
+
+
+Collaboration diagram for base\+\_\+structures\+:\+:Dangeon\+:
+% FIG 1
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1Dangeon_a1f3d447cdeb6379ae39d3163f0b081ef}\label{classbase__structures_1_1Dangeon_a1f3d447cdeb6379ae39d3163f0b081ef}} 
+{\bfseries Dangeon} (int x, int y)
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1Dangeon_aa2f7f887eddd0707b5476ceb86a3d743}\label{classbase__structures_1_1Dangeon_aa2f7f887eddd0707b5476ceb86a3d743}} 
+\hyperlink{classbase__structures_1_1Dangeon_aa2f7f887eddd0707b5476ceb86a3d743}{Dangeon} (int x, int y, std\+::ifstream \&is)
+\begin{DoxyCompactList}\small\item\em Used to read dangeon params from binary save file. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classbase__structures_1_1Dangeon_a90a437b23f5fbfa4a61351a3cc0b0630}\label{classbase__structures_1_1Dangeon_a90a437b23f5fbfa4a61351a3cc0b0630}} 
+{\bfseries Dangeon} (const \hyperlink{classbase__structures_1_1Dangeon}{Dangeon} \&cp)
+\item 
+void \hyperlink{classbase__structures_1_1Dangeon_aa1d44555dd5611253aa0f6196be99238}{Next\+Wave} () noexcept
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1Dangeon_a1426d3e716ce87739a04cebe1406692a}\label{classbase__structures_1_1Dangeon_a1426d3e716ce87739a04cebe1406692a}} 
+bool {\bfseries is\+Active} () const
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1Dangeon_a276ffb8f27ec375e0e6d52d49736b8cd}\label{classbase__structures_1_1Dangeon_a276ffb8f27ec375e0e6d52d49736b8cd}} 
+int {\bfseries get\+Cur\+Wave\+Num} () const noexcept
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1Dangeon_af62631eba5c7802985f6eccec116d932}\label{classbase__structures_1_1Dangeon_af62631eba5c7802985f6eccec116d932}} 
+int {\bfseries get\+Waves\+Count} () const noexcept
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1Dangeon_a581b32153dba6f74d65fdb1009686b94}\label{classbase__structures_1_1Dangeon_a581b32153dba6f74d65fdb1009686b94}} 
+std\+::shared\+\_\+ptr$<$ \hyperlink{classbase__structures_1_1Monster}{Monster} $>$ {\bfseries Release\+Monster} (std\+::chrono\+::time\+\_\+point$<$ std\+::chrono\+::steady\+\_\+clock $>$ wave\+\_\+start)
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1Dangeon_a45b26326b01975edcece729f7131bd6a}\label{classbase__structures_1_1Dangeon_a45b26326b01975edcece729f7131bd6a}} 
+void {\bfseries Add\+Wave} (int count=1)
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1Dangeon_aa32f641001257b34ec3dc2201888512e}\label{classbase__structures_1_1Dangeon_aa32f641001257b34ec3dc2201888512e}} 
+void {\bfseries Add\+Monster} (std\+::pair$<$ \hyperlink{classbase__structures_1_1Monster}{Monster}, double $>$ monster)
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1Dangeon_a03d8a0f7cd8b53bd04ba402b5ded3f39}\label{classbase__structures_1_1Dangeon_a03d8a0f7cd8b53bd04ba402b5ded3f39}} 
+\hyperlink{classbase__structures_1_1Dangeon}{Dangeon} \& {\bfseries set\+Next} (std\+::shared\+\_\+ptr$<$ \hyperlink{classbase__structures_1_1Road}{Road} $>$ n)
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1Dangeon_a14af3aa3c068993f19994343dde97134}\label{classbase__structures_1_1Dangeon_a14af3aa3c068993f19994343dde97134}} 
+double {\bfseries Next\+Monster\+Time} () const noexcept
+\item 
+\mbox{\Hypertarget{classbase__structures_1_1Dangeon_a62ac56c6c0e9b5b9f91be1e72775ccce}\label{classbase__structures_1_1Dangeon_a62ac56c6c0e9b5b9f91be1e72775ccce}} 
+int \hyperlink{classbase__structures_1_1Dangeon_a62ac56c6c0e9b5b9f91be1e72775ccce}{save\+To\+File} (std\+::ofstream \&os) const
+\begin{DoxyCompactList}\small\item\em Save dangeon waves to save file. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Class of dangeon tile. 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classbase__structures_1_1Dangeon_aa1d44555dd5611253aa0f6196be99238}\label{classbase__structures_1_1Dangeon_aa1d44555dd5611253aa0f6196be99238}} 
+\index{base\+\_\+structures\+::\+Dangeon@{base\+\_\+structures\+::\+Dangeon}!Next\+Wave@{Next\+Wave}}
+\index{Next\+Wave@{Next\+Wave}!base\+\_\+structures\+::\+Dangeon@{base\+\_\+structures\+::\+Dangeon}}
+\subsubsection{\texorpdfstring{Next\+Wave()}{NextWave()}}
+{\footnotesize\ttfamily void base\+\_\+structures\+::\+Dangeon\+::\+Next\+Wave (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+\begin{DoxyWarning}{Warning}
+This method does not check whether next wave is available. cur\+\_\+wave\+\_\+it will be incremented anyway, but dangeon will be disabled (is\+Active == false) if cur\+\_\+wave\+\_\+it is invalid. 
+\end{DoxyWarning}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+structures/base\+\_\+structures.\+h\item 
+structures/base\+\_\+structures.\+cpp\end{DoxyCompactItemize}
