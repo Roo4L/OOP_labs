@@ -9,6 +9,7 @@
 #include <string>
 #include "base_structures.h"
 #include "cocos2d.h"
+#include <mutex>
 
 static std::string level_name_;
 
@@ -27,6 +28,13 @@ public:
     std::chrono::time_point<std::chrono::steady_clock> wave_start;
     bool lose = false;
     int wave_num = -1;
+
+    std::mutex monster_table_mutex;
+    std::mutex castle_mutex;
+    std::mutex towers_mutex;
+    std::mutex traps_mutex;
+    std::mutex scene_mutex;
+
 
     virtual bool init();
     void update(float delta);

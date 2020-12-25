@@ -65,6 +65,7 @@ namespace UICustom {
         cocos2d::ui::TextField* WaveField;
         cocos2d::Label* stats;
 
+
         void dismiss(const bool animated = true) override;
     public:
         static DangeonMenu* create(std::shared_ptr<base_structures::Dangeon> dang);

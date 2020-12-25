@@ -4,7 +4,13 @@
 
 #include "GameScene.h"
 #include <memory>
+#include <future>
 #include "Popup.h"
+
+#define EXEC_SEP(mutex, code) \
+mutex.lock();                 \
+code;                         \
+mutex.unlock();
 
 static int TILE_WIDTH = 50;
 
@@ -110,20 +116,22 @@ void Game::update(float delta) {
                 }
             }
         }
-        releaseMonsters();
-        updateDebufs();
-        activateTraps();
+        std::future<void> releaseMonstersFuture= std::async(std::launch::async, &::Game::releaseMonsters, this);
+        std::future<void> updateDebufsFuture = std::async(std::launch::async, &::Game::updateDebufs, this);
+        std::future<void> activateTrapsFuture = std::async(std::launch::async, &::Game::activateTraps, this);
         if (last_attack_time > 0.7) {
-            attackTowers();
+            std::future<void> attackTowersFuture = std::async(std::launch::async, &::Game::attackTowers, this);
             last_attack_time = 0;
         }
-        moveMonsters(delta);
+        std::future<void> moveMonstersFuture = std::async(std::launch::async, &::Game::moveMonsters, this, delta);
     }
     else {
+        scene_mutex.lock();
         auto dialog = UICustom::LosePopup::create(level_name_);
         this->pause();
         _eventDispatcher->pauseEventListenersForTarget(this);
         this->addChild(dialog, 5);
+        scene_mutex.unlock();
     }
 }
 
@@ -145,7 +153,10 @@ bool Game::isWaveEnded() {
     if (wave_num < 0) {
         return true;
     }
-    if (MonsterTable.empty()) {
+    monster_table_mutex.lock();
+    bool is_empty = MonsterTable.empty();
+    monster_table_mutex.unlock();
+    if (is_empty) {
         for (auto& row : Map.cell_arr) {
             for (auto& cell : row) {
                 if (cell->getType() == base_structures::DANGEON &&
@@ -162,7 +173,10 @@ bool Game::isWaveEnded() {
 }
 
 bool Game::isGameEnded() {
-    if (MonsterTable.empty()) {
+    monster_table_mutex.lock();
+    bool is_empty = MonsterTable.empty();
+    monster_table_mutex.unlock();
+    if (is_empty) {
         for (auto& row : Map.cell_arr) {
             for (auto& cell : row) {
                 if (cell->getType() == base_structures::DANGEON &&
@@ -179,9 +193,11 @@ bool Game::isGameEnded() {
 }
 
 void Game::updateDebufs() {
+    monster_table_mutex.lock();
     for (auto& monster : MonsterTable) {
         monster->UpdateDebufs();
     }
+    monster_table_mutex.unlock();
 }
 
 void Game::releaseMonsters() {
@@ -191,8 +207,12 @@ void Game::releaseMonsters() {
                 auto dang = std::dynamic_pointer_cast<base_structures::Dangeon>(cell);
                 std::shared_ptr<base_structures::Monster> monster = dang->ReleaseMonster(wave_start);
                 while (monster != nullptr) {
+                    scene_mutex.lock();
                     this->addChild(monster->sprite_, 2);
+                    scene_mutex.unlock();
+                    monster_table_mutex.lock();
                     MonsterTable.push_back(monster);
+                    monster_table_mutex.unlock();
                     monster = dang->ReleaseMonster(wave_start);
                 }
             }
@@ -201,18 +221,25 @@ void Game::releaseMonsters() {
 }
 
 void Game::activateTraps() {
+    traps_mutex.lock();
     std::list<std::shared_ptr<base_structures::MagicTrap>> activated;
     for (const auto& trap : UnitTable.traps) {
         bool is_activate = false;
+        monster_table_mutex.lock();
         for (auto& monster : MonsterTable) {
             if (trap->isReachable(*monster)) is_activate = true;
         }
+        monster_table_mutex.unlock();
         if (is_activate) {
+            monster_table_mutex.lock();
             std::vector<std::shared_ptr<base_structures::Monster>> victims = trap->Activate(MonsterTable);
+            monster_table_mutex.unlock();
             for (auto victim : victims) {
                 if (!victim->isAlive()) {
+                    castle_mutex.lock();
                     Map.castle->income(*victim);
-                    victim->sprite_->removeFromParentAndCleanup(true);
+                    castle_mutex.unlock();
+                    EXEC_SEP(scene_mutex,victim->sprite_->removeFromParentAndCleanup(true));
                 } else {
                     auto tint1 = cocos2d::TintBy::create(0.1, 0.f, 125.f, 125.f);
                     auto tint2 = cocos2d::TintBy::create(0.1, 0.f, -125.f, -125.f);
@@ -225,16 +252,18 @@ void Game::activateTraps() {
     }
     for (auto trap : activated) {
         UnitTable.traps.erase(std::find(UnitTable.traps.begin(), UnitTable.traps.end(), trap));
-        trap->sprite_->removeFromParentAndCleanup(true);
+        EXEC_SEP(scene_mutex, trap->sprite_->removeFromParentAndCleanup(true));
     }
+    traps_mutex.unlock();
 }
 
 void Game::attackTowers() {
+    towers_mutex.lock();
     for (const auto& tower : UnitTable.towers) {
         std::shared_ptr<base_structures::Monster> victim = tower->Attack(MonsterTable);
         if (victim != nullptr && !victim->isAlive()) {
-            Map.castle->income(*victim);
-            victim->sprite_->removeFromParentAndCleanup(true);
+            EXEC_SEP(castle_mutex, Map.castle->income(*victim));
+            EXEC_SEP(scene_mutex, victim->sprite_->removeFromParentAndCleanup(true));
         }
         else if (victim != nullptr) {
             auto tint1 = cocos2d::TintBy::create(0.1, 0.f, 125.f, 125.f);
@@ -243,9 +272,11 @@ void Game::attackTowers() {
             victim->sprite_->runAction(tint_act);
         }
     }
+    towers_mutex.unlock();
 }
 
 void Game::moveMonsters(float dt) {
+    monster_table_mutex.lock();
     std::list<std::shared_ptr<base_structures::Monster>> deleted;
     for (auto& monster : MonsterTable) {
         cocos2d::Vec2 pos = monster->sprite_->getPosition();
@@ -259,18 +290,21 @@ void Game::moveMonsters(float dt) {
             }
         }
         else {
-            Map.castle->doDamage(*monster);
+            EXEC_SEP(castle_mutex, Map.castle->doDamage(*monster));
             this->HPTextField->setString("HP: " + std::to_string(Map.castle->getHp()));
             deleted.push_back(monster);
         }
     }
     for (auto& monster : deleted) {
         MonsterTable.erase(std::find(MonsterTable.begin(), MonsterTable.end(), monster));
-        monster->sprite_->removeFromParentAndCleanup(true);
+        EXEC_SEP(scene_mutex, monster->sprite_->removeFromParentAndCleanup(true));
     }
+    monster_table_mutex.unlock();
+    castle_mutex.lock();
     if (Map.castle->getHp() <= 0) {
         lose = true;
     }
+    castle_mutex.unlock();
 }
 
 void Game::onMouseDown(cocos2d::Event* event) {
@@ -291,7 +325,10 @@ void Game::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, Event* event) 
     int y = this->CellSelected->getPositionY() / TILE_WIDTH;
     switch(keyCode) {
         case cocos2d::EventKeyboard::KeyCode::KEY_1: {
-            if(Map.castle->spend()) {
+            castle_mutex.lock();
+            bool is_enough_money = Map.castle->spend();
+            castle_mutex.unlock();
+            if (is_enough_money) {
                 switch(Map.cell_arr[x][y]->getType()) {
                     case base_structures::BASEMENT: {
                         auto cell = std::dynamic_pointer_cast<base_structures::Basement>(Map.cell_arr[x][y]);
@@ -300,15 +337,18 @@ void Game::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, Event* event) 
                                     std::make_shared<base_structures::MagicTower>(
                                             *(std::dynamic_pointer_cast<base_structures::Tower>(cell->getUnit())),
                                             base_structures::FROZEN));
+                            towers_mutex.lock();
                             UnitTable.towers.erase(std::find(UnitTable.towers.begin(), UnitTable.towers.end(),
                                                              std::dynamic_pointer_cast<base_structures::Tower>(
                                                                      cell->getUnit())));
-                            cell->getUnit()->sprite_->removeFromParentAndCleanup(true);
+                            towers_mutex.unlock();
+                            EXEC_SEP(scene_mutex, cell->getUnit()->sprite_->removeFromParentAndCleanup(true));
                             cell->removeUnit();
                             cell->setUnit(unit);
                             unit->sprite_->setPosition(Map.cell_arr[x][y]->sprite_->getPosition());
-                            this->addChild(unit->sprite_, 3);
-                            UnitTable.towers.push_back(std::dynamic_pointer_cast<base_structures::Tower>(unit));
+                            EXEC_SEP(scene_mutex, this->addChild(unit->sprite_, 3));
+                            EXEC_SEP(towers_mutex,
+                                     UnitTable.towers.push_back(std::dynamic_pointer_cast<base_structures::Tower>(unit)));
                         }
                         break;
                     }
@@ -317,8 +357,9 @@ void Game::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, Event* event) 
                         if (!cell->isBusy()) {
                             auto unit = cell->setUnit(base_structures::FROZEN);
                             unit->sprite_->setPosition(Map.cell_arr[x][y]->sprite_->getPosition());
-                            this->addChild(unit->sprite_, 3);
-                            UnitTable.traps.push_back(std::dynamic_pointer_cast<base_structures::MagicTrap>(unit));
+                            EXEC_SEP(scene_mutex, this->addChild(unit->sprite_, 3));
+                            EXEC_SEP(traps_mutex,
+                                     UnitTable.traps.push_back(std::dynamic_pointer_cast<base_structures::MagicTrap>(unit)));
                         } else {
                             log("Can't set unit on busy cell.");
                         }
@@ -328,10 +369,14 @@ void Game::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, Event* event) 
                         break;
                 }
             }
+            castle_mutex.unlock();
             break;
         }
         case cocos2d::EventKeyboard::KeyCode::KEY_2: {
-            if (Map.castle->spend()) {
+            castle_mutex.lock();
+            bool is_enough_money = Map.castle->spend();
+            castle_mutex.unlock();
+            if (is_enough_money) {
                 switch(Map.cell_arr[x][y]->getType()) {
                     case base_structures::BASEMENT: {
                         auto cell = std::dynamic_pointer_cast<base_structures::Basement>(Map.cell_arr[x][y]);
@@ -340,15 +385,18 @@ void Game::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, Event* event) 
                                     std::make_shared<base_structures::MagicTower>(
                                             *(std::dynamic_pointer_cast<base_structures::Tower>(cell->getUnit())),
                                             base_structures::POISON));
+                            towers_mutex.lock();
                             UnitTable.towers.erase(std::find(UnitTable.towers.begin(), UnitTable.towers.end(),
                                                              std::dynamic_pointer_cast<base_structures::Tower>(
                                                                      cell->getUnit())));
-                            cell->getUnit()->sprite_->removeFromParentAndCleanup(true);
+                            towers_mutex.unlock();
+                            EXEC_SEP(scene_mutex, cell->getUnit()->sprite_->removeFromParentAndCleanup(true));
                             cell->removeUnit();
                             cell->setUnit(unit);
                             unit->sprite_->setPosition(Map.cell_arr[x][y]->sprite_->getPosition());
-                            this->addChild(unit->sprite_, 3);
-                            UnitTable.towers.push_back(std::dynamic_pointer_cast<base_structures::Tower>(unit));
+                            EXEC_SEP(scene_mutex, this->addChild(unit->sprite_, 3));
+                            EXEC_SEP(towers_mutex,
+                                     UnitTable.towers.push_back(std::dynamic_pointer_cast<base_structures::Tower>(unit)));
                         }
                         break;
                     }
@@ -357,8 +405,9 @@ void Game::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, Event* event) 
                         if (!cell->isBusy()) {
                             auto unit = cell->setUnit(base_structures::POISON);
                             unit->sprite_->setPosition(Map.cell_arr[x][y]->sprite_->getPosition());
-                            this->addChild(unit->sprite_, 3);
-                            UnitTable.traps.push_back(std::dynamic_pointer_cast<base_structures::MagicTrap>(unit));
+                            EXEC_SEP(scene_mutex, this->addChild(unit->sprite_, 3));
+                            EXEC_SEP(traps_mutex,
+                                     UnitTable.traps.push_back(std::dynamic_pointer_cast<base_structures::MagicTrap>(unit)));
                         } else {
                             log("Can't set unit on busy cell.");
                         }
@@ -371,7 +420,10 @@ void Game::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, Event* event) 
             break;
         }
         case cocos2d::EventKeyboard::KeyCode::KEY_3: {
-            if (Map.castle->spend()) {
+            castle_mutex.lock();
+            bool is_enough_money = Map.castle->spend();
+            castle_mutex.unlock();
+            if (is_enough_money) {
                 switch(Map.cell_arr[x][y]->getType()) {
                     case base_structures::BASEMENT: {
                         auto cell = std::dynamic_pointer_cast<base_structures::Basement>(Map.cell_arr[x][y]);
@@ -380,15 +432,18 @@ void Game::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, Event* event) 
                                     std::make_shared<base_structures::MagicTower>(
                                             *(std::dynamic_pointer_cast<base_structures::Tower>(cell->getUnit())),
                                             base_structures::EXHAUST));
+                            towers_mutex.lock();
                             UnitTable.towers.erase(std::find(UnitTable.towers.begin(), UnitTable.towers.end(),
                                                              std::dynamic_pointer_cast<base_structures::Tower>(
                                                                      cell->getUnit())));
-                            cell->getUnit()->sprite_->removeFromParentAndCleanup(true);
+                            towers_mutex.unlock();
+                            EXEC_SEP(scene_mutex, cell->getUnit()->sprite_->removeFromParentAndCleanup(true));
                             cell->removeUnit();
                             cell->setUnit(unit);
                             unit->sprite_->setPosition(Map.cell_arr[x][y]->sprite_->getPosition());
-                            this->addChild(unit->sprite_, 3);
-                            UnitTable.towers.push_back(std::dynamic_pointer_cast<base_structures::Tower>(unit));
+                            EXEC_SEP(scene_mutex, this->addChild(unit->sprite_, 3));
+                            EXEC_SEP(towers_mutex,
+                                     UnitTable.towers.push_back(std::dynamic_pointer_cast<base_structures::Tower>(unit)));
                         }
                         break;
                     }
@@ -397,8 +452,9 @@ void Game::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, Event* event) 
                         if (!cell->isBusy()) {
                             auto unit = cell->setUnit(base_structures::EXHAUST);
                             unit->sprite_->setPosition(Map.cell_arr[x][y]->sprite_->getPosition());
-                            this->addChild(unit->sprite_, 3);
-                            UnitTable.traps.push_back(std::dynamic_pointer_cast<base_structures::MagicTrap>(unit));
+                            EXEC_SEP(scene_mutex, this->addChild(unit->sprite_, 3));
+                            EXEC_SEP(traps_mutex,
+                                     UnitTable.traps.push_back(std::dynamic_pointer_cast<base_structures::MagicTrap>(unit)));
                         } else {
                             log("Can't set unit on busy cell.");
                         }
@@ -411,7 +467,10 @@ void Game::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, Event* event) 
             break;
         }
         case cocos2d::EventKeyboard::KeyCode::KEY_0: {
-            if (Map.castle->spend()) {
+            castle_mutex.lock();
+            bool is_enough_money = Map.castle->spend();
+            castle_mutex.unlock();
+            if (is_enough_money) {
                 switch(Map.cell_arr[x][y]->getType()) {
                     case base_structures::BASEMENT: {
                         auto cell = std::dynamic_pointer_cast<base_structures::Basement>(Map.cell_arr[x][y]);
@@ -419,8 +478,8 @@ void Game::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, Event* event) 
                             auto unit = std::dynamic_pointer_cast<base_structures::Tower>(
                                     std::dynamic_pointer_cast<base_structures::Basement>(Map.cell_arr[x][y])->setUnit());
                             unit->sprite_->setPosition(Map.cell_arr[x][y]->sprite_->getPosition());
-                            this->addChild(unit->sprite_, 3);
-                            UnitTable.towers.push_back(unit);
+                            EXEC_SEP(scene_mutex, this->addChild(unit->sprite_, 3));
+                            EXEC_SEP(towers_mutex, UnitTable.towers.push_back(unit));
                         } else {
                             log("Can't set unit on busy cell.");
                         }
@@ -436,24 +495,26 @@ void Game::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, Event* event) 
             switch(Map.cell_arr[x][y]->getType()) {
                 case base_structures::BASEMENT: {
                     auto cell = std::dynamic_pointer_cast<base_structures::Basement>(Map.cell_arr[x][y]);
-                    if (cell->isBusy() && cell->getUnit()->isUpgradable() && Map.castle->spend()) {
-                        cell->getUnit()->Upgrade();
+                    if (cell->isBusy() && cell->getUnit()->isUpgradable() && (castle_mutex.lock(), Map.castle->spend())) {
+                        EXEC_SEP(towers_mutex, cell->getUnit()->Upgrade());
                         auto star = cocos2d::Sprite::create("res/star.png");
                         star->setPosition(cell->getUnit()->sprite_->getPosition() +
                                             cocos2d::Vec2(cell->getUnit()->sprite_->getContentSize().width/2, 0));
-                        this->addChild(star, 4);
+                        EXEC_SEP(scene_mutex, this->addChild(star, 4));
                     }
+                    castle_mutex.unlock();
                     break;
                 }
                 case base_structures::ROAD: {
                     auto cell = std::dynamic_pointer_cast<base_structures::Road>(Map.cell_arr[x][y]);
-                    if (cell->isBusy() && cell->getUnit()->isUpgradable() && Map.castle->spend()) {
-                        cell->getUnit()->Upgrade();
+                    if (cell->isBusy() && cell->getUnit()->isUpgradable() && (castle_mutex.lock(),Map.castle->spend())) {
+                        EXEC_SEP(traps_mutex, cell->getUnit()->Upgrade());
                         auto star = cocos2d::Sprite::create("res/star.png");
                         star->setPosition(cell->getUnit()->sprite_->getPosition() +
                                           cocos2d::Vec2(cell->getUnit()->sprite_->getContentSize().width/2, 0));
-                        this->addChild(star, 4);
+                        EXEC_SEP(scene_mutex, this->addChild(star, 4));
                     }
+                    castle_mutex.unlock();
                     break;
                 }
                 default:
@@ -466,17 +527,21 @@ void Game::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, Event* event) 
                 case base_structures::BASEMENT: {
                     auto cell = std::dynamic_pointer_cast<base_structures::Basement>(Map.cell_arr[x][y]);
                     if (cell->isBusy()) {
+                        towers_mutex.lock();
                         auto tower = std::dynamic_pointer_cast<base_structures::Tower>(cell->getUnit());
                         int attack_num = int(tower->getStyle() + 1) % 5;
                         tower->setStyle(static_cast<base_structures::AttackStyle>(attack_num));
-                        cell->sprite_->removeAllChildrenWithCleanup(true);
+                        towers_mutex.unlock();
+                        EXEC_SEP(scene_mutex, cell->sprite_->removeAllChildrenWithCleanup(true));
                         auto attack_icon = cocos2d::Label::createWithTTF( std::to_string(attack_num), "fonts/Marker Felt.ttf", 24);
                         attack_icon->setTextColor(Color4B::RED);
                         attack_icon->setPosition(cell->sprite_->getPosition());
                         auto prev = this->getChildByName("attack mode");
+                        scene_mutex.lock();
                         if (prev != nullptr)
                             this->removeChild(prev);
                         this->addChild(attack_icon, 5, "attack mode");
+                        scene_mutex.unlock();
                     }
                 }
             }
